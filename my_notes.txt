@@ -1,0 +1,120 @@
+Js13kgames
+Deadline: September 13, 2018
+
+
+The Idea:
+A cyberpunk roguelike themed around you being a hacker, digitalizing you mind and connecting to servers.
+The world is a generic futuristic capitalistic dystopia. You're hired to sabotage big corporations systems.
+
+Gameplay:
+Roguelike controls, move with arrows, attack by moving into the enemy's square.
+
+Progression: 
+The player can choose from different contracts. Each contract specifies a corporation to attack and a reward in cash.
+While connected, the player can find info to trade on the blackmarket for additional money.
+With the money obtained, the player can buy new programs to upgrade himself.
+
+Possible game elements:
+Firewall as a barrier/locked door to be bypassed by the player.
+Programs/Apps as equipment, some are unidentified and need a 'serial' to be unlocked.
+Scripts are expendable abilities / magic that can be executed.
+Keys to unlock doors/chests are passwords.
+Media items are files that can be sold for money.
+The player has a limited inventory that must be managed while on the dungeon.
+Add a 'console' outside of the canvas elements which displays some plot or trivia.
+HP is the player 'connection stability'. When reduced to 0 the player's mind will go offline. Hence the theme of the game.
+An interesting idea is to set the hp to a 'latency' value, and instead of reducing when the player takes damage it increases. When the hp passes a certain value (200) every damage the player takes has a chance of disconnecting him, resulting in a game loss.
+
+Scenes:
+Main menu
+Mission select
+Black market 
+Dungeon
+Inventory 
+
+
+Possible Missions:
+After finishing any objective, the Player has to run back to the exit, as more enemies will be spawning.
+
+Espionage 
+Player has to explore the dungeon in search of a specific enemy that will ve carrying a password, then go find the chest that can be accessed with that password. 
+
+Hijacking 
+Player has to interact with a number of switches to bring down the server.
+
+Sabotage 
+Player has to upload a virus into a terminal located somewhere in the dungeon. 
+
+
+Possible enemies:
+Common enemy, walks towards the player he can see.
+
+Explosive enemy, less hp than the common enemy. Explodes in a number of turns after dying.
+
+Ranged enemy, every turn casts an AOE at the Player.
+
+Debugger, heals close enemies, tries to follow them. Cannot move and heal on the same turn.
+
+Trap, deals damage if stepped on. 
+
+
+Possible programs:
+I am planning of allowing the Player to equip 2 programs at one time. He can exchange them while on the dungeon or before the mission.
+
+Scanner:
+Shows enemies behind walls
+Maintenance:
+Heals every turn 
+HDD:
+Increase inventory space 
+Proxy:
+Ressurect the Player after he dies, then vanishes.
+DOS:
+Attacks poison the enemy
+Social Network:
+Chance of finding media items while walking 
+
+Possible Scripts:
+Refresh:
+Teleport back to the start 
+Reconnect:
+Recovers HP
+Glitch:
+Teleports all enemies on the screen to random locations in the dungeon.
+Decrypt:
+Open a locked door/ chest
+Ping:
+AOR damage 
+Interference:
+Stuns an enemy
+
+
+Technical Notes:
+Need a scene manager 
+Simulate a terminal on the html page used to deliver the plot development and other notes about the game.
+Maybe make a hud with the inventory / stats in the html as well.
+If the file size gets too big, I may sacrifice the BSP dungeon gen in favor of a premade list of dungeons
+to randomly choose from. 
+
+About the grid:
+The grid is a 2d array with tiles being accessed by (x,y) coordinates. 
+I pretend to have layers in each tile.
+    Layer 0 would be the actual tile, defining if its a wall, door or passable tile.
+    Layer 1 are elements that can be stepped onto, like traps or dropped items.
+    Layer 2 are enemies, temporary obstacles, chests, or any other element that the player may not pass through, but is not permanent.
+One possible implementation is to put a dictionary in each entry of the grid array, with keys 'Layer0', 'Layer1', 'Layer2' each
+assigned to its own array. Every time the Player moves the game responds based on the Layers affected.
+
+I also want fog-of-war, so the enemies change their behavior based on whether or not they can see the player, and to hide the dungeon's unexplored areas.
+
+Secret doors may be nice, but i have to be careful, the Player must always be able to open them.
+
+The controls are going to be arrow keys to move plus the mouse to interact with the ui/ use items, maybe the use of space bar.
+Some items will allow the player to click on a square of the dungeon.
+
+When an arrow is pressed, the game checks if the tile is walkable (Layer0);
+if the tile has an obstacle/enemy (Layer2) it will trigger that element's interaction, (such as attacking an enemy or opening a door);
+If the tile is 'vacant' the player will move onto it and the game will check for any items/traps (Layer1) that may interact with him.
+
+Walking over an item automatically adds it to the Player's inventory. If the inventory is full, the Player must be able to somehow
+trade one of his items for the one on the floor. 
