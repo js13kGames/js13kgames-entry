@@ -66,8 +66,13 @@ class DungeonScene extends Scene {
                     this.ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 }
     
-                if (tile["entity"] && tile["entity"].type === "player") {
-                    this.ctx.fillStyle = 'blue';
+                if (tile["entity"]) {
+                    if (tile["entity"].type === "player") {
+                        this.ctx.fillStyle = 'blue';
+                    }
+                    if (tile["entity"].type === "enemy") {
+                        this.ctx.fillStyle = 'red';
+                    }
                     this.ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 }
             }

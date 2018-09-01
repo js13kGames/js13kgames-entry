@@ -62,17 +62,34 @@ class DungeonGrid {
                 this.grid[point.y][point.x]["isWall"] = false;
             }
         }
+
+        this.populateDungeon();
+    }
+
+    populateDungeon() {
+        var enemies_to_spawn = this.size / 4;
+
+        while(enemies_to_spawn > 0) {
+            var rand_point = this.randomPointInRoom();
+            if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
+                this.addEntity(new Enemy(this, rand_point), rand_point);
+                enemies_to_spawn--;
+            }
+        }
     }
 
     addEntity(ent, point) {
         this.grid[ point.y ][ point.x ]["entity"] = ent;
     }
 
+    randomPointInRoom() {
+        var rand_room = this.rooms[ randint(0, this.rooms.length) ];
+        return rand_room.randomPoint();
+    }
+
     addPlayer() {
         // Creates a player object at a random location inside a random room.
-        var rand_room = this.rooms[ randint(0, this.rooms.length) ];
-        var rand_point = rand_room.randomPoint();
-
+        var rand_point = this.randomPointInRoom();
         this.player_at = rand_point;
         this.addEntity(new Player(this, rand_point), rand_point);
     }
@@ -82,12 +99,21 @@ class DungeonGrid {
 
         if (entity) {
             if (this.grid[to.y][to.x]["isWall"]) {
+                // Trying to move into a wall
                 return;
             } else {
-                this.grid[from.y][from.x]["entity"] = null;
-                this.grid[to.y][to.x]["entity"] = entity;
-                if (entity.type == "player") {
-                    this.player_at = to;
+
+                var from_tile = this.grid[from.y][from.x], 
+                    to_tile = this.grid[to.y][to.x];
+
+                if (to_tile["entity"]) {
+                    from_tile["entity"].interactWith(to_tile["entity"]);
+                } else {
+                    from_tile["entity"] = null;
+                    to_tile["entity"] = entity;
+                    if (entity.type == "player") {
+                        this.player_at = to;
+                    }
                 }
             }
         }
