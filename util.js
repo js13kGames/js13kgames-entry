@@ -73,4 +73,35 @@ function randint(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
-// TODO: Create a Vector object to facilitate the math
+class Button extends Rect {
+    constructor(x, y, width, height, text, color, callback) {
+        super(x, y, width, height);
+
+        this.color = color;
+        this.text = text;
+        this.callback = callback;
+    }
+    draw(ctx) {
+        ctx.font="20px Consolas";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+    
+        ctx.strokeStyle = this.color;
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fillText(this.text, this.x + (this.width/2), this.y + (this.height/2));
+    }
+}
+
+function getCursorPosition(canvas, event) {
+    // Get the mouse position relative to the canvas.
+    var rect = canvas.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    return new Vector(x, y);
+}
+
+function clearCanvas(canvas, ctx) {
+    ctx.fillStyle = "rgb(25,25,25)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}

@@ -123,26 +123,3 @@ class DungeonGrid {
     }
 
 }
-
-
-function drawDungeon(canvas, ctx, dungeon) {
-    var tileSize = canvas.width / dungeon.size;
-
-    for(var y=0; y < dungeon.size; y++) {
-        for(var x=0; x < dungeon.size; x++) {
-            var tile = dungeon.grid[y][x]
-            if ( tile["isWall"] ) {
-                ctx.strokeStyle = "gray";
-                ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
-            } else {
-                ctx.fillStyle = 'white';
-                ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-            }
-
-            if (tile["entity"] === "player") {
-                ctx.fillStyle = 'blue';
-                ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-            }
-        }
-    }
-}
