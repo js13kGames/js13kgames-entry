@@ -74,7 +74,7 @@ class DungeonGrid {
         var rand_point = rand_room.randomPoint();
 
         this.player_at = rand_point;
-        this.addEntity("player", rand_point);
+        this.addEntity(new Player(this, rand_point), rand_point);
     }
 
     moveEntity(from, to) {
@@ -86,7 +86,7 @@ class DungeonGrid {
             } else {
                 this.grid[from.y][from.x]["entity"] = null;
                 this.grid[to.y][to.x]["entity"] = entity;
-                if (entity == "player") {
+                if (entity.type == "player") {
                     this.player_at = to;
                 }
             }
