@@ -16,3 +16,7 @@ class Rect {
         return x > this.left && x < this.right && y > this.top && y < this.bottom;
     }
 }
+
+function randint(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
