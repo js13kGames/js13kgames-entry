@@ -118,3 +118,41 @@ If the tile is 'vacant' the player will move onto it and the game will check for
 
 Walking over an item automatically adds it to the Player's inventory. If the inventory is full, the Player must be able to somehow
 trade one of his items for the one on the floor. 
+
+
+Thinking about extending the terminal idea:
+Instead of making a interface for the user to select or click items, I can add commands to the terminal the user can type in to
+access his inventory or execute programns/scripts, brainstorming some ideas bellow:
+
+
+## On Mission Select Scene:
+Here the canvas will show the missions available, the player can start one by cliking on it.
+
+Also the terminal may work like this:
+>> ls 
+programs/ scripts/ installed/
+>> ls programs
+Maintenance.deb  DenialService.deb
+>> programs/Maintenance.deb
+Maintenace.deb -- Heals every turn
+>> ls installed
+Scanner
+>> ls install programs/Maintenace.deb
+Installed Maintenace.deb
+>> ls installed
+Scanner  Maintenace
+
+
+
+## While on a dungeon:
+CONNECTING TO ADDRESS...
+NEURAL LINK ESTABILISHED
+EXECUTING Scanner 1.0
+EXECUTING Maintenace 0.6
+>> ls scripts
+ping.sh  decrypt.sh
+>> install programs/DenialService.deb
+No processing power available.
+Cannot install programs while NEUTRAL LINK is active.
+>> ping
+Executing ping at coordinates (player.position)...
