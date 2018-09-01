@@ -1,6 +1,7 @@
 var canvas = document.getElementById("screen");
 var ctx = canvas.getContext('2d');
 
+
 var MENU = 0,
     MISSION_SELECT = 1,
     GAMEPLAY = 2;
@@ -39,6 +40,10 @@ class Scene {
     }
 
     addButton(rect, text, color, callback=null) {
+        ctx.font="20px Consolas";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
         ctx.strokeStyle = color;
         ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
         ctx.fillStyle = color;
