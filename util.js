@@ -1,3 +1,22 @@
+class Vector {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    add(vec) {
+        this.x += vec.x;
+        this.y += vec.y;
+    }
+    subtract(vec) {
+        this.x -= vec.x;
+        this.y -= vec.y;
+    }
+    scale(s) {
+        this.x *= s;
+        this.y *= s;
+    }
+}
+
 class Rect {
     // A Rectangle, facilitate geometry calculations.
     constructor(x, y, width, height) {
