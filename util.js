@@ -1,15 +1,30 @@
 class Vector {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(vec_or_x, y=null) {
+        if (y != null) {
+            this.x = vec_or_x;
+            this.y = y;
+        } else {
+            this.x = vec_or_x.x;
+            this.y = vec_or_x.y;
+        }
     }
-    add(vec) {
-        this.x += vec.x;
-        this.y += vec.y;
+    add(vec_or_x, y=null) {
+        if (y != null) {
+            this.x += vec_or_x;
+            this.y += y;
+        } else {
+            this.x += vec_or_x.x;
+            this.y += vec_or_x.y;
+        }
     }
-    subtract(vec) {
-        this.x -= vec.x;
-        this.y -= vec.y;
+    subtract(vec_or_x, y=null) {
+        if (y != null) {
+            this.x -= vec_or_x;
+            this.y -= y;
+        } else {
+            this.x -= vec_or_x.x;
+            this.y -= vec_or_x.y;
+        }
     }
     scale(s) {
         this.x *= s;
@@ -31,16 +46,16 @@ class Rect {
         this.centerx = x + width / 2;
         this.centery = y + height / 2;
     }
-    hasPoint(x, y) {
+    hasPoint(vec) {
         // True if the given point in inside the rect
-        return x > this.left && x < this.right && y > this.top && y < this.bottom;
+        return vec.x > this.left && vec.x < this.right && vec.y > this.top && vec.y < this.bottom;
     }
     asPointArray() {
         // Return every point inside this rect
         var points = [];
         for (var y=this.top; y<this.bottom; y++) {
             for (var x=this.left; x<this.right; x++) {
-                points.push([x, y]);
+                points.push(new Vector(x, y));
             }
         }
 
@@ -50,7 +65,7 @@ class Rect {
         // Return a random point inside this rect
         var x = randint(this.left, this.right),
             y = randint(this.top, this.bottom);
-        return [x, y];
+        return new Vector(x, y);
     }
 }
 

@@ -49,9 +49,8 @@ class DungeonGrid {
             if(all_leaves[i].room) {
                 var points = all_leaves[i].room.asPointArray();
                 for(var p=0; p<points.length; p++) {
-                    var X = points[p][0],
-                        Y = points[p][1];
-                    this.grid[Y][X]["isWall"] = false;
+                    var point = points[p];
+                    this.grid[point.y][point.x]["isWall"] = false;
                 }
             }
         }
@@ -59,15 +58,14 @@ class DungeonGrid {
         for(var i=0; i<this.halls.length; i++) {
             var points = this.halls[i].asPointArray();
             for(var p=0; p<points.length; p++) {
-                var X = points[p][0],
-                    Y = points[p][1];
-                this.grid[Y][X]["isWall"] = false;
+                var point = points[p];
+                this.grid[point.y][point.x]["isWall"] = false;
             }
         }
     }
 
     addEntity(ent, point) {
-        this.grid[ point[1] ][ point[0] ]["entity"] = ent;
+        this.grid[ point.y ][ point.x ]["entity"] = ent;
     }
 
     addPlayer() {
@@ -80,14 +78,14 @@ class DungeonGrid {
     }
 
     moveEntity(from, to) {
-        var entity = this.grid[from[1]][from[0]]["entity"];
+        var entity = this.grid[from.y][from.x]["entity"];
 
         if (entity) {
-            if (this.grid[to[1]][to[0]]["isWall"]) {
+            if (this.grid[to.y][to.x]["isWall"]) {
                 return;
             } else {
-                this.grid[from[1]][from[0]]["entity"] = null;
-                this.grid[to[1]][to[0]]["entity"] = entity;
+                this.grid[from.y][from.x]["entity"] = null;
+                this.grid[to.y][to.x]["entity"] = entity;
                 if (entity == "player") {
                     this.player_at = to;
                 }
@@ -99,24 +97,29 @@ class DungeonGrid {
 
     handleKeyUp(evt) {
         if (!this.player_at) { return; } // There is no player to move
+
+        var from = this.player_at,
+            to = new Vector(this.player_at);
+
         switch (evt.key) {
             case "ArrowUp": {
-                this.moveEntity(this.player_at, [ this.player_at[0], this.player_at[1]-1 ])
+                to.add(0, -1);
                 break;
             }
             case "ArrowLeft": {
-                this.moveEntity(this.player_at, [ this.player_at[0]-1, this.player_at[1] ])
+                to.add(-1, 0);
                 break;
             }
             case "ArrowDown": {
-                this.moveEntity(this.player_at, [ this.player_at[0], this.player_at[1]+1 ])
+                to.add(0, 1);
                 break;
             }
             case "ArrowRight": {
-                this.moveEntity(this.player_at, [ this.player_at[0]+1, this.player_at[1] ])
+                to.add(1, 0);
                 break;
             }
         }
+        this.moveEntity(from, to);
     }
 
 }

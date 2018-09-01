@@ -13,7 +13,7 @@ function getCursorPosition(canvas, event) {
     var rect = canvas.getBoundingClientRect();
     var x = event.clientX - rect.left;
     var y = event.clientY - rect.top;
-    return [x, y];
+    return new Vector(x, y);
 }
 
 function handleClick(evt) {
@@ -24,7 +24,7 @@ function handleClick(evt) {
       var rect = ui[i][0],
           callback = ui[i][1];
   
-      if ( callback && rect.hasPoint(clicked_at[0], clicked_at[1]) ) { callback(); }
+      if ( callback && rect.hasPoint(clicked_at) ) { callback(); }
     }
 }
 
@@ -66,7 +66,7 @@ function changeScene(to_scene) {
             dungeon.addPlayer();
             drawDungeon(canvas, ctx, dungeon);
 
-            document.addEventListener('keyup', function(evt) { dungeon.handleKeyUp(evt); drawDungeon(canvas, ctx, dungeon); console.log("keypress"); });
+            document.addEventListener('keyup', function(evt) { dungeon.handleKeyUp(evt); drawDungeon(canvas, ctx, dungeon); });
 
             break;
         }
