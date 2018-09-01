@@ -66,6 +66,8 @@ function changeScene(to_scene) {
             dungeon.addPlayer();
             drawDungeon(canvas, ctx, dungeon);
 
+            document.addEventListener('keyup', function(evt) { dungeon.handleKeyUp(evt); drawDungeon(canvas, ctx, dungeon); console.log("keypress"); });
+
             break;
         }
     }

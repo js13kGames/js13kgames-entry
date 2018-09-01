@@ -5,11 +5,12 @@ class DungeonGrid {
         this.grid = [];
         this.rooms = [];
         this.halls = [];
+        this.player_at = null;
 
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "obstacles": [], "onFloor": []};
+                this.grid[y][x] = {"isWall": true, "entity": null, "items": []};
             }
         }
     }
@@ -65,15 +66,59 @@ class DungeonGrid {
         }
     }
 
+    addEntity(ent, point) {
+        this.grid[ point[1] ][ point[0] ]["entity"] = ent;
+    }
+
     addPlayer() {
         // Creates a player object at a random location inside a random room.
-        var rand_room = randint(0, this.rooms.length);
-        var points = this.rooms[rand_room].asPointArray();
-        var rand_point = randint(0, points.length);
-        var point = points[rand_point];
+        var rand_room = this.rooms[ randint(0, this.rooms.length) ];
+        var rand_point = rand_room.randomPoint();
 
-        this.grid[point[1]][point[0]]["obstacles"].push("player");
+        this.player_at = rand_point;
+        this.addEntity("player", rand_point);
     }
+
+    moveEntity(from, to) {
+        var entity = this.grid[from[1]][from[0]]["entity"];
+
+        if (entity) {
+            if (this.grid[to[1]][to[0]]["isWall"]) {
+                return;
+            } else {
+                this.grid[from[1]][from[0]]["entity"] = null;
+                this.grid[to[1]][to[0]]["entity"] = entity;
+                if (entity == "player") {
+                    this.player_at = to;
+                }
+            }
+        }
+        return;
+
+    }
+
+    handleKeyUp(evt) {
+        if (!this.player_at) { return; } // There is no player to move
+        switch (evt.key) {
+            case "ArrowUp": {
+                this.moveEntity(this.player_at, [ this.player_at[0], this.player_at[1]-1 ])
+                break;
+            }
+            case "ArrowLeft": {
+                this.moveEntity(this.player_at, [ this.player_at[0]-1, this.player_at[1] ])
+                break;
+            }
+            case "ArrowDown": {
+                this.moveEntity(this.player_at, [ this.player_at[0], this.player_at[1]+1 ])
+                break;
+            }
+            case "ArrowRight": {
+                this.moveEntity(this.player_at, [ this.player_at[0]+1, this.player_at[1] ])
+                break;
+            }
+        }
+    }
+
 }
 
 
@@ -91,7 +136,7 @@ function drawDungeon(canvas, ctx, dungeon) {
                 ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
             }
 
-            if (tile["obstacles"].includes("player")) {
+            if (tile["entity"] === "player") {
                 ctx.fillStyle = 'blue';
                 ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
             }
