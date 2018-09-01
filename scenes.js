@@ -39,6 +39,13 @@ class MenuScene extends Scene {
     } 
 }
 
+class MissionScene extends MenuScene {
+    constructor() {
+        super();
+        this.buttons = [];
+    }
+}
+
 class DungeonScene extends Scene {
     constructor(size) {
         super();
@@ -126,7 +133,17 @@ class SceneControl {
 
     setUpMainMenu() {
         this.cur_scene = new MenuScene();
-        control.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
-                                    "START", "purple", startGame);
+        this.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
+                                 "START", "purple", startGame);
+    }
+
+    setUpNewGame() {
+        this.cur_scene = new MissionScene();
+        this.cur_scene.addButton(canvas.width/2-175, 25, 350, 100,
+                                 "MISSION 1", "yellow", startDungeon);
+        this.cur_scene.addButton(canvas.width/2-175, 145, 350, 100,
+                                 "MISSION 2", "yellow", startDungeon);
+        this.cur_scene.addButton(canvas.width/2-175, 265, 350, 100,
+                                 "MISSION 3", "yellow", startDungeon);
     }
 }

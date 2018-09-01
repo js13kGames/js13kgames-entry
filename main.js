@@ -16,6 +16,11 @@ document.addEventListener( 'keyup', handleEvents );
 
 
 function startGame(){
+    control.setUpNewGame();
+    control.cur_scene.draw();
+}
+
+function startDungeon(){
     control.changeScene(new DungeonScene(40));
     control.cur_scene.draw();
 }
