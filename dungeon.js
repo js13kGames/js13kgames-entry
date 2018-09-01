@@ -5,7 +5,6 @@ class DungeonGrid {
         this.grid = [];
         this.rooms = [];
         this.halls = [];
-        this.entities = [];
         this.player_at = null;
 
         for (var y=0; y<size; y++) {
@@ -80,17 +79,24 @@ class DungeonGrid {
     }
 
     executeTurn() {
-        for (var e=0; e<this.entities.length; e++) {
-            var entity = this.entities[e];
-            if (entity.type == "enemy") {
-                entity.turn();
-            };
+        for (var y=0; y<this.size; y++) {
+            for (var x=0; x<this.size; x++) {
+                var entity = this.grid[y][x]["entity"];
+                if (entity) {
+                    if (entity.type == "enemy") {
+                        entity.turn();
+                    };
+        
+                    if (entity.destroy) {
+                        this.grid[y][x]["entity"] = null;
+                    }
+                }
+            }
         }
     }
 
     addEntity(ent, point) {
         this.grid[ point.y ][ point.x ]["entity"] = ent;
-        this.entities.push(ent);
     }
 
     randomPointInRoom() {
