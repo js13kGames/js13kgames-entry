@@ -94,32 +94,4 @@ class DungeonGrid {
         return;
 
     }
-
-    handleKeyUp(evt) {
-        if (!this.player_at) { return; } // There is no player to move
-
-        var from = this.player_at,
-            to = new Vector(this.player_at);
-
-        switch (evt.key) {
-            case "ArrowUp": {
-                to.add(0, -1);
-                break;
-            }
-            case "ArrowLeft": {
-                to.add(-1, 0);
-                break;
-            }
-            case "ArrowDown": {
-                to.add(0, 1);
-                break;
-            }
-            case "ArrowRight": {
-                to.add(1, 0);
-                break;
-            }
-        }
-        this.moveEntity(from, to);
-    }
-
 }

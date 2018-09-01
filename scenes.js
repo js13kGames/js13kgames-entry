@@ -75,7 +75,32 @@ class DungeonScene extends Scene {
     }
 
     handle(evt) {
-        this.dungeon.handleKeyUp(evt);
+        if (evt.type == "keyup") {
+            if (!this.dungeon.player_at) { return; } // There is no player to move
+    
+            var from = this.dungeon.player_at,
+                to = new Vector(this.dungeon.player_at);
+    
+            switch (evt.key) {
+                case "ArrowUp": {
+                    to.add(0, -1);
+                    break;
+                }
+                case "ArrowLeft": {
+                    to.add(-1, 0);
+                    break;
+                }
+                case "ArrowDown": {
+                    to.add(0, 1);
+                    break;
+                }
+                case "ArrowRight": {
+                    to.add(1, 0);
+                    break;
+                }
+            }
+            this.dungeon.moveEntity(from, to);
+        }
         this.draw();
     }
 }
