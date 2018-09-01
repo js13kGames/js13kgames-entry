@@ -37,7 +37,14 @@ class Enemy extends Entity {
         }
     }
     turn() {
-        from = this.pos;
-        this.dungeon.moveEntity();
+        var from = this.pos,
+            to = new Vector(from);
+        switch (randint(0, 3)) {
+            case 0: {to.add(-1, 0); break;}
+            case 1: {to.add(0, 1); break;}
+            case 2: {to.add(1, 0); break;}
+            case 3: {to.add(0, -1); break;}
+        }
+        this.dungeon.moveEntity(from, to);
     }
 }

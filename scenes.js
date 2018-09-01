@@ -105,6 +105,7 @@ class DungeonScene extends Scene {
                 }
             }
             this.dungeon.moveEntity(from, to);
+            this.dungeon.executeTurn();
         }
         this.draw();
     }

@@ -5,6 +5,7 @@ class DungeonGrid {
         this.grid = [];
         this.rooms = [];
         this.halls = [];
+        this.entities = [];
         this.player_at = null;
 
         for (var y=0; y<size; y++) {
@@ -78,8 +79,18 @@ class DungeonGrid {
         }
     }
 
+    executeTurn() {
+        for (var e=0; e<this.entities.length; e++) {
+            var entity = this.entities[e];
+            if (entity.type == "enemy") {
+                entity.turn();
+            };
+        }
+    }
+
     addEntity(ent, point) {
         this.grid[ point.y ][ point.x ]["entity"] = ent;
+        this.entities.push(ent);
     }
 
     randomPointInRoom() {
@@ -111,9 +122,10 @@ class DungeonGrid {
                 } else {
                     from_tile["entity"] = null;
                     to_tile["entity"] = entity;
-                    if (entity.type == "player") {
-                        this.player_at = to;
-                    }
+                    entity.pos = to;
+
+                    // If the player is moving, update the tracker
+                    if (entity.type == "player") { this.player_at = to; }
                 }
             }
         }
