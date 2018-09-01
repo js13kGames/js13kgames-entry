@@ -3,6 +3,8 @@ class DungeonGrid {
     constructor(size) {
         this.size = size;
         this.grid = [];
+        this.rooms = [];
+        this.halls = [];
 
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
@@ -13,6 +15,7 @@ class DungeonGrid {
     }
 
     createDungeon(maxLeafSize=10) {
+        // Uses the BSP module to generate a dungeon and set it on the grid array.
         var root = new Leaf(0, 0, this.size, this.size);
         var all_leaves = [root];
     
@@ -38,25 +41,38 @@ class DungeonGrid {
             splitted = false;
         }
         
-        var halls = [];
-        root.createRooms(halls);
+        root.createRooms(this.halls, this.rooms);
 
+        // Set the grid elements as walls or not walls.
         for(var i=0; i<all_leaves.length; i++) {
             if(all_leaves[i].room) {
                 var points = all_leaves[i].room.asPointArray();
                 for(var p=0; p<points.length; p++) {
-                    this.grid[points[p][1]][points[p][0]]["isWall"] = false;
+                    var X = points[p][0],
+                        Y = points[p][1];
+                    this.grid[Y][X]["isWall"] = false;
                 }
             }
         }
         
-        var rooms = [];
-        for(var i=0; i<halls.length; i++) {
-            var points = halls[i].asPointArray();
+        for(var i=0; i<this.halls.length; i++) {
+            var points = this.halls[i].asPointArray();
             for(var p=0; p<points.length; p++) {
-                this.grid[points[p][1]][points[p][0]]["isWall"] = false;
+                var X = points[p][0],
+                    Y = points[p][1];
+                this.grid[Y][X]["isWall"] = false;
             }
         }
+    }
+
+    addPlayer() {
+        // Creates a player object at a random location inside a random room.
+        var rand_room = randint(0, this.rooms.length);
+        var points = this.rooms[rand_room].asPointArray();
+        var rand_point = randint(0, points.length);
+        var point = points[rand_point];
+
+        this.grid[point[1]][point[0]]["obstacles"].push("player");
     }
 }
 
@@ -66,11 +82,17 @@ function drawDungeon(canvas, ctx, dungeon) {
 
     for(var y=0; y < dungeon.size; y++) {
         for(var x=0; x < dungeon.size; x++) {
-            if( dungeon.grid[y][x]["isWall"] ) {
+            var tile = dungeon.grid[y][x]
+            if ( tile["isWall"] ) {
                 ctx.strokeStyle = "gray";
                 ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
             } else {
                 ctx.fillStyle = 'white';
+                ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+            }
+
+            if (tile["obstacles"].includes("player")) {
+                ctx.fillStyle = 'blue';
                 ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
             }
         }

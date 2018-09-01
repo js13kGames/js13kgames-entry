@@ -120,12 +120,12 @@ class Leaf extends Rect{
         return true;
     }
 
-    createRooms(hallways) {
+    createRooms(hallways, rooms) {
         // Create rooms and hallways for this leaf and all children.
         // hallways must be an array to store the hallways
         if(this.lChild || this.rChild) {
-            if(this.lChild) { this.lChild.createRooms(hallways); }
-            if(this.rChild) { this.rChild.createRooms(hallways); }
+            if(this.lChild) { this.lChild.createRooms(hallways, rooms); }
+            if(this.rChild) { this.rChild.createRooms(hallways, rooms); }
             if(this.lChild && this.rChild) {
                 createHall(this.lChild.findRoom(), this.rChild.findRoom(), hallways); }
         } else {
@@ -138,6 +138,7 @@ class Leaf extends Rect{
 
             this.room = new Rect(this.x + roomPos[0], this.y + roomPos[1],
                                  roomSize[0], roomSize[1]);
+            rooms.push(this.room);
         }
     }
 

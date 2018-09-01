@@ -63,7 +63,7 @@ function changeScene(to_scene) {
         case 2: {
             var dungeon = new DungeonGrid(40);
             dungeon.createDungeon();
-            
+            dungeon.addPlayer();
             drawDungeon(canvas, ctx, dungeon);
 
             break;
