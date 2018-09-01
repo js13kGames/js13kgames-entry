@@ -1,26 +1,24 @@
 class Scene {
     // This is a base class, supposed to be extended
-    constructor(canvas, ctx) { 
-        this.canvas = canvas;
-        this.ctx = ctx;
+    constructor() { 
     }
     draw() {
-        this.ctx.fillStyle = "rgb(25,25,25)";
-        this.ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgb(25,25,25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     handle(evt) {
     }
 }
 
 class MenuScene extends Scene {
-    constructor(canvas, ctx) {
-        super(canvas, ctx);
+    constructor() {
+        super();
         this.buttons = [];
     }
     draw() {
-        clearCanvas(this.canvas, this.ctx);
+        clearCanvas();
         for(var b=0; b<this.buttons.length; b++) {
-           this.buttons[b].draw(this.ctx);
+           this.buttons[b].draw();
         }
     }
     handle(evt) {
@@ -42,38 +40,38 @@ class MenuScene extends Scene {
 }
 
 class DungeonScene extends Scene {
-    constructor(canvas, ctx, size) {
-        super(canvas, ctx);
+    constructor(size) {
+        super();
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
         this.dungeon.addPlayer();
     }
 
     draw() {
-        clearCanvas(this.canvas, this.ctx);
+        clearCanvas();
 
-        var tileSize = this.canvas.width / this.dungeon.size;
+        var tileSize = canvas.width / this.dungeon.size;
     
         for(var y=0; y < this.dungeon.size; y++) {
             for(var x=0; x < this.dungeon.size; x++) {
                 var tile = this.dungeon.grid[y][x]
 
                 if ( tile["isWall"] ) {
-                    this.ctx.strokeStyle = "gray";
-                    this.ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    ctx.strokeStyle = "gray";
+                    ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 } else {
-                    this.ctx.fillStyle = 'white';
-                    this.ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 }
     
                 if (tile["entity"]) {
                     if (tile["entity"].type === "player") {
-                        this.ctx.fillStyle = 'blue';
+                        ctx.fillStyle = 'blue';
                     }
                     if (tile["entity"].type === "enemy") {
-                        this.ctx.fillStyle = 'red';
+                        ctx.fillStyle = 'red';
                     }
-                    this.ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 }
             }
         }
@@ -83,7 +81,9 @@ class DungeonScene extends Scene {
         if (evt.type == "keyup") {
             if (!this.dungeon.player_at) { return; } // There is no player to move
     
-            var from = this.dungeon.player_at,
+            // Flag so only the arrows keys will raise a turn execution.
+            var noMovement = false,
+                from = this.dungeon.player_at,
                 to = new Vector(this.dungeon.player_at);
     
             switch (evt.key) {
@@ -103,9 +103,14 @@ class DungeonScene extends Scene {
                     to.add(1, 0);
                     break;
                 }
+                default: {
+                    noMovement = true;
+                }
             }
-            this.dungeon.moveEntity(from, to);
-            this.dungeon.executeTurn();
+            if (!noMovement) {
+                this.dungeon.moveEntity(from, to);
+                this.dungeon.executeTurn();
+            }
         }
         this.draw();
     }
@@ -117,5 +122,11 @@ class SceneControl {
     }
     changeScene(to_scene) {
         this.cur_scene = to_scene;
+    }
+
+    setUpMainMenu() {
+        this.cur_scene = new MenuScene();
+        control.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
+                                    "START", "purple", startGame);
     }
 }

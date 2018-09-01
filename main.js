@@ -16,13 +16,11 @@ document.addEventListener( 'keyup', handleEvents );
 
 
 function startGame(){
-    control.changeScene(new DungeonScene(canvas, ctx, 40));
+    control.changeScene(new DungeonScene(40));
     control.cur_scene.draw();
 }
 
-control.changeScene(new MenuScene(canvas, ctx));
+control.changeScene(new MenuScene());
 
-control.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
-                            "START", "purple", startGame);
-
+control.setUpMainMenu();
 control.cur_scene.draw();

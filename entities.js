@@ -18,7 +18,7 @@ class Player extends Entity {
     interactWith(other) {
         if (other.type == "enemy") {
             other.hp -= this.att;
-            if (other.hp == 0) { other.destroy = true; }
+            if (other.hp == 0) { other.destroy = true;}
         }
     }
 }

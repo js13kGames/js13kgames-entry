@@ -86,7 +86,7 @@ class DungeonGrid {
                     if (entity.type == "enemy") {
                         entity.turn();
                     };
-        
+                    
                     if (entity.destroy) {
                         this.grid[y][x]["entity"] = null;
                     }

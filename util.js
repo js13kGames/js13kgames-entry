@@ -81,7 +81,7 @@ class Button extends Rect {
         this.text = text;
         this.callback = callback;
     }
-    draw(ctx) {
+    draw() {
         ctx.font="20px Consolas";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -101,7 +101,7 @@ function getCursorPosition(canvas, event) {
     return new Vector(x, y);
 }
 
-function clearCanvas(canvas, ctx) {
+function clearCanvas() {
     ctx.fillStyle = "rgb(25,25,25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
