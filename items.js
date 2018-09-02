@@ -6,15 +6,5 @@ TRAPS = {
     "poison": function(target) { print_message("Stepped on a worm trap, your connection is slowly degrading.") }
 };
 
-PROGRAM_LIST = ["Maintenance", "HDD", "Proxy", "Denial_Of_Service", "Scavenger"];
-
-PROGRAMS = {
-    "Maintenance": function() {},
-    "HDD": function() {},
-    "Proxy": function() {},
-    "Denial_Of_Service": function() {},
-    "Scavenger": function() {}
-}
-
-
+PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];
 SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Interference"];
