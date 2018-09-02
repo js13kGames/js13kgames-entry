@@ -19,6 +19,9 @@ class Player extends Entity {
         if (other.type == "enemy") {
             other.hp -= this.att;
             if (other.hp == 0) { other.destroy = true;}
+        } else if (other.type == "goal") {
+            other.destroy = true;
+            print_message("You reached your goal!");
         }
     }
 }

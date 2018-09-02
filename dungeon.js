@@ -83,13 +83,27 @@ class DungeonGrid {
         var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3);
         var traps_to_spawn = randint(1, this.size * 0.1);
         var items_to_spawn = randint(1, this.size * 0.08);
+        var player_spawned = false;
+        var goal_spawned = false;
         
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
             var rand_point = this.randomPointInRoom(),
                 tile = this.getTile(rand_point);
 
-            if (traps_to_spawn && tile['trap'] === null) {
+            if (!player_spawned) {
+                this.player_at = rand_point;
+                this.player = new Player(this, rand_point);
+                this.addEntity(this.player, rand_point);
+                player_spawned = true;
+
+            } else if (!goal_spawned) {
+                var goal = new Entity(this, rand_point);
+                goal.type = "goal";
+                this.addEntity(goal, rand_point);
+                goal_spawned = true;
+
+            } else if (traps_to_spawn && tile['trap'] === null) {
                 var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
                 this.addTrap(trap, rand_point);
                 traps_to_spawn--;
@@ -154,14 +168,6 @@ class DungeonGrid {
 
     randomPointInRoom() {
         return this.rooms[ randint(0, this.rooms.length) ];
-    }
-
-    addPlayer() {
-        // Creates a player object at a random location inside a random room.
-        var rand_point = this.randomPointInRoom();
-        this.player_at = rand_point;
-        this.player = new Player(this, rand_point)
-        this.addEntity(this.player, rand_point);
     }
 
     moveEntity(from, to) {

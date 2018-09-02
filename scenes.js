@@ -130,7 +130,6 @@ class DungeonScene extends Scene {
         super();
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
-        this.dungeon.addPlayer();
 
         // this.data = {
         //     "programs_running": data["installed"],
@@ -174,6 +173,9 @@ class DungeonScene extends Scene {
                     }
                     if (tile["entity"].type === "enemy") {
                         ctx.fillStyle = 'orange';
+                    }
+                    if (tile["entity"].type === "goal") {
+                        ctx.fillStyle = 'yellow';
                     }
                     ctx.fillRect(x * tileSize +1, y * tileSize +1, tileSize-1, tileSize-1);
                 }

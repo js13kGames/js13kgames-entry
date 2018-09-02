@@ -15,6 +15,7 @@ var control = new SceneControl();
 
 function handleEvents(evt) {
     if(evt.key === "Enter") { user_command(); }
+    if(evt.key === "Escape") { terminal_input.focus(); }
     control.cur_scene.handle(evt)
 }
 
