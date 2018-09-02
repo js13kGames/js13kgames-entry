@@ -11,7 +11,7 @@ class DungeonGrid {
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "entity": null, "items": []};
+                this.grid[y][x] = {"isWall": true, "entity": null, "trap": null, "items": []};
             }
         }
     }
@@ -68,7 +68,7 @@ class DungeonGrid {
     }
 
     populateDungeon() {
-        var enemies_to_spawn = this.size / 4;
+        var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3);
 
         while(enemies_to_spawn > 0) {
             var rand_point = this.randomPointInRoom();
@@ -77,6 +77,17 @@ class DungeonGrid {
                 enemies_to_spawn--;
             }
         }
+        var traps_to_spawn = randint(1, this.size * 0.1);
+
+        while(traps_to_spawn > 0) {
+            var rand_point = this.randomPointInRoom();
+            if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
+                var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
+                this.addTrap(trap, rand_point);
+                traps_to_spawn--;
+            }
+        }
+        var traps_to_spawn = randint(1, this.size * 0.1);
     }
 
     executeTurn() {
@@ -105,6 +116,14 @@ class DungeonGrid {
     addEntity(ent, point) {
         this.grid[ point.y ][ point.x ]["entity"] = ent;
         this.entities.push(ent);
+    }
+
+    addTrap(trap, point) {
+        this.grid[ point.y ][ point.x ]["trap"] = trap;
+    }
+
+    addItem(item, point) {
+        this.grid[ point.y ][ point.x ]["items"].push(item);
     }
 
     randomPointInRoom() {

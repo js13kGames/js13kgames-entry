@@ -46,6 +46,14 @@ class MissionScene extends MenuScene {
     constructor() {
         super();
         this.buttons = [];
+
+        this.data = {
+            "programs": [],
+            "scripts": [],
+            "installed": [],
+            "money": 0,
+            "memory": 8
+        }
     }
 }
 
@@ -73,15 +81,25 @@ class DungeonScene extends Scene {
                     ctx.fillStyle = 'white';
                     ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 }
+
+                if (tile["trap"]) {
+                    ctx.fillStyle = 'rgb(200,200,200)';
+                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                }
     
                 if (tile["entity"]) {
                     if (tile["entity"].type === "player") {
                         ctx.fillStyle = 'blue';
                     }
                     if (tile["entity"].type === "enemy") {
-                        ctx.fillStyle = 'red';
+                        ctx.fillStyle = 'orange';
                     }
-                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    ctx.fillRect(x * tileSize + 1, y * tileSize + 1, tileSize - 1, tileSize - 1);
+                }
+
+                if (tile["items"].length > 0) {
+                    ctx.fillStyle = 'cyan';
+                    ctx.fillRect(x * tileSize + 2, y * tileSize + 2, tileSize - 2, tileSize - 2);
                 }
             }
         }
