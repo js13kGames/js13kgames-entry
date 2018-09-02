@@ -129,7 +129,6 @@ class DungeonGrid {
                 
                 if (entity.destroy) {
                     to_destroy.push(e);
-                    // TODO: remove the entity from entities array as well
                     this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                 }
             }
@@ -166,30 +165,25 @@ class DungeonGrid {
     }
 
     moveEntity(from, to) {
-        // TODO: Refactor this
-        var entity = this.getTile(from)["entity"];
+        var from_tile = this.getTile(from),
+            to_tile = this.getTile(to),
+            entity = from_tile["entity"];
 
-        if (entity) {
-            if (this.getTile(to)["isWall"]) {
-                // Trying to move into a wall
-                return;
-            } else {
+        // No entity to move in the origin tile
+        if (!entity) { return; }
+        // Trying to move into a wall
+        if (to_tile["isWall"]) { return; }
 
-                var from_tile = this.getTile(from), 
-                    to_tile = this.getTile(to);
+        if (to_tile["entity"]) {
+            // Going to a tile occupied by another entity
+            from_tile["entity"].interactWith(to_tile["entity"]);
+        } else {
+            from_tile["entity"] = null;
+            to_tile["entity"] = entity;
+            entity.pos = to;
 
-                if (to_tile["entity"]) {
-                    from_tile["entity"].interactWith(to_tile["entity"]);
-                } else {
-                    from_tile["entity"] = null;
-                    to_tile["entity"] = entity;
-                    entity.pos = to;
-
-                    // If the player is moving, update the tracker
-                    if (entity.type == "player") { this.player_at = to; }
-                }
-            }
+            // If the player is moving, update the tracker
+            if (entity.type == "player") { this.player_at = to; }
         }
-        return;
     }
 }
