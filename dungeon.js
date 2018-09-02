@@ -6,6 +6,7 @@ class DungeonGrid {
         this.rooms = [];
         this.halls = [];
         this.entities = [];
+        this.player = null;
         this.player_at = null;
 
         for (var y=0; y<size; y++) {
@@ -110,10 +111,9 @@ class DungeonGrid {
 
     executeTurn() {
         // Player coomputation
-        var player_tile = this.getTile(this.player_at),
-            player = player_tile["entity"];
+        var player_tile = this.getTile(this.player_at);
         if (player_tile["trap"]) {
-            TRAPS[player_tile["trap"]](player);
+            TRAPS[player_tile["trap"]](this.player);
             player_tile["trap"] = null;
         }
 
@@ -160,7 +160,8 @@ class DungeonGrid {
         // Creates a player object at a random location inside a random room.
         var rand_point = this.randomPointInRoom();
         this.player_at = rand_point;
-        this.addEntity(new Player(this, rand_point), rand_point);
+        this.player = new Player(this, rand_point)
+        this.addEntity(this.player, rand_point);
     }
 
     moveEntity(from, to) {

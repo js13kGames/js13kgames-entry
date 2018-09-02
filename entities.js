@@ -11,7 +11,7 @@ class Entity {
 class Player extends Entity {
     constructor(dungeon, pos) {
         super(dungeon, pos)
-        this.hp = 10;
+        this.latency = 80;
         this.att = 1;
         this.type = "player";
     }
@@ -27,13 +27,14 @@ class Enemy extends Entity {
     constructor(dungeon, pos) {
         super(dungeon, pos)
         this.hp = 3;
-        this.att = 1;
+        this.att = 20;
         this.type = "enemy";
     }
     interactWith(other) {
         if (other.type == "player") {
-            other.hp -= this.att;
-            if (other.hp == 0) { other.destroy = true; }
+            other.latency += this.att;
+            print_message("Enemy is trying to cut your connection, increased latency by 20ms.")
+            if (other.latency == 0) { other.destroy = true; }
         }
     }
     turn() {
