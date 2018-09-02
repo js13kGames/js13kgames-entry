@@ -131,6 +131,8 @@ class DungeonGrid {
             player_tile["trap"] = null;
         }
 
+        if (this.player.latency > 400) { this.player.destroy = true; }
+
         // Enemy turn
         var to_destroy = [];
 
@@ -142,6 +144,21 @@ class DungeonGrid {
                 };
                 
                 if (entity.destroy) {
+                    if (entity.type == "player") {
+                        var proxy = DATA["installed"].indexOf("Proxy");
+                        console.log(proxy);
+                        if (proxy < 0) {
+                            // Player dies
+                            print_message("Connection lost, your neural link to your body is offline.");
+                            print_message("GAME OVER");
+                            GAME_OVER = true;
+                        } else {
+                            print_message("Main connection lost, Proxy connection estabilished.");
+                            this.player.latency = 80;
+                            DATA["installed"].splice(proxy, 1);
+                            DATA["programs"].splice(proxy, 1);
+                        }
+                    }
                     to_destroy.push(e);
                     this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                 }

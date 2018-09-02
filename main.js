@@ -1,27 +1,23 @@
 var canvas = document.getElementById("screen");
 var ctx = canvas.getContext('2d');
-
-
 var terminal_window = document.getElementById("terminal-window");
 var terminal_input = document.getElementById("terminal-input");
-if (terminal_window) {terminal_window.value = ""};
-if (terminal_input) {terminal_input.value = ""};
+var control;
+var DATA;
+var GAME_OVER;
 
-var previous_commands = [];
-
-
-var control = new SceneControl();
-
-
-function handleEvents(evt) {
-    if(evt.key === "Enter") { user_command(); }
-    if(evt.key === "Escape") { terminal_input.focus(); }
-    control.cur_scene.handle(evt)
-}
+reset();
 
 canvas.addEventListener( 'click', handleEvents );
 document.addEventListener( 'keyup', handleEvents );
 
+
+function handleEvents(evt) {
+    if( GAME_OVER && (evt.type == "keyup" || evt.type == "click") ) { reset(); }
+    if(evt.key === "Enter") { user_command(); }
+    if(evt.key === "Escape") { terminal_input.focus(); }
+    control.cur_scene.handle(evt)
+}
 
 function startGame(){
     control.setUpNewGame();
@@ -33,8 +29,24 @@ function startDungeon(){
     control.cur_scene.draw();
 }
 
-control.changeScene(new MenuScene());
+function reset() {
+    if (terminal_window) {terminal_window.value = ""};
+    if (terminal_input) {terminal_input.value = ""};
+    
+    var previous_commands = [];
+    control = new SceneControl();
+    control.changeScene(new MenuScene());
+    
+    control.setUpMainMenu();
+    control.cur_scene.draw();
+    terminal_input.focus();
 
-control.setUpMainMenu();
-control.cur_scene.draw();
-terminal_input.focus();
+    DATA = {
+        "programs": [],
+        "scripts": [],
+        "installed": [],
+        "money": 0,
+        "memory": 3
+    }
+    GAME_OVER = false;
+}

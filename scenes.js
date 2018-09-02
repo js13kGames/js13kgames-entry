@@ -46,67 +46,59 @@ class MissionScene extends MenuScene {
     constructor() {
         super();
         this.buttons = [];
-
-        this.data = {
-            "programs": [],
-            "scripts": [],
-            "installed": [],
-            "money": 0,
-            "memory": 3
-        }
     }
     execute(cmd) {
         if (cmd == "ls programs" || cmd == "ls programs/") {
             print_message("Available programs:");
-            print_message(control.cur_scene.data["programs"]);
+            print_message(DATA["programs"]);
         }
         if (cmd == "ls scripts" || cmd == "ls scripts/") {
             print_message("Available scripts:");
-            print_message(control.cur_scene.data["scripts"]);
+            print_message(DATA["scripts"]);
         }
         if (cmd == "ls installed" || cmd == "ls installed/") {
             print_message("Programs installed:");
-            print_message(control.cur_scene.data["installed"]);
+            print_message(DATA["installed"]);
         }
         if (cmd.startsWith("install ")) {
             var program = cmd.slice(8),
-                index = this.data["programs"].indexOf(program);
+                index = DATA["programs"].indexOf(program);
 
             if (index < 0) {
                 print_message("There's no program named " + program);
                 return;
             }
 
-            if (this.data["installed"].indexOf(program) >= 0) {
+            if (DATA["installed"].indexOf(program) >= 0) {
                 print_message("Program " + program + " is already installed");
                 return;
             }
 
-            if (this.data["installed"].length === this.data["memory"]) {
+            if (DATA["installed"].length === DATA["memory"]) {
                 print_message("There's no memory available, try uninstalling another program");
                 return;
             }
 
-            this.data["installed"].push(this.data["programs"][index]);
+            DATA["installed"].push(DATA["programs"][index]);
             print_message("Successfully installed " + program);
         }
 
         if (cmd.startsWith("uninstall ")) {
             var program = cmd.slice(10),
-                index = this.data["installed"].indexOf(program);
+                index = DATA["installed"].indexOf(program);
             if (index < 0) {
                 print_message("Program " + program + " is not installed.");
                 return;
             }
 
-            this.data["installed"].splice(index, 1);
+            DATA["installed"].splice(index, 1);
             print_message("Successfully uninstalled " + program);
         }
 
         if (cmd.startsWith("sell ")) {
             var program = cmd.slice(5),
-                index = this.data["programs"].indexOf(program),
-                installed_index = this.data["installed"].indexOf(program);
+                index = DATA["programs"].indexOf(program),
+                installed_index = DATA["installed"].indexOf(program);
 
             if (index < 0) {
                 print_message("There's no program named " + program);
@@ -115,12 +107,12 @@ class MissionScene extends MenuScene {
 
             if (installed_index >= 0) {
                 print_message("Uninstalling " + program);
-                this.data["installed"].splice(installed_index, 1);
+                DATA["installed"].splice(installed_index, 1);
             }
 
             print_message("Sucessfully sold " + program + " for 100$")
-            this.data["programs"].splice(index, 1);
-            this.data["money"] += 100;
+            DATA["programs"].splice(index, 1);
+            DATA["money"] += 100;
         }
     }
 }
@@ -130,14 +122,6 @@ class DungeonScene extends Scene {
         super();
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
-
-        // this.data = {
-        //     "programs_running": data["installed"],
-        //     "programs_found": [],
-        //     "scripts": data["scripts"],
-        //     "media": 0,
-        //     "memory": data["memory"]
-        // }
     }
 
     draw() {
@@ -227,6 +211,7 @@ class DungeonScene extends Scene {
                 this.dungeon.moveEntity(from, to);
                 this.dungeon.executeTurn();
             }
+            if (evt.key == "Shift") {this.dungeon.player.latency += 60;}
         }
         this.draw();
     }
