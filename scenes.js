@@ -1,6 +1,7 @@
 class Scene {
     // This is a base class, supposed to be extended
-    constructor() { 
+    constructor(type) { 
+        this.type = type;
     }
     draw() {
         ctx.fillStyle = "rgb(25,25,25)";
@@ -14,8 +15,8 @@ class Scene {
 }
 
 class MenuScene extends Scene {
-    constructor() {
-        super();
+    constructor(type) {
+        super(type);
         this.buttons = [];
     }
     draw() {
@@ -42,84 +43,9 @@ class MenuScene extends Scene {
     } 
 }
 
-class MissionScene extends MenuScene {
-    constructor() {
-        super();
-        this.buttons = [];
-    }
-    execute(cmd) {
-        if (cmd == "ls programs" || cmd == "ls programs/") {
-            print_message("Available programs:");
-            print_message(DATA["programs"]);
-        }
-        if (cmd == "ls scripts" || cmd == "ls scripts/") {
-            print_message("Available scripts:");
-            print_message(DATA["scripts"]);
-        }
-        if (cmd == "ls installed" || cmd == "ls installed/") {
-            print_message("Programs installed:");
-            print_message(DATA["installed"]);
-        }
-        if (cmd.startsWith("install ")) {
-            var program = cmd.slice(8),
-                index = DATA["programs"].indexOf(program);
-
-            if (index < 0) {
-                print_message("There's no program named " + program);
-                return;
-            }
-
-            if (DATA["installed"].indexOf(program) >= 0) {
-                print_message("Program " + program + " is already installed");
-                return;
-            }
-
-            if (DATA["installed"].length === DATA["memory"]) {
-                print_message("There's no memory available, try uninstalling another program");
-                return;
-            }
-
-            DATA["installed"].push(DATA["programs"][index]);
-            print_message("Successfully installed " + program);
-        }
-
-        if (cmd.startsWith("uninstall ")) {
-            var program = cmd.slice(10),
-                index = DATA["installed"].indexOf(program);
-            if (index < 0) {
-                print_message("Program " + program + " is not installed.");
-                return;
-            }
-
-            DATA["installed"].splice(index, 1);
-            print_message("Successfully uninstalled " + program);
-        }
-
-        if (cmd.startsWith("sell ")) {
-            var program = cmd.slice(5),
-                index = DATA["programs"].indexOf(program),
-                installed_index = DATA["installed"].indexOf(program);
-
-            if (index < 0) {
-                print_message("There's no program named " + program);
-                return;
-            }
-
-            if (installed_index >= 0) {
-                print_message("Uninstalling " + program);
-                DATA["installed"].splice(installed_index, 1);
-            }
-
-            print_message("Sucessfully sold " + program + " for 100$")
-            DATA["programs"].splice(index, 1);
-            DATA["money"] += 100;
-        }
-    }
-}
-
 class DungeonScene extends Scene {
-    constructor(data, size) {
-        super();
+    constructor(size) {
+        super("Dungeon");
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
     }
@@ -226,13 +152,13 @@ class SceneControl {
     }
 
     setUpMainMenu() {
-        this.cur_scene = new MenuScene();
+        this.cur_scene = new MenuScene("MainMenu");
         this.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
                                  "START", "purple", startGame);
     }
 
     setUpNewGame() {
-        this.cur_scene = new MissionScene();
+        this.cur_scene = new MenuScene("MissionSelect");
         this.cur_scene.addButton(canvas.width/2-175, 25, 350, 100,
                                  "MISSION 1", "yellow", startDungeon);
         this.cur_scene.addButton(canvas.width/2-175, 145, 350, 100,

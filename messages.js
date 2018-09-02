@@ -33,6 +33,5 @@ help [script]        |   Prints the description of the [script] and its market v
 install [program]    |   Installs [program] so it can be used in the cyberspace.\n\
 uninstall [program]  |   Uninstalls [program], allowing other programs to be installed.\n\
 sell [program]       |   Permanently removes the [program]'s license, exchanging it for an amount of money.\n\
-sell [script]        |   Permanently removes the [script]'s license, exchanging it for an amount of money.",
-    "ls": "programs/  scripts/  installed/"
+sell [script]        |   Permanently removes the [script]'s license, exchanging it for an amount of money."
 }

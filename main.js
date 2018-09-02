@@ -25,7 +25,7 @@ function startGame(){
 }
 
 function startDungeon(){
-    control.changeScene(new DungeonScene(control.cur_scene.data, 40));
+    control.changeScene(new DungeonScene(40));
     control.cur_scene.draw();
 }
 
@@ -33,10 +33,7 @@ function reset() {
     if (terminal_window) {terminal_window.value = ""};
     if (terminal_input) {terminal_input.value = ""};
     
-    var previous_commands = [];
-    control = new SceneControl();
-    control.changeScene(new MenuScene());
-    
+    control = new SceneControl();    
     control.setUpMainMenu();
     control.cur_scene.draw();
     terminal_input.focus();
