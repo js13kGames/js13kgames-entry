@@ -1,9 +1,9 @@
 function print_message(text) {
-    var old_text = terminal.value;
+    var old_text = terminal_window.value;
     if (old_text.length) {
-        terminal.value = old_text + "\n>> " + text;
+        terminal_window.value = old_text + "\n>> " + text;
     } else {
-        terminal.value = ">> " + text;
+        terminal_window.value = ">> " + text;
     }
-    terminal.scrollTop = terminal.scrollHeight;
+    terminal_window.scrollTop = terminal_window.scrollHeight;
 }
