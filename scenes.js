@@ -8,6 +8,9 @@ class Scene {
     }
     handle(evt) {
     }
+    execute_command(cmd) {
+        return;
+    }
 }
 
 class MenuScene extends Scene {

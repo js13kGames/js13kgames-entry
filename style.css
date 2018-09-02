@@ -1,5 +1,5 @@
 * {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Courier New', Courier, 'Ubuntu Mono', 'DejaVu Sans Mono', monospace;
 }
 
 .game {
@@ -44,27 +44,27 @@
 }
 #terminal-window {
   order: 1;
-  font-family: sans-serif;
   background-color: black;
   color: white;
-  width: 600px;
-  height: 570px;
+  width: 590px;
+  height: 560px;
   resize: none;
   overflow: hidden;
+  border: 5px solid black;
+  padding: 0;
+  margin: 0;
 }
 #terminal-cli {
   background-color: black;
   order: 2;
 }
 #terminal-cli span {
-  font-family: sans-serif;
   font-size: 16px;
   display: inline-block;
   color: white;
   width: 50px;
 }
 #terminal-cli input {
-  font-family: sans-serif;
   font-size: 16px;
   display: inline-block;
   background-color: black;

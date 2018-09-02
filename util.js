@@ -82,7 +82,7 @@ class Button extends Rect {
         this.callback = callback;
     }
     draw() {
-        ctx.font="20px Consolas";
+        ctx.font="40px 'Courier New'";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
     
