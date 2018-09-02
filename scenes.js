@@ -48,9 +48,9 @@ class MissionScene extends MenuScene {
         this.buttons = [];
 
         this.data = {
-            "programs": [],
+            "programs": ['a', 'b', 'c', 'd'],
             "scripts": [],
-            "installed": [],
+            "installed": ['b', 'c', 'd'],
             "money": 0,
             "memory": 3
         }
@@ -70,20 +70,20 @@ class MissionScene extends MenuScene {
         }
         if (cmd.startsWith("install ")) {
             var program = cmd.slice(8),
-                index = findInArray(program, this.data["programs"]);
+                index = this.data["programs"].indexOf(program);
 
-            if (index === null) {
+            if (index < 0) {
                 print_message("There's no program named " + program);
+                return;
+            }
+
+            if (this.data["installed"].indexOf(program) >= 0) {
+                print_message("Program " + program + " is already installed");
                 return;
             }
 
             if (this.data["installed"].length === this.data["memory"]) {
                 print_message("There's no memory available, try uninstalling another program");
-                return;
-            }
-
-            if (findInArray(program, this.data["installed"]) != null) {
-                print_message("Program " + program + " is already installed");
                 return;
             }
 
@@ -93,8 +93,11 @@ class MissionScene extends MenuScene {
 
         if (cmd.startsWith("uninstall ")) {
             var program = cmd.slice(10),
-                index = findInArray(program, this.data["installed"]);
-            if (index === null) { print_message("Program " + program + " is not installed."); }
+                index = this.data["installed"].indexOf(program);
+            if (index < 0) {
+                print_message("Program " + program + " is not installed.");
+                return;
+            }
 
             this.data["installed"].splice(index, 1);
             print_message("Successfully uninstalled " + program);
@@ -102,22 +105,22 @@ class MissionScene extends MenuScene {
 
         if (cmd.startsWith("sell ")) {
             var program = cmd.slice(5),
-                index = findInArray(program, this.data["programs"]),
-                installed_index = findInArray(program, this.data["installed"]);
+                index = this.data["programs"].indexOf(program),
+                installed_index = this.data["installed"].indexOf(program);
 
-            if (index === null) {
+            if (index < 0) {
                 print_message("There's no program named " + program);
                 return;
             }
 
-            if (installed_index != null) {
+            if (installed_index >= 0) {
                 print_message("Uninstalling " + program);
                 this.data["installed"].splice(installed_index, 1);
             }
+
             print_message("Sucessfully sold " + program + " for 100$")
             this.data["programs"].splice(index, 1);
             this.data["money"] += 100;
-
         }
     }
 }
