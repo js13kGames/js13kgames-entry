@@ -16,6 +16,17 @@ class DungeonGrid {
         }
     }
 
+    getTile(x_or_vec, y=null) {
+        if (y != null) {
+            // Coordinates are not in the grid
+            if(y < 0 || y >= this.size || x_or_vec < 0 || x_or_vec >= this.size) { return; }
+
+            return this.grid[y][x_or_vec];
+        } else {
+            return this.getTile(x_or_vec.x, x_or_vec.y);
+        }
+    }
+
     createDungeon(maxLeafSize=10) {
         // Uses the BSP module to generate a dungeon and set it on the grid array.
         var root = new Leaf(0, 0, this.size, this.size);
@@ -51,7 +62,7 @@ class DungeonGrid {
                 var points = all_leaves[i].room.asPointArray();
                 for(var p=0; p<points.length; p++) {
                     var point = points[p];
-                    this.grid[point.y][point.x]["isWall"] = false;
+                    this.getTile(point)["isWall"] = false;
                 }
             }
         }
@@ -60,7 +71,7 @@ class DungeonGrid {
             var points = this.halls[i].asPointArray();
             for(var p=0; p<points.length; p++) {
                 var point = points[p];
-                this.grid[point.y][point.x]["isWall"] = false;
+                this.getTile(point)["isWall"] = false;
             }
         }
 
@@ -68,6 +79,7 @@ class DungeonGrid {
     }
 
     populateDungeon() {
+        // TODO: Refactor this
         var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3);
 
         while(enemies_to_spawn > 0) {
@@ -81,7 +93,8 @@ class DungeonGrid {
 
         while(traps_to_spawn > 0) {
             var rand_point = this.randomPointInRoom();
-            if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
+            // if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
+            if (this.getTile(rand_point)["entity"] === null) {
                 var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
                 this.addTrap(trap, rand_point);
                 traps_to_spawn--;
@@ -92,7 +105,7 @@ class DungeonGrid {
 
         while(items_to_spawn > 0) {
             var rand_point = this.randomPointInRoom();
-            if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
+            if (this.getTile(rand_point)["entity"] === null) {
                 if (randint(0, 2)) {
                     var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
                 } else {
@@ -128,16 +141,16 @@ class DungeonGrid {
     }
 
     addEntity(ent, point) {
-        this.grid[ point.y ][ point.x ]["entity"] = ent;
+        this.getTile(point)["entity"] = ent;
         this.entities.push(ent);
     }
 
     addTrap(trap, point) {
-        this.grid[ point.y ][ point.x ]["trap"] = trap;
+        this.getTile(point)["trap"] = trap;
     }
 
     addItem(item, point) {
-        this.grid[ point.y ][ point.x ]["items"].push(item);
+        this.getTile(point)["items"].push(item);
     }
 
     randomPointInRoom() {
@@ -153,16 +166,17 @@ class DungeonGrid {
     }
 
     moveEntity(from, to) {
-        var entity = this.grid[from.y][from.x]["entity"];
+        // TODO: Refactor this
+        var entity = this.getTile(from)["entity"];
 
         if (entity) {
-            if (this.grid[to.y][to.x]["isWall"]) {
+            if (this.getTile(to)["isWall"]) {
                 // Trying to move into a wall
                 return;
             } else {
 
-                var from_tile = this.grid[from.y][from.x], 
-                    to_tile = this.grid[to.y][to.x];
+                var from_tile = this.getTile(from), 
+                    to_tile = this.getTile(to);
 
                 if (to_tile["entity"]) {
                     from_tile["entity"].interactWith(to_tile["entity"]);

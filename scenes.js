@@ -72,7 +72,7 @@ class DungeonScene extends Scene {
     
         for(var y=0; y < this.dungeon.size; y++) {
             for(var x=0; x < this.dungeon.size; x++) {
-                var tile = this.dungeon.grid[y][x]
+                var tile = this.dungeon.getTile(x, y)
 
                 if ( tile["isWall"] ) {
                     ctx.strokeStyle = "gray";
