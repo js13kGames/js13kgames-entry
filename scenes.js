@@ -86,6 +86,11 @@ class DungeonScene extends Scene {
                     ctx.fillStyle = 'rgb(200,200,200)';
                     ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 }
+
+                if (tile["items"].length > 0) {
+                    ctx.fillStyle = 'cyan';
+                    ctx.fillRect(x * tileSize +3, y * tileSize +3, tileSize-3, tileSize-3);
+                }
     
                 if (tile["entity"]) {
                     if (tile["entity"].type === "player") {
@@ -94,12 +99,7 @@ class DungeonScene extends Scene {
                     if (tile["entity"].type === "enemy") {
                         ctx.fillStyle = 'orange';
                     }
-                    ctx.fillRect(x * tileSize + 1, y * tileSize + 1, tileSize - 1, tileSize - 1);
-                }
-
-                if (tile["items"].length > 0) {
-                    ctx.fillStyle = 'cyan';
-                    ctx.fillRect(x * tileSize + 2, y * tileSize + 2, tileSize - 2, tileSize - 2);
+                    ctx.fillRect(x * tileSize +1, y * tileSize +1, tileSize-1, tileSize-1);
                 }
             }
         }

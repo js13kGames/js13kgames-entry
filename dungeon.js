@@ -87,7 +87,21 @@ class DungeonGrid {
                 traps_to_spawn--;
             }
         }
-        var traps_to_spawn = randint(1, this.size * 0.1);
+        
+        var items_to_spawn = randint(1, this.size * 0.08);
+
+        while(items_to_spawn > 0) {
+            var rand_point = this.randomPointInRoom();
+            if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
+                if (randint(0, 2)) {
+                    var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
+                } else {
+                    var item = SCRIPT_LIST[randint(0, SCRIPT_LIST.length)];
+                }
+                this.addItem(item, rand_point);
+                items_to_spawn--;
+            }
+        }
     }
 
     executeTurn() {
