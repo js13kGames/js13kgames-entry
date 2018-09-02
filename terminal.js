@@ -87,5 +87,9 @@ function user_command() {
         print_message("Sucessfully sold " + program + " for 100$")
         DATA["programs"].splice(index, 1);
         DATA["money"] += 100;
+    } else if (DATA["scripts"].indexOf(cmd) >= 0) {
+        index = DATA["scripts"].indexOf(cmd);
+        print_message("Executing script " + cmd);
+        SCRIPTS[cmd]();
     }
 }

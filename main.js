@@ -40,10 +40,10 @@ function reset() {
 
     DATA = {
         "programs": [],
-        "scripts": [],
+        "scripts": ['Scan'],
         "installed": [],
         "money": 0,
-        "memory": 3
+        "memory": 3,
     }
     GAME_OVER = false;
 }
