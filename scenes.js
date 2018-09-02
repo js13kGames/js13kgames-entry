@@ -58,36 +58,55 @@ class DungeonScene extends Scene {
         for(var y=0; y < this.dungeon.size; y++) {
             for(var x=0; x < this.dungeon.size; x++) {
                 var tile = this.dungeon.getTile(x, y)
+                if (Math.abs(this.dungeon.player_at.x - x) < PLAYER_VISION &&
+                    Math.abs(this.dungeon.player_at.y - y) < PLAYER_VISION) {
+                    // Tile in player's vision range
+                    tile["fow"] = 1;
+                } else if(tile["fow"] == 1) {
+                    // Tile has been explored but not in player's range
+                    tile["fow"] = 0;
+                }
 
-                if ( tile["isWall"] ) {
-                    ctx.strokeStyle = "gray";
-                    ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                if (tile["fow"] == 0) {
+                    // Explored map
+                    if ( !tile["isWall"] ) {
+                        ctx.fillStyle = '#ccc';
+                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    }
+                }
+                if (tile["fow"] == 1) {
+                    // Visible map
+                    if ( tile["isWall"] ) {
+                        ctx.strokeStyle = "#555";
+                        ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    } else {
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    }
+                    
+                    if (tile["trap"]) {
+                        ctx.fillStyle = 'rgb(200,200,200)';
+                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    }
+                    
+                    if (tile["item"]) {
+                        ctx.fillStyle = 'cyan';
+                        ctx.fillRect(x * tileSize +3, y * tileSize +3, tileSize-3, tileSize-3);
+                    }
+                    
+                    if (tile["entity"]) {
+                        if (tile["entity"].type === "player") {
+                            ctx.fillStyle = 'blue';
+                        }
+                        if (tile["entity"].type === "enemy") {
+                            ctx.fillStyle = 'orange';
+                        }
+                        if (tile["entity"].type === "goal") {
+                            ctx.fillStyle = 'yellow';
+                        }
+                        ctx.fillRect(x * tileSize +1, y * tileSize +1, tileSize-1, tileSize-1);
+                    }
                 } else {
-                    ctx.fillStyle = 'white';
-                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-                }
-
-                if (tile["trap"]) {
-                    ctx.fillStyle = 'rgb(200,200,200)';
-                    ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-                }
-
-                if (tile["item"]) {
-                    ctx.fillStyle = 'cyan';
-                    ctx.fillRect(x * tileSize +3, y * tileSize +3, tileSize-3, tileSize-3);
-                }
-    
-                if (tile["entity"]) {
-                    if (tile["entity"].type === "player") {
-                        ctx.fillStyle = 'blue';
-                    }
-                    if (tile["entity"].type === "enemy") {
-                        ctx.fillStyle = 'orange';
-                    }
-                    if (tile["entity"].type === "goal") {
-                        ctx.fillStyle = 'yellow';
-                    }
-                    ctx.fillRect(x * tileSize +1, y * tileSize +1, tileSize-1, tileSize-1);
                 }
             }
         }

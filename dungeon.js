@@ -12,7 +12,7 @@ class DungeonGrid {
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "entity": null, "trap": null, "item": null};
+                this.grid[y][x] = {"isWall": true, "entity": null, "trap": null, "item": null, "fow": -1};
             }
         }
     }
@@ -20,8 +20,7 @@ class DungeonGrid {
     getTile(x_or_vec, y=null) {
         if (y != null) {
             // Coordinates are not in the grid
-            if(y < 0 || y >= this.size || x_or_vec < 0 || x_or_vec >= this.size) { return; }
-
+            if(y < 0 || y >= this.size || x_or_vec < 0 || x_or_vec >= this.size) { return null; }
             return this.grid[y][x_or_vec];
         } else {
             return this.getTile(x_or_vec.x, x_or_vec.y);

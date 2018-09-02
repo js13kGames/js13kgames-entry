@@ -5,6 +5,7 @@ var terminal_input = document.getElementById("terminal-input");
 var control;
 var DATA;
 var GAME_OVER;
+var PLAYER_VISION = 4;
 
 reset();
 
