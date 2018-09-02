@@ -79,33 +79,21 @@ class DungeonGrid {
     }
 
     populateDungeon() {
-        // TODO: Refactor this
         var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3);
-
-        while(enemies_to_spawn > 0) {
-            var rand_point = this.randomPointInRoom();
-            if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
-                this.addEntity(new Enemy(this, rand_point), rand_point);
-                enemies_to_spawn--;
-            }
-        }
         var traps_to_spawn = randint(1, this.size * 0.1);
+        var items_to_spawn = randint(1, this.size * 0.08);
+        
 
-        while(traps_to_spawn > 0) {
-            var rand_point = this.randomPointInRoom();
-            // if (this.grid[rand_point.y][rand_point.x]["entity"] === null) {
-            if (this.getTile(rand_point)["entity"] === null) {
+        while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
+            var rand_point = this.randomPointInRoom(),
+                tile = this.getTile(rand_point);
+
+            if (traps_to_spawn && tile['trap'] === null) {
                 var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
                 this.addTrap(trap, rand_point);
                 traps_to_spawn--;
-            }
-        }
-        
-        var items_to_spawn = randint(1, this.size * 0.08);
+            } else if (items_to_spawn && tile['items'].length === 0) {
 
-        while(items_to_spawn > 0) {
-            var rand_point = this.randomPointInRoom();
-            if (this.getTile(rand_point)["entity"] === null) {
                 if (randint(0, 2)) {
                     var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
                 } else {
@@ -113,6 +101,9 @@ class DungeonGrid {
                 }
                 this.addItem(item, rand_point);
                 items_to_spawn--;
+            } else if (enemies_to_spawn && tile['entity'] === null) {
+                this.addEntity(new Enemy(this, rand_point), rand_point);
+                enemies_to_spawn--;
             }
         }
     }
