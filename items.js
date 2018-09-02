@@ -10,7 +10,7 @@ PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];
 SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Interference"];
 
 SCRIPTS = {
-    "Scan" : function() { print_message("Scanning surroundings...");},
+    "Scan" : function() { print_message("Scanning surroundings..."); },
     "Refresh" : function() {},
     "Reconnect" : function() {},
     "Glitch" : function() {},

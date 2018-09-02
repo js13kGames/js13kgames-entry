@@ -40,7 +40,7 @@ function reset() {
 
     DATA = {
         "programs": [],
-        "scripts": ['Scan'],
+        "scripts": [],
         "installed": [],
         "money": 0,
         "memory": 3,

@@ -12,7 +12,7 @@ class DungeonGrid {
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "entity": null, "trap": null, "items": []};
+                this.grid[y][x] = {"isWall": true, "entity": null, "trap": null, "item": null};
             }
         }
     }
@@ -107,7 +107,7 @@ class DungeonGrid {
                 var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
                 this.addTrap(trap, rand_point);
                 traps_to_spawn--;
-            } else if (items_to_spawn && tile['items'].length === 0) {
+            } else if (items_to_spawn && tile['item'] === null) {
 
                 if (randint(0, 2)) {
                     var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
@@ -129,6 +129,14 @@ class DungeonGrid {
         if (player_tile["trap"]) {
             TRAPS[player_tile["trap"]](this.player);
             player_tile["trap"] = null;
+        }
+        if (player_tile["item"]) {
+            var item = player_tile["item"];
+            print_message("Obtained " + player_tile["item"] + " item!");
+            if (PROGRAM_LIST.indexOf(item)) { DATA["programs"].push('item');
+            } else if (SCRIPT_LIST.indexOf(item)) { DATA["scripts"].push('item'); }
+            
+            player_tile["item"] = null;
         }
 
         if (this.player.latency > 400) { this.player.destroy = true; }
@@ -180,7 +188,7 @@ class DungeonGrid {
     }
 
     addItem(item, point) {
-        this.getTile(point)["items"].push(item);
+        this.getTile(point)["item"] = item;
     }
 
     randomPointInRoom() {
