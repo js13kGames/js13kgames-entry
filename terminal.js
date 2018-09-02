@@ -11,7 +11,6 @@ function print_message(text) {
 function user_command() {
     var text = terminal_input.value;
     print_message(">>> " + text)
-    control.cur_scene.execute_command(text);
     terminal_input.value = "";
     if (text == "help") {
         print_message(commandlist["help"]);
@@ -19,9 +18,9 @@ function user_command() {
     if (text == "ls") {
         print_message(commandlist["ls"]);
     }
-    if (text == "ls programs" || text == "ls programs/") {
-        print_message("Available programs:");
-        print_message();
+    else {
+        control.cur_scene.execute(text);
     }
+
     previous_commands.push(text);
 }

@@ -73,6 +73,13 @@ function randint(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
+function findInArray(obj, array) {
+    for (var i=0; i<array.length; i++) {
+        if (obj === array[i]) { return i; }
+    }
+    return null;
+}
+
 class Button extends Rect {
     constructor(x, y, width, height, text, color, callback) {
         super(x, y, width, height);

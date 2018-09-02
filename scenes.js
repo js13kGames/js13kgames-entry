@@ -8,7 +8,7 @@ class Scene {
     }
     handle(evt) {
     }
-    execute_command(cmd) {
+    execute(cmd) {
         return;
     }
 }
@@ -52,17 +52,90 @@ class MissionScene extends MenuScene {
             "scripts": [],
             "installed": [],
             "money": 0,
-            "memory": 8
+            "memory": 3
+        }
+    }
+    execute(cmd) {
+        if (cmd == "ls programs" || cmd == "ls programs/") {
+            print_message("Available programs:");
+            print_message(control.cur_scene.data["programs"]);
+        }
+        if (cmd == "ls scripts" || cmd == "ls scripts/") {
+            print_message("Available scripts:");
+            print_message(control.cur_scene.data["scripts"]);
+        }
+        if (cmd == "ls installed" || cmd == "ls installed/") {
+            print_message("Programs installed:");
+            print_message(control.cur_scene.data["installed"]);
+        }
+        if (cmd.startsWith("install ")) {
+            var program = cmd.slice(8),
+                index = findInArray(program, this.data["programs"]);
+
+            if (index === null) {
+                print_message("There's no program named " + program);
+                return;
+            }
+
+            if (this.data["installed"].length === this.data["memory"]) {
+                print_message("There's no memory available, try uninstalling another program");
+                return;
+            }
+
+            if (findInArray(program, this.data["installed"]) != null) {
+                print_message("Program " + program + " is already installed");
+                return;
+            }
+
+            this.data["installed"].push(this.data["programs"][index]);
+            print_message("Successfully installed " + program);
+        }
+
+        if (cmd.startsWith("uninstall ")) {
+            var program = cmd.slice(10),
+                index = findInArray(program, this.data["installed"]);
+            if (index === null) { print_message("Program " + program + " is not installed."); }
+
+            this.data["installed"].splice(index, 1);
+            print_message("Successfully uninstalled " + program);
+        }
+
+        if (cmd.startsWith("sell ")) {
+            var program = cmd.slice(5),
+                index = findInArray(program, this.data["programs"]),
+                installed_index = findInArray(program, this.data["installed"]);
+
+            if (index === null) {
+                print_message("There's no program named " + program);
+                return;
+            }
+
+            if (installed_index != null) {
+                print_message("Uninstalling " + program);
+                this.data["installed"].splice(installed_index, 1);
+            }
+            print_message("Sucessfully sold " + program + " for 100$")
+            this.data["programs"].splice(index, 1);
+            this.data["money"] += 100;
+
         }
     }
 }
 
 class DungeonScene extends Scene {
-    constructor(size) {
+    constructor(data, size) {
         super();
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
         this.dungeon.addPlayer();
+
+        // this.data = {
+        //     "programs_running": data["installed"],
+        //     "programs_found": [],
+        //     "scripts": data["scripts"],
+        //     "media": 0,
+        //     "memory": data["memory"]
+        // }
     }
 
     draw() {

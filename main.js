@@ -28,7 +28,7 @@ function startGame(){
 }
 
 function startDungeon(){
-    control.changeScene(new DungeonScene(40));
+    control.changeScene(new DungeonScene(control.cur_scene.data, 40));
     control.cur_scene.draw();
 }
 
