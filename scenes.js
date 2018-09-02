@@ -48,9 +48,9 @@ class MissionScene extends MenuScene {
         this.buttons = [];
 
         this.data = {
-            "programs": ['a', 'b', 'c', 'd'],
+            "programs": [],
             "scripts": [],
-            "installed": ['b', 'c', 'd'],
+            "installed": [],
             "money": 0,
             "memory": 3
         }
