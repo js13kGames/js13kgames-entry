@@ -109,6 +109,15 @@ class DungeonGrid {
     }
 
     executeTurn() {
+        // Player coomputation
+        var player_tile = this.getTile(this.player_at),
+            player = player_tile["entity"];
+        if (player_tile["trap"]) {
+            TRAPS[player_tile["trap"]](player);
+            player_tile["trap"] = null;
+        }
+
+        // Enemy turn
         var to_destroy = [];
 
         for (var e=0; e<this.entities.length; e++) {
@@ -144,8 +153,7 @@ class DungeonGrid {
     }
 
     randomPointInRoom() {
-        var rand_room = this.rooms[ randint(0, this.rooms.length) ];
-        return rand_room.randomPoint();
+        return this.rooms[ randint(0, this.rooms.length) ];
     }
 
     addPlayer() {
