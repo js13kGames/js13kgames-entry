@@ -8,6 +8,7 @@ class DungeonGrid {
         this.entities = [];
         this.player = null;
         this.player_at = null;
+        this.player_start = null;
 
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
@@ -92,8 +93,10 @@ class DungeonGrid {
 
             if (!player_spawned) {
                 this.player_at = rand_point;
+                this.player_start = rand_point;
                 this.player = new Player(this, rand_point);
                 this.addEntity(this.player, rand_point);
+                this.getTile(rand_point)["trap"] = "exit";
                 player_spawned = true;
 
             } else if (!goal_spawned) {
@@ -125,7 +128,7 @@ class DungeonGrid {
     executeTurn() {
         // Player coomputation
         var player_tile = this.getTile(this.player_at);
-        if (player_tile["trap"]) {
+        if (player_tile["trap"] && player_tile["trap"] != "exit") {
             TRAPS[player_tile["trap"]](this.player);
             player_tile["trap"] = null;
         }

@@ -48,6 +48,8 @@ class DungeonScene extends Scene {
         super("Dungeon");
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
+
+        this.scan = 0;
     }
 
     draw() {
@@ -86,6 +88,7 @@ class DungeonScene extends Scene {
                     
                     if (tile["trap"]) {
                         ctx.fillStyle = 'rgb(200,200,200)';
+                        if (tile["trap"] == "exit") { ctx.fillStyle = 'cyan'; }
                         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     }
                     

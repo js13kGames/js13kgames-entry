@@ -41,10 +41,11 @@ function reset() {
 
     DATA = {
         "programs": [],
-        "scripts": [],
+        "scripts": ["Refresh"],
         "installed": [],
         "money": 0,
         "memory": 3,
+        "processing": 10,
     }
     GAME_OVER = false;
 }

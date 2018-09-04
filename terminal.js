@@ -89,7 +89,15 @@ function user_command() {
         DATA["money"] += 100;
     } else if (DATA["scripts"].indexOf(cmd) >= 0) {
         index = DATA["scripts"].indexOf(cmd);
-        print_message("Executing script " + cmd);
-        SCRIPTS[cmd]();
+        var script = SCRIPTS[cmd];
+        if (DATA["processing"] > script["cost"]) {
+            print_message(script["msg"]);
+            script["run"](control.cur_scene.dungeon);
+            DATA["processing"] -= script["cost"];
+        } else {
+            print_message("Not enough processing power to run the script.")
+        }
+
+        control.cur_scene.dungeon.executeTurn();
     }
 }
