@@ -54,6 +54,7 @@ class Enemy extends Entity {
         }
     }
     turn() {
+        if (this.hp <= 0) { this.destroy = true; }
         if (this.stats == "stun3") { this.stats = "stun2"; return;}
         if (this.stats == "stun2") { this.stats = "stun1"; return;}
         if (this.stats == "stun1") { this.stats = ""; return;}

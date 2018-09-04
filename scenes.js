@@ -93,7 +93,7 @@ class DungeonScene extends Scene {
                     }
                     
                     if (tile["item"]) {
-                        ctx.fillStyle = 'cyan';
+                        ctx.fillStyle = 'green';
                         ctx.fillRect(x * tileSize +3, y * tileSize +3, tileSize-3, tileSize-3);
                     }
                     

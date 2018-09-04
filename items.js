@@ -51,9 +51,21 @@ SCRIPTS = {
         }
     },
     "Ping" : {
-        "msg" : "",
-        "cost" : 0,
-        "run" : function(dungeon) {}
+        "msg" : "Deals damage to all enemies you can see",
+        "cost" : 2,
+        "run" : function(dungeon) {
+            var center = dungeon.player_at;
+            for(var y=center.y-PLAYER_VISION; y<center.y+PLAYER_VISION; y++) {
+                for(var x=center.x-PLAYER_VISION; x<center.x+PLAYER_VISION; x++) {
+                    if (y >= 0 && y < dungeon.size && x >= 0 && x < dungeon.size) {
+                        entity = dungeon.getTile(x, y)["entity"];
+                        if(entity && entity.type == "enemy") {
+                            entity.hp -= 1;
+                        }
+                    }
+                }
+            }
+        }
     },
     "Interference" : {
         "msg" : "",
