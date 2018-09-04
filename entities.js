@@ -44,6 +44,7 @@ class Enemy extends Entity {
         this.hp = 3;
         this.att = 20;
         this.type = "enemy";
+        this.status = "";
     }
     interactWith(other) {
         if (other.type == "player") {
@@ -53,6 +54,9 @@ class Enemy extends Entity {
         }
     }
     turn() {
+        if (this.stats == "stun3") { this.stats = "stun2"; return;}
+        if (this.stats == "stun2") { this.stats = "stun1"; return;}
+        if (this.stats == "stun1") { this.stats = ""; return;}
         var from = this.pos,
             to = new Vector(from);
         switch (randint(0, 4)) {

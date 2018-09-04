@@ -159,7 +159,6 @@ class DungeonScene extends Scene {
                 this.dungeon.moveEntity(from, to);
                 this.dungeon.executeTurn();
             }
-            if (evt.key == "Shift") {this.dungeon.player.latency += 60;}
         }
         this.draw();
     }

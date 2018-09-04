@@ -41,7 +41,7 @@ function reset() {
 
     DATA = {
         "programs": [],
-        "scripts": ["Refresh"],
+        "scripts": ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Interference"],
         "installed": [],
         "money": 0,
         "memory": 3,

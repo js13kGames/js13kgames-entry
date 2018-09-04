@@ -28,24 +28,27 @@ SCRIPTS = {
         "msg" : "Teleporting back to the start...",
         "cost" : 5,
         "run" :  function(dungeon) {
-                    var dungeon = control.cur_scene.dungeon;
                     dungeon.moveEntity(dungeon.player_at, dungeon.player_start);
                 }
     },
     "Reconnect" : {
-        "msg" : "",
-        "cost" : 0,
-        "run" : function(dungeon) {}
+        "msg" : "Restoring Neural Link connection...",
+        "cost" : 2,
+        "run" : function(dungeon) { dungeon.player.latency += 40; }
     },
     "Glitch" : {
-        "msg" : "",
-        "cost" : 0,
-        "run" : function(dungeon) {}
-    },
-    "Decrypt" : {
-        "msg" : "",
-        "cost" : 0,
-        "run" : function(dungeon) {}
+        "msg" : "All enemies are now paralyzed.",
+        "cost" : 5,
+        "run" : function(dungeon) {
+            for (var y=0; y < dungeon.size; y++) {
+                for (var x=0; x < dungeon.size; x++) {
+                    var entity = dungeon.grid[y][x]["entity"];
+                    if (entity && entity.type == "enemy") {
+                        entity.stats = "stun3";
+                    }
+                }
+            }
+        }
     },
     "Ping" : {
         "msg" : "",
