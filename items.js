@@ -10,7 +10,7 @@ TRAPS = {
 };
 
 PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];
-SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Interference"];
+SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hack"];
 
 SCRIPTS = {
     "Scan" : {
@@ -51,7 +51,7 @@ SCRIPTS = {
         }
     },
     "Ping" : {
-        "msg" : "Deals damage to all enemies you can see",
+        "msg" : "Deals damage to all enemies you can see.",
         "cost" : 2,
         "run" : function(dungeon) {
             var center = dungeon.player_at;
@@ -67,9 +67,18 @@ SCRIPTS = {
             }
         }
     },
-    "Interference" : {
-        "msg" : "",
-        "cost" : 0,
-        "run" : function(dungeon) {}
+    "Hack" : {
+        "msg" : "Hacking surrounding walls into passable tiles.",
+        "cost" : 5,
+        "run" : function(dungeon) {
+            var center = dungeon.player_at;
+            for(var y=center.y-2; y<center.y+2; y++) {
+                for(var x=center.x-2; x<center.x+2; x++) {
+                    if (y >= 1 && y < dungeon.size-1 && x >= 1 && x < dungeon.size-1) {
+                        dungeon.getTile(x, y)["isWall"] = false;
+                    }
+                }
+            }
+        }
     }
 }
