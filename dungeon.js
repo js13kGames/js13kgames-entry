@@ -80,16 +80,20 @@ class DungeonGrid {
     }
 
     populateDungeon() {
-        var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3);
-        var traps_to_spawn = randint(1, this.size * 0.1);
-        var items_to_spawn = randint(1, this.size * 0.08);
-        var player_spawned = false;
-        var goal_spawned = false;
+        var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3),
+            traps_to_spawn = randint(1, this.size * 0.1),
+            items_to_spawn = randint(1, this.size * 0.08),
+            player_spawned = false,
+            goal_spawned = false,
+            goal_start = null;
         
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
             var rand_point = this.randomPointInRoom(),
                 tile = this.getTile(rand_point);
+
+            if (player_spawned && this.player_start == rand_point) { continue; }
+            if (goal_spawned && goal_start == rand_point) { continue; }
 
             if (!player_spawned) {
                 this.player_at = rand_point;
@@ -99,11 +103,12 @@ class DungeonGrid {
                 this.getTile(rand_point)["trap"] = "exit";
                 player_spawned = true;
 
-            } else if (!goal_spawned) {
+            } else if (!goal_spawned ) {
                 var goal = new Entity(this, rand_point);
                 goal.type = "goal";
                 this.addEntity(goal, rand_point);
                 goal_spawned = true;
+                goal_start = rand_point;
 
             } else if (traps_to_spawn && tile['trap'] === null) {
                 var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
