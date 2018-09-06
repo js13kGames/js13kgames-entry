@@ -7,6 +7,7 @@ class Vector {
             this.x = vec_or_x.x;
             this.y = vec_or_x.y;
         }
+        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
     }
     add(vec_or_x, y=null) {
         if (y != null) {
@@ -16,6 +17,7 @@ class Vector {
             this.x += vec_or_x.x;
             this.y += vec_or_x.y;
         }
+        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
     }
     subtract(vec_or_x, y=null) {
         if (y != null) {
@@ -25,10 +27,30 @@ class Vector {
             this.x -= vec_or_x.x;
             this.y -= vec_or_x.y;
         }
+        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
     }
     scale(s) {
         this.x *= s;
         this.y *= s;
+        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    normalize() {
+        this.x /= this.length;
+        this.x = Math.round(this.x);
+        this.y /= this.length;
+        this.y = Math.round(this.y);
+        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    isInside(array){
+        for (var i=0; i<array.length; i++) {
+            if(array[i].x == this.x && array[i].y == this.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+    isEqual(vec) {
+        return this.x == vec.x && this.y == vec.y;
     }
 }
 

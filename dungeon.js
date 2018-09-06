@@ -26,7 +26,7 @@ class DungeonGrid {
         } else {
             return this.getTile(x_or_vec.x, x_or_vec.y);
         }
-    }
+    } 
 
     createDungeon(maxLeafSize=10) {
         // Uses the BSP module to generate a dungeon and set it on the grid array.
@@ -89,7 +89,7 @@ class DungeonGrid {
         
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
-            var rand_point = this.randomPointInRoom(),
+            var rand_point = this.randomRoom().randomPoint(),
                 tile = this.getTile(rand_point);
 
             if (player_spawned && this.player_start == rand_point) { continue; }
@@ -155,13 +155,12 @@ class DungeonGrid {
             var entity = this.entities[e];
             if (entity) {
                 if (entity.type == "enemy") {
-                    entity.turn();
+                    entity.turn(this);
                 };
                 
                 if (entity.destroy) {
                     if (entity.type == "player") {
                         var proxy = DATA["installed"].indexOf("Proxy");
-                        console.log(proxy);
                         if (proxy < 0) {
                             // Player dies
                             print_message("Connection lost, your neural link to your body is offline.");
@@ -198,8 +197,37 @@ class DungeonGrid {
         this.getTile(point)["item"] = item;
     }
 
-    randomPointInRoom() {
+    randomRoom() { // Changed from randomPointInRoom
         return this.rooms[ randint(0, this.rooms.length) ];
+    }
+
+    getNeighbors(center) {
+        var neighbors = [];
+        if (center.x > 0) { neighbors.push(new Vector(center.x -1, center.y)); }
+        if (center.x < this.size -1) { neighbors.push(new Vector(center.x +1, center.y)); }
+        if (center.y > 0) { neighbors.push(new Vector(center.x, center.y-1)); }
+        if (center.y < this.size -1) { neighbors.push(new Vector(center.x, center.y+1)); }
+        return neighbors;
+    }
+
+    walkTowards(from, to) {
+        // NOTE: Its fine, but the entities do not go around corners.
+        // Maybe adding diagonal movement will fix this.
+        // Maybe computing the diagonal tiles distance and script a two movement path when the entity reaches a corner
+        var neighbors = this.getNeighbors(from),
+            closest = neighbors[0],
+            closest_distance = new Vector(to);
+        closest_distance.subtract(from);
+
+        for (var n=0; n < neighbors.length; n++) {
+            var n_distance = new Vector(to);
+                n_distance.subtract(neighbors[n]);
+            if (n_distance.length < closest_distance.length) {
+                closest = neighbors[n];
+            }
+        }
+
+        return closest
     }
 
     moveEntity(from, to) {

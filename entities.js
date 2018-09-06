@@ -53,19 +53,35 @@ class Enemy extends Entity {
             if (other.latency == 0) { other.destroy = true; }
         }
     }
-    turn() {
+    turn(dungeon) {
         if (this.hp <= 0) { this.destroy = true; }
         if (this.stats == "stun3") { this.stats = "stun2"; return;}
         if (this.stats == "stun2") { this.stats = "stun1"; return;}
         if (this.stats == "stun1") { this.stats = ""; return;}
         var from = this.pos,
-            to = new Vector(from);
-        switch (randint(0, 4)) {
-            case 0: {to.add(-1, 0); break;}
-            case 1: {to.add(0, 1); break;}
-            case 2: {to.add(1, 0); break;}
-            case 3: {to.add(0, -1); break;}
+            to = new Vector(from),
+            to_player = new Vector(from);
+
+        to_player.subtract(dungeon.player_at);
+        
+        if (to_player.length < PLAYER_VISION) {
+            print_message("I can see you")
+            if (to_player.length == 1) {
+                // Player is in attack range
+            } else {
+                to = dungeon.walkTowards(from, dungeon.player_at);
+                console.log(from, to, dungeon.player_at)
+            }
+        } else {
+            switch (randint(0, 5)) {
+                case 0: {to.add(0, 0); break;}
+                case 1: {to.add(-1, 0); break;}
+                case 2: {to.add(0, 1); break;}
+                case 3: {to.add(1, 0); break;}
+                case 4: {to.add(0, -1); break;}
+            }
         }
+
         this.dungeon.moveEntity(from, to);
     }
 }
