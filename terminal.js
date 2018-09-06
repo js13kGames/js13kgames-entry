@@ -27,10 +27,12 @@ function user_command() {
         print_message("Programs installed:");
         print_message(DATA["installed"]);
     } else if (cmd.startsWith("install ")) {
+
         if (control.cur_scene.type == "Dungeon") {
             print_message("Can't install programs while the Neural Link is connected.")
             return;
         }
+
         var program = cmd.slice(8),
             index = DATA["programs"].indexOf(program);
 
@@ -51,11 +53,15 @@ function user_command() {
 
         DATA["installed"].push(DATA["programs"][index]);
         print_message("Successfully installed " + program);
+        control.setUpMissionMenu();
+
     } else if (cmd.startsWith("uninstall ")) {
+
         if (control.cur_scene.type == "Dungeon") {
             print_message("Can't uninstall programs while the Neural Link is connected.")
             return;
         }
+
         var program = cmd.slice(10),
             index = DATA["installed"].indexOf(program);
         if (index < 0) {
@@ -65,6 +71,8 @@ function user_command() {
 
         DATA["installed"].splice(index, 1);
         print_message("Successfully uninstalled " + program);
+        control.setUpMissionMenu(); // Refreshs the screen
+
     } else if (cmd.startsWith("sell ")) {
         if (control.cur_scene.type == "Dungeon") {
             print_message("Can't sell programs while the Neural Link is connected.")

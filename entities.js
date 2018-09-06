@@ -34,6 +34,7 @@ class Player extends Entity {
         } else if (other.type == "goal") {
             other.destroy = true;
             print_message("You reached your goal!");
+            control.setUpMissionMenu()
         }
     }
 }

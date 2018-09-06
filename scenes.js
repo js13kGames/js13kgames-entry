@@ -173,18 +173,26 @@ class SceneControl {
     }
 
     setUpMainMenu() {
-        this.cur_scene = new MenuScene("MainMenu");
+        this.cur_scene = new MenuScene("main");
         this.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
                                  "START", "purple", startGame);
     }
 
-    setUpNewGame() {
-        this.cur_scene = new MenuScene("MissionSelect");
-        this.cur_scene.addButton(canvas.width/2-175, 25, 350, 100,
-                                 "MISSION 1", "yellow", startDungeon);
-        this.cur_scene.addButton(canvas.width/2-175, 145, 350, 100,
-                                 "MISSION 2", "yellow", startDungeon);
-        this.cur_scene.addButton(canvas.width/2-175, 265, 350, 100,
-                                 "MISSION 3", "yellow", startDungeon);
+    setUpMissionMenu() {
+        this.cur_scene = new MenuScene("mission");
+        this.drawMissionMenu();
+        this.cur_scene.draw();
+    }
+    drawMissionMenu() {
+        // this.cur_scene.addButton(canvas.width/2-175, 25, 350, 100,
+        //                          "MISSION 1", "yellow", startDungeon);
+        this.cur_scene.addButton(canvas.width/2-200, 50, 400, 100,
+                                 "Mail: " + DATA["mailbox"].length, "yellow");
+        this.cur_scene.addButton(canvas.width/2-200, 175, 400, 100,
+                                 "Day: " + DATA["day"], "yellow");
+        this.cur_scene.addButton(canvas.width/2-200, 300, 400, 100,
+                                 "Money: " + DATA["money"], "yellow");
+        this.cur_scene.addButton(canvas.width/2-200, 425, 400, 100,
+                                 "Memory: " + DATA["installed"].length + "/" + DATA["memory"], "yellow");
     }
 }

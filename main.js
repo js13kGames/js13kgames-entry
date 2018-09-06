@@ -21,8 +21,7 @@ function handleEvents(evt) {
 }
 
 function startGame(){
-    control.setUpNewGame();
-    control.cur_scene.draw();
+    control.setUpMissionMenu();
 }
 
 function startDungeon(){
@@ -40,12 +39,14 @@ function reset() {
     terminal_input.focus();
 
     DATA = {
-        "programs": [],
+        "programs": ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"],
         "scripts": ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hack"],
         "installed": [],
         "money": 0,
         "memory": 3,
         "processing": 10,
+        "day": 1,
+        "mailbox": [],
     }
     GAME_OVER = false;
 }
