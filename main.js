@@ -8,6 +8,8 @@ var GAME_OVER;
 var PLAYER_VISION = 5;
 var gameloop;
 var EXP_TO_LEVEL = 100;
+var FPS = 30;
+var GO_timer = 0; // Game over timer
 // var PLAYER_VISION = 15;
 
 reset();
@@ -17,7 +19,7 @@ document.addEventListener( 'keyup', handleEvents );
 
 
 function handleEvents(evt) {
-    if( GAME_OVER && (evt.type == "keyup" || evt.type == "click") ) {
+    if( GAME_OVER && GO_timer > 5000 && (evt.type == "keyup" || evt.type == "click") ) {
         GAME_OVER = false;
         startGame();
     }
@@ -31,7 +33,7 @@ function startGame(){
     reset();
     control.changeScene(new MenuScene("menu"));
     if (gameloop) { clearInterval(gameloop); }
-    gameloop = setInterval(gameLoop, 33);
+    gameloop = setInterval(gameLoop, FPS);
 }
 
 function startDungeon(){
@@ -59,6 +61,8 @@ function reset() {
 function gameLoop() {
     control.update();
     control.draw();
+
+    if (GAME_OVER) { GO_timer += FPS; }
 }
 
 startGame();
