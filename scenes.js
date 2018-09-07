@@ -14,7 +14,7 @@ class Scene {
         return;
     }
     addButton(x, y, width, height, text, color, callback) {
-        this.buttons.push(new Button(x, y, width, height, text, color, callback));
+        this.buttons.push(new Button(x, y, width, height, text, 40, color, callback));
     }
 }
 
@@ -173,7 +173,7 @@ class DungeonScene extends Scene {
         
         this.buttons = [];
 
-        this.buttons.push(new Button(canvas.width-200, canvas.height-20, 200, 20, latency_text, latency_level));
+        this.buttons.push(new Button(canvas.width-200, canvas.height-20, 200, 20, latency_text, 20, latency_level));
     }
 }
 

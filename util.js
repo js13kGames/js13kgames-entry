@@ -97,15 +97,16 @@ function randint(min, max) {
 
   
 class Button extends Rect {
-    constructor(x, y, width, height, text, color, callback) {
+    constructor(x, y, width, height, text, fontsize, color, callback) {
         super(x, y, width, height);
 
-        this.color = color;
         this.text = text;
+        this.fontsize = fontsize;
+        this.color = color;
         this.callback = callback;
     }
-    draw(fontsize="40px") {
-        ctx.font= fontsize + " 'Courier New'";
+    draw() {
+        ctx.font = this.fontsize + "px 'Courier New'";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
     
