@@ -255,9 +255,9 @@ class DungeonGrid {
             if (entity.type == "player") {
                 this.player_at = to;
                 var scavenger = DATA["installed"].indexOf("Scavenger");
-                if (scavenger >= 0 && Math.random() > 0.05) {
-                    print_message("Scavenger program found a file worth of 50$.");
-                    DATA["money"] += 50;
+                if (scavenger >= 0 && Math.random() < 0.015) {
+                    print_message("Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
+                    
                 }
             }
         }
