@@ -36,7 +36,7 @@ function user_command() {
             return;
         }
 
-        if (DATA["installed"].indexOf(program) >= 0) {
+        if (DATA["installed"].indexOf(program) > -1) {
             print_message("Program " + program + " is already installed");
             return;
         }
@@ -60,7 +60,7 @@ function user_command() {
         DATA["installed"].splice(index, 1);
         print_message("Successfully uninstalled " + program);
 
-    } else if (DATA["scripts"].indexOf(cmd) >= 0) {
+    } else if (DATA["scripts"].indexOf(cmd) > -1) {
         index = DATA["scripts"].indexOf(cmd);
         var script = SCRIPTS[cmd];
         print_message(script["msg"]);

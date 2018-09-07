@@ -23,7 +23,7 @@ class Player extends Entity {
             }
 
             other.hp -= DATA["version"];
-            if (DATA["installed"].indexOf("Denial_Of_Service") && roll == 20) {
+            if (DATA["installed"].indexOf("Denial_Of_Service") > -1 && roll == 20) {
                 if (Math.random < 0.2) {
                     print_message(">> Denial_Of_Service successfully shut down the enemy's connection");
                     other.destroy = true;
@@ -32,7 +32,7 @@ class Player extends Entity {
             }
             if (other.hp == 0) {
                 other.destroy = true;
-                if (DATA["installed"].indexOf("Maintenance") && this.latency > 40) {
+                if (DATA["installed"].indexOf("Maintenance") > -1 && this.latency > 40) {
                     print_message(">> Maintenance repairs your connection by 20ms.")
                     this.latency -= 20;
                 }

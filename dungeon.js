@@ -291,8 +291,7 @@ class DungeonGrid {
             // If the player is moving, update the tracker
             if (entity.type == "player") {
                 this.player_at = to;
-                var scavenger = DATA["installed"].indexOf("Scavenger");
-                if (scavenger >= 0 && Math.random() < 0.015) {
+                if (DATA["installed"].indexOf("Scavenger") > -1 && Math.random() < 0.015) {
                     print_message("!! Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
                     
                 }
