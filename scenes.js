@@ -44,10 +44,6 @@ class MenuScene extends Scene {
         this.buttons = [];
         this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 100,
                        "NEW GAME", 40, "green", startDungeon);
-        if (GAME_OVER) {
-            this.addButton(canvas.width/2-150, canvas.height/2-200, 300, 100,
-                           "GAME OVER", 40, "red", startDungeon);
-        }
     }
 }
 
@@ -191,7 +187,11 @@ class DungeonScene extends Scene {
         this.addButton(0, canvas.height-20, 200, 20, "Version: " + DATA["version"] + "." + DATA["bits"] , 20, "#0dc600");
         this.addButton(canvas.width/2-100, canvas.height-20, 200, 20, "Level: " + DATA["level"], 20, "#0dc600");
         if (GAME_OVER) {
-            this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 50, "GAME OVER", 40, 'red');
+            var alpha = GO_timer / 3000;
+            this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 50, "GAME OVER", 40, 'rgba(255,0,0,' + alpha + ")");
+            if (GO_timer > 3000) {
+                this.addButton(canvas.width/2-150, canvas.height/2, 300, 50, "Press any key to start again.", 16, 'rgba(255,0,0,' + alpha/2 + ")");
+            }
         }
     }
 }
