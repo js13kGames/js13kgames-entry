@@ -15,7 +15,6 @@ function createHall(lChild, rChild, hallways) {
         // point2 is at the left of point1
         if(h < 0) {
             // point2 is bellow point1
-            // The same bug is also here, I have to fix it
             if(Math.random() < 0.5) {
                 hallways.push( new Rect(point2[0], point1[1], Math.abs(w), 1) );
                 hallways.push( new Rect(point2[0], point2[1], 1, Math.abs(h)) );
@@ -30,8 +29,9 @@ function createHall(lChild, rChild, hallways) {
                 hallways.push( new Rect(point2[0], point1[1], Math.abs(w), 1) );
                 hallways.push( new Rect(point2[0], point1[1], 1, Math.abs(h)) );
             } else {
+                // The +1 here fixes a bug where the corridors would not connect
                 hallways.push( new Rect(point2[0], point2[1], Math.abs(w), 1) );
-                hallways.push( new Rect(point1[0], point1[1], 1, Math.abs(h)) );
+                hallways.push( new Rect(point1[0], point1[1], 1, Math.abs(h)+1) );
             }
 
         } else {
