@@ -83,9 +83,9 @@ class DungeonGrid {
     }
 
     populateDungeon() {
-        var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3),
-            traps_to_spawn = randint(1, this.size * 0.1),
-            items_to_spawn = randint(1, this.size * 0.08),
+        var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3) + DATA["level"],
+            traps_to_spawn = randint(1, this.size * 0.1) + DATA["level"],
+            items_to_spawn = randint(1, this.size * 0.05),
             player_spawned = false,
             goal_spawned = false,
             goal_start = null;

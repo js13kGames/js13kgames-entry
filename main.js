@@ -51,7 +51,8 @@ function reset() {
         "installed": [],
         "bits": 0,
         "version": 1,
-        "memory": 3
+        "memory": 3,
+        "level": 1
     }
 }
 

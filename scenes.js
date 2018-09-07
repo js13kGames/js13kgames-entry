@@ -182,12 +182,14 @@ class DungeonScene extends Scene {
 
         if (latency < 81) { var latency_level = "#0dc600"; }
         else if (latency < 171) { var latency_level = "#e0e000"; }
-        else if (latency < 301) { var latency_level = "#ff0000"; }
+        else if (latency < 301) { var latency_level = "#c66600"; }
+        else { var latency_level = "#ff0000"; }
         
         this.buttons = [];
 
         this.addButton(canvas.width-200, canvas.height-20, 200, 20, latency_text, 20, latency_level);
         this.addButton(0, canvas.height-20, 200, 20, "Version: " + DATA["version"] + "." + DATA["bits"] , 20, "#0dc600");
+        this.addButton(canvas.width/2-100, canvas.height-20, 200, 20, "Level: " + DATA["level"], 20, "#0dc600");
         if (GAME_OVER) {
             this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 50, "GAME OVER", 40, "red");
         }
