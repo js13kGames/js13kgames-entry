@@ -158,6 +158,7 @@ class DungeonGrid {
 
         for (var e=0; e<this.entities.length; e++) {
             var entity = this.entities[e];
+            if (GAME_OVER) { break; } // Fix a bug where enemies would attack after GAME OVER
             if (entity) {
                 if (entity.type == "enemy") {
                     entity.turn(this);
@@ -168,7 +169,7 @@ class DungeonGrid {
                         var proxy = DATA["installed"].indexOf("Proxy");
                         if (proxy < 0) {
                             // Player dies
-                            print_message("Connection lost, your neural link to your body is offline.");
+                            print_message("Connection lost... Systems shutting down... You're now offline...");
                             print_message("GAME OVER");
                             GAME_OVER = true;
                         } else {
