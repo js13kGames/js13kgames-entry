@@ -129,3 +129,24 @@ function clearCanvas() {
     ctx.fillStyle = "rgb(25,25,25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
+
+class Animation extends Rect {
+    constructor(x, y, width, height, rgbArray, time) {
+        super(x, y, width, height);
+        this.start = delta;
+        this.destroy = false;
+        this.time = time;
+        this.color = rgbArray;
+    }
+
+    draw() {
+        var alpha = (delta - this.start) / (1000 * this.time);
+        ctx.fillStyle = "rgba(" + this.color + "," + alpha + ")";
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (alpha > this.time) {this.destroy = true;}
+    }
+}
+
+function playAnimation(x, y, size, color, time) {
+    control.cur_scene.ani.push( new Animation(x, y, size, size, color, time) );
+}

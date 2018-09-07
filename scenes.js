@@ -53,15 +53,14 @@ class DungeonScene extends Scene {
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
 
-        this.ui = [];
+        TILESIZE = canvas.width / size;
+        this.ani = [];
 
         this.scan = 0;
     }
 
     draw() {
         clearCanvas();
-
-        var tileSize = canvas.width / this.dungeon.size;
     
         for(var y=0; y < this.dungeon.size; y++) {
             for(var x=0; x < this.dungeon.size; x++) {
@@ -79,39 +78,39 @@ class DungeonScene extends Scene {
                     // Explored map
                     if ( tile["isWall"] ) {
                         ctx.fillStyle = "#14412b";
-                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                     } else {
                         if (tile["isHall"]) {
                             ctx.fillStyle = '#7f9642';
                         } else {
                             ctx.fillStyle = '#262626';
                         }
-                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                     }
                 }
                 if (tile["fow"] == 1) {
                     // Visible map
                     if ( tile["isWall"] ) {
                         ctx.fillStyle = "#1f774d";
-                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                     } else {
                         if (tile["isHall"]) {
                             ctx.fillStyle = '#caca56';
                         } else {
                             ctx.fillStyle = '#1a1a1a';
                         }
-                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                     }
                     
                     if (tile["trap"]) {
                         ctx.fillStyle = 'rgb(200,200,200)';
                         if (tile["trap"] == "exit") { ctx.fillStyle = 'cyan'; }
-                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                     }
                     
                     if (tile["item"]) {
                         ctx.fillStyle = 'green';
-                        ctx.fillRect(x * tileSize +3, y * tileSize +3, tileSize-3, tileSize-3);
+                        ctx.fillRect(x * TILESIZE +3, y * TILESIZE +3, TILESIZE-3, TILESIZE-3);
                     }
                     
                     if (tile["entity"]) {
@@ -124,7 +123,7 @@ class DungeonScene extends Scene {
                         if (tile["entity"].type === "goal") {
                             ctx.fillStyle = 'yellow';
                         }
-                        ctx.fillRect(x * tileSize +1, y * tileSize +1, tileSize-1, tileSize-1);
+                        ctx.fillRect(x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                     }
                 } else {
                 }
@@ -133,6 +132,7 @@ class DungeonScene extends Scene {
 
 
         for(var b=0; b<this.buttons.length; b++) { this.buttons[b].draw(); }
+        for(var a=0; a<this.ani.length; a++) { this.ani[a].draw(); if(this.ani[a].destroy) { this.ani.splice(a, 1); } }
     }
 
     handle(evt) {

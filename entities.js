@@ -17,6 +17,7 @@ class Player extends Entity {
     interactWith(other) {
         if (other.type == "enemy") {
             other.hp -= DATA["version"];
+
             if (DATA["installed"].indexOf("Denial_Of_Service")) {
                 if (Math.random < 0.2) {
                     print_message("Denial_Of_Service successfully shut down the enemy's connection");
@@ -31,6 +32,9 @@ class Player extends Entity {
                     this.latency -= 20;
                 }
                 DATA["bits"]++;
+            }
+            if (!other.destroy) {
+                playAnimation(other.pos.x*TILESIZE, other.pos.y*TILESIZE, TILESIZE, [255,0,0], 0.4);
             }
         } else if (other.type == "goal") {
             other.destroy = true;
@@ -53,6 +57,7 @@ class Enemy extends Entity {
         if (other.type == "player") {
             other.latency += this.att;
             print_message("Enemy is trying to cut your connection, increased latency by 10ms.")
+            playAnimation(0, 0, canvas.width,  [255,255,255], 0.2);
             if (other.latency == 0) { other.destroy = true; }
         }
     }

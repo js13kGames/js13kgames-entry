@@ -10,6 +10,8 @@ var gameloop;
 var EXP_TO_LEVEL = 100;
 var FPS = 30;
 var GO_timer = 0; // Game over timer
+var delta = 0; // Game over timer
+var TILESIZE = 15;
 // var PLAYER_VISION = 15;
 
 reset();
@@ -65,6 +67,7 @@ function gameLoop() {
     control.draw();
 
     if (GAME_OVER) { GO_timer += FPS; }
+    delta += FPS;
 }
 
 startGame();
