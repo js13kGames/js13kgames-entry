@@ -78,29 +78,23 @@ class DungeonScene extends Scene {
                     // Explored map
                     if ( tile["isWall"] ) {
                         ctx.fillStyle = "#14412b";
-                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
+                    } else if (tile["isHall"]) {
+                        ctx.fillStyle = '#7f9642';
                     } else {
-                        if (tile["isHall"]) {
-                            ctx.fillStyle = '#7f9642';
-                        } else {
-                            ctx.fillStyle = '#262626';
-                        }
-                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
+                        ctx.fillStyle = '#262626';
                     }
+                    ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                 }
                 if (tile["fow"] == 1) {
                     // Visible map
                     if ( tile["isWall"] ) {
                         ctx.fillStyle = "#1f774d";
-                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
+                    } else if (tile["isHall"]) {
+                        ctx.fillStyle = '#caca56';
                     } else {
-                        if (tile["isHall"]) {
-                            ctx.fillStyle = '#caca56';
-                        } else {
-                            ctx.fillStyle = '#1a1a1a';
-                        }
-                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
+                        ctx.fillStyle = '#1a1a1a';
                     }
+                    ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                     
                     if (tile["trap"]) {
                         ctx.fillStyle = 'rgb(200,200,200)';
@@ -123,9 +117,15 @@ class DungeonScene extends Scene {
                         if (tile["entity"].type === "goal") {
                             ctx.fillStyle = 'yellow';
                         }
+                        if (tile["entity"].type === "firewall") {
+                            ctx.fillStyle = 'red';
+                        }
                         ctx.fillRect(x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                     }
-                } else {
+                } 
+                if (tile["isDoor"]) {
+                    ctx.fillStyle = '#725337';
+                    ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
                 }
             }
         }

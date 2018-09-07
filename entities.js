@@ -1,8 +1,8 @@
 class Entity {
-    constructor(dungeon,pos) {
+    constructor(dungeon,pos,type="") {
         this.dungeon = dungeon;
         this.pos = pos;
-        this.type = "";
+        this.type = type;
         this.destroy = false;
     }
     interactsWith(other) {}
@@ -46,6 +46,8 @@ class Player extends Entity {
             print_message("!! You reached your goal!");
             DATA["level"]++;
             startDungeon();
+        } else if (other.type == "firewall") {
+            if (DATA["passwords"] > 0) { other.destroy = true; DATA["passwords"]--;}
         }
     }
 }

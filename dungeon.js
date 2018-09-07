@@ -4,6 +4,7 @@ class DungeonGrid {
         this.size = size;
         this.grid = [];
         this.rooms = [];
+        this.locked_rooms = [];
         this.halls = [];
         this.entities = [];
         this.player = null;
@@ -79,6 +80,33 @@ class DungeonGrid {
             }
         }
 
+        var keys_to_spawn = 0;
+        for (var r=0; r<this.rooms.length; r++) { // For each room
+            var room = this.rooms[r],
+                exits = [];
+            // Transpose the walls that encloses the room
+            for (var y=room.y-1; y<room.bottom+1; y++) {
+                for (var x=room.x-1; x<room.right+1; x++) {
+                    if (x == room.x-1 || x == room.right || y==room.y-1 || y==room.bottom) {
+                        tile = this.getTile(x, y);
+                        if (tile["isHall"]) {
+                            exits.push(new Vector(x, y));
+                        }
+                    }
+                }
+            }
+
+            if (exits.length == 1 && Math.random() < 0.33) {
+                this.addEntity(new Entity(this, exits[0], "firewall"), exits[0]);
+                this.locked_rooms.push(room);
+                keys_to_spawn++;
+            } else if (keys_to_spawn) {
+                // Put the key into a room with more than 1 exit.
+                this.getTile(room.randomPoint())["item"] = "password";
+                keys_to_spawn--;
+            }
+        }
+
         this.populateDungeon();
     }
 
@@ -92,12 +120,18 @@ class DungeonGrid {
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
             var rand_point = this.randomRoom().randomPoint(),
-                tile = this.getTile(rand_point);
+                tile = this.getTile(rand_point),
+                locked=false;
 
             if (player_spawned && this.player_start == rand_point) { continue; }
             if (goal_spawned && goal_start == rand_point) { continue; }
 
-            if (!player_spawned) {
+            // Preventing the player to spawn in a locked room
+            for (var r=0; r<this.locked_rooms.length; r++) {
+                if ( rand_point.isInside(this.locked_rooms[r].asPointArray()) ) { locked=true; }
+            }
+
+            if (!player_spawned && !locked) {
                 this.player_at = rand_point;
                 this.player_start = rand_point;
                 this.player = new Player(this, rand_point);
@@ -142,8 +176,9 @@ class DungeonGrid {
         if (player_tile["item"]) {
             var item = player_tile["item"];
             print_message("<< Obtained " + player_tile["item"] + " item!");
-            if (PROGRAM_LIST.indexOf(item)) { DATA["programs"].push('item');
-            } else if (SCRIPT_LIST.indexOf(item)) { DATA["scripts"].push('item'); }
+            if (PROGRAM_LIST.indexOf(item) > -1) { DATA["programs"].push(item);
+            } else if (SCRIPT_LIST.indexOf(item)> -1) { DATA["scripts"].push(item);
+            } else if (item == "password") { DATA["passwords"]++; }
             
             player_tile["item"] = null;
         }

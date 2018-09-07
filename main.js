@@ -51,13 +51,14 @@ function reset() {
     terminal_input.focus();
 
     DATA = {
-        "programs": ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"],
-        "scripts": ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hack"],
+        "programs": [],
+        "scripts": [],
         "installed": [],
         "bits": 0,
         "version": 1,
         "memory": 3,
-        "level": 1
+        "level": 1,
+        "passwords": 0
     }
 }
 
