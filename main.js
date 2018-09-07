@@ -7,6 +7,7 @@ var DATA;
 var GAME_OVER;
 var PLAYER_VISION = 5;
 var gameloop;
+var EXP_TO_LEVEL = 100;
 // var PLAYER_VISION = 15;
 
 reset();
@@ -48,7 +49,8 @@ function reset() {
         "programs": ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"],
         "scripts": ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hack"],
         "installed": [],
-        "money": 0,
+        "bits": 0,
+        "version": 1,
         "memory": 3
     }
 }

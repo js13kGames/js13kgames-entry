@@ -149,7 +149,9 @@ class DungeonGrid {
             player_tile["item"] = null;
         }
 
-        if (this.player.latency > 400) { this.player.destroy = true; }
+        if (this.player.latency > 400) { this.player.destroy = true; } // Player dies
+        if (DATA["bits"] > 9) { DATA["bits"] = 0; DATA["version"]++;
+                                print_message("Version Update! Attack increased.")} // Level up
 
         // Enemy turn
         var to_destroy = [];

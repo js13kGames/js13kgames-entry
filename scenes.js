@@ -82,13 +82,13 @@ class DungeonScene extends Scene {
                 if (tile["fow"] == 0) {
                     // Explored map
                     if ( tile["isWall"] ) {
-                        ctx.fillStyle = "#1f774d55";
+                        ctx.fillStyle = "#14412b";
                         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     } else {
                         if (tile["isHall"]) {
-                            ctx.fillStyle = '#caca5655';
+                            ctx.fillStyle = '#7f9642';
                         } else {
-                            ctx.fillStyle = '#1a1a1a55';
+                            ctx.fillStyle = '#262626';
                         }
                         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     }
@@ -187,6 +187,7 @@ class DungeonScene extends Scene {
         this.buttons = [];
 
         this.addButton(canvas.width-200, canvas.height-20, 200, 20, latency_text, 20, latency_level);
+        this.addButton(0, canvas.height-20, 200, 20, "Version: " + DATA["version"] + "." + DATA["bits"] , 20, "#0dc600");
         if (GAME_OVER) {
             this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 50, "GAME OVER", 40, "red");
         }

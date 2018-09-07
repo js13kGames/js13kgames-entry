@@ -12,16 +12,16 @@ class Player extends Entity {
     constructor(dungeon, pos) {
         super(dungeon, pos)
         this.latency = 80;
-        this.att = 1;
         this.type = "player";
     }
     interactWith(other) {
         if (other.type == "enemy") {
-            other.hp -= this.att;
+            other.hp -= DATA["version"];
             if (DATA["installed"].indexOf("Denial_Of_Service")) {
                 if (Math.random < 0.2) {
                     print_message("Denial_Of_Service successfully shut down the enemy's connection");
                     other.destroy = true;
+                    DATA["bits"]++;
                 }
             }
             if (other.hp == 0) {
@@ -30,6 +30,7 @@ class Player extends Entity {
                     print_message("Maintenance repairs your connection by 20ms.")
                     this.latency -= 20;
                 }
+                DATA["bits"]++;
             }
         } else if (other.type == "goal") {
             other.destroy = true;
