@@ -13,8 +13,8 @@ class Scene {
     execute(cmd) {
         return;
     }
-    addButton(x, y, width, height, text, color, callback) {
-        this.buttons.push(new Button(x, y, width, height, text, 40, color, callback));
+    addButton(x, y, width, height, text, fontsize, color, callback) {
+        this.buttons.push(new Button(x, y, width, height, text, fontsize, color, callback));
     }
 }
 
@@ -42,9 +42,11 @@ class MenuScene extends Scene {
     }
     update() {
         this.buttons = [];
-        if (this.type == "menu") {
-            this.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
-                                     "START", "purple", startDungeon);
+        this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 100,
+                       "NEW GAME", 40, "green", startDungeon);
+        if (GAME_OVER) {
+            this.addButton(canvas.width/2-150, canvas.height/2-200, 300, 100,
+                           "GAME OVER", 40, "red", startDungeon);
         }
     }
 }
@@ -173,7 +175,10 @@ class DungeonScene extends Scene {
         
         this.buttons = [];
 
-        this.buttons.push(new Button(canvas.width-200, canvas.height-20, 200, 20, latency_text, 20, latency_level));
+        this.addButton(canvas.width-200, canvas.height-20, 200, 20, latency_text, 20, latency_level);
+        if (GAME_OVER) {
+            this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 50, "GAME OVER", 40, "red");
+        }
     }
 }
 

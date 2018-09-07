@@ -67,7 +67,7 @@ class Enemy extends Entity {
         
         if (to_player.length < PLAYER_VISION) {
             if (to_player.length == 1) {
-                // Player is in attack range
+                this.interactWith(dungeon.player)
             } else {
                 to = dungeon.walkTowards(from, dungeon.player_at);
             }
