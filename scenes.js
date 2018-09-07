@@ -2,6 +2,7 @@ class Scene {
     // This is a base class, supposed to be extended
     constructor(type) { 
         this.type = type;
+        this.buttons = [];
     }
     draw() {
         ctx.fillStyle = "rgb(25,25,25)";
@@ -12,12 +13,14 @@ class Scene {
     execute(cmd) {
         return;
     }
+    addButton(x, y, width, height, text, color, callback) {
+        this.buttons.push(new Button(x, y, width, height, text, color, callback));
+    }
 }
 
 class MenuScene extends Scene {
     constructor(type) {
         super(type);
-        this.buttons = [];
     }
     draw() {
         clearCanvas();
@@ -37,17 +40,22 @@ class MenuScene extends Scene {
             }
         }
     }
-    addButton(x, y, width, height, text, color, callback) {
-        var button = new Button(x, y, width, height, text, color, callback);
-        this.buttons.push(button);
-    } 
+    update() {
+        this.buttons = [];
+        if (this.type == "menu") {
+            this.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
+                                     "START", "purple", startDungeon);
+        }
+    }
 }
 
 class DungeonScene extends Scene {
     constructor(size) {
-        super("Dungeon");
+        super("dungeon");
         this.dungeon = new DungeonGrid(size);
         this.dungeon.createDungeon();
+
+        this.ui = [];
 
         this.scan = 0;
     }
@@ -114,15 +122,8 @@ class DungeonScene extends Scene {
             }
         }
 
-        var latency = this.dungeon.player.latency,
-            latency_text = "Latency: " + this.dungeon.player.latency + "ms";
-        if (latency < 81) { var latency_level = "#0dc600"; }
-        else if (latency < 171) { var latency_level = "#e0e000"; }
-        else if (latency < 301) { var latency_level = "#ff0000"; }
-        
 
-        var latency_label = new Button(canvas.width-200, canvas.height-20, 200, 20, latency_text, latency_level);
-        latency_label.draw("20px");
+        for(var b=0; b<this.buttons.length; b++) { this.buttons[b].draw(); }
     }
 
     handle(evt) {
@@ -160,39 +161,30 @@ class DungeonScene extends Scene {
                 this.dungeon.executeTurn();
             }
         }
-        this.draw();
+    }
+
+    update() {
+        var latency = this.dungeon.player.latency,
+            latency_text = "Latency: " + this.dungeon.player.latency + "ms";
+
+        if (latency < 81) { var latency_level = "#0dc600"; }
+        else if (latency < 171) { var latency_level = "#e0e000"; }
+        else if (latency < 301) { var latency_level = "#ff0000"; }
+        
+        this.buttons = [];
+
+        this.buttons.push(new Button(canvas.width-200, canvas.height-20, 200, 20, latency_text, latency_level));
     }
 }
 
 class SceneControl {
     constructor() {
-        this.cur_scene = null;
+        this.cur_scene = new MenuScene("main");
     }
     changeScene(to_scene) {
         this.cur_scene = to_scene;
     }
 
-    setUpMainMenu() {
-        this.cur_scene = new MenuScene("main");
-        this.cur_scene.addButton(canvas.width/2-100, canvas.height/2-50, 200, 100,
-                                 "START", "purple", startGame);
-    }
-
-    setUpMissionMenu() {
-        this.cur_scene = new MenuScene("mission");
-        this.drawMissionMenu();
-        this.cur_scene.draw();
-    }
-    drawMissionMenu() {
-        // this.cur_scene.addButton(canvas.width/2-175, 25, 350, 100,
-        //                          "MISSION 1", "yellow", startDungeon);
-        this.cur_scene.addButton(canvas.width/2-200, 50, 400, 100,
-                                 "Mail: " + DATA["mailbox"].length, "yellow");
-        this.cur_scene.addButton(canvas.width/2-200, 175, 400, 100,
-                                 "Day: " + DATA["day"], "yellow");
-        this.cur_scene.addButton(canvas.width/2-200, 300, 400, 100,
-                                 "Money: " + DATA["money"], "yellow");
-        this.cur_scene.addButton(canvas.width/2-200, 425, 400, 100,
-                                 "Memory: " + DATA["installed"].length + "/" + DATA["memory"], "yellow");
-    }
+    update() { this.cur_scene.update() }
+    draw() { this.cur_scene.draw() }
 }

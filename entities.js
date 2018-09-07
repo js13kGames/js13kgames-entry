@@ -34,7 +34,7 @@ class Player extends Entity {
         } else if (other.type == "goal") {
             other.destroy = true;
             print_message("You reached your goal!");
-            control.setUpMissionMenu()
+            startDungeon();
         }
     }
 }
@@ -66,12 +66,10 @@ class Enemy extends Entity {
         to_player.subtract(dungeon.player_at);
         
         if (to_player.length < PLAYER_VISION) {
-            print_message("I can see you")
             if (to_player.length == 1) {
                 // Player is in attack range
             } else {
                 to = dungeon.walkTowards(from, dungeon.player_at);
-                console.log(from, to, dungeon.player_at)
             }
         } else {
             switch (randint(0, 5)) {

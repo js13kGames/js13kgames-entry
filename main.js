@@ -5,7 +5,8 @@ var terminal_input = document.getElementById("terminal-input");
 var control;
 var DATA;
 var GAME_OVER;
-var PLAYER_VISION = 4;
+var PLAYER_VISION = 5;
+var PLAYER_VISION = 15;
 
 reset();
 
@@ -21,21 +22,20 @@ function handleEvents(evt) {
 }
 
 function startGame(){
-    control.setUpMissionMenu();
+    reset();
+    control.cur_scene = new MenuScene("menu");
+    setInterval(gameLoop, 33);
 }
 
 function startDungeon(){
     control.changeScene(new DungeonScene(40));
-    control.cur_scene.draw();
 }
 
 function reset() {
     if (terminal_window) {terminal_window.value = ""};
     if (terminal_input) {terminal_input.value = ""};
     
-    control = new SceneControl();    
-    control.setUpMainMenu();
-    control.cur_scene.draw();
+    control = new SceneControl();
     terminal_input.focus();
 
     DATA = {
@@ -44,9 +44,14 @@ function reset() {
         "installed": [],
         "money": 0,
         "memory": 3,
-        "processing": 10,
-        "day": 1,
-        "mailbox": [],
+        "processing": 10
     }
     GAME_OVER = false;
 }
+
+function gameLoop() {
+    control.update();
+    control.draw();
+}
+
+startGame();
