@@ -1,12 +1,12 @@
 TRAP_LIST = ["damage", "stun", "poison"];
 
 TRAPS = {
-    "damage": function(target) { print_message("Stepped on a disconnection trap, received 3 damage.") },
-    "stun": function(target) { print_message("Stepped on a disruption trap, your connection is unstable.") },
-    "poison": function(target) { print_message("Stepped on a worm trap, your connection is slowly degrading.") },
+    "damage": function(target) { print_message("<< Stepped on a disconnection trap, received 3 damage.") },
+    "stun": function(target) { print_message("<< Stepped on a disruption trap, your connection is unstable.") },
+    "poison": function(target) { print_message("<< Stepped on a worm trap, your connection is slowly degrading.") },
 
     // This is not a trap, just used to represent the exit of the dungeon.
-    "exit": function(target) { print_message("You're at the exit. Press space to exit the dungeon."); }
+    "exit": function(target) { print_message("!! You're at the exit. Press space to exit the dungeon."); }
 };
 
 PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];

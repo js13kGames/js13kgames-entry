@@ -142,7 +142,7 @@ class DungeonGrid {
         }
         if (player_tile["item"]) {
             var item = player_tile["item"];
-            print_message("Obtained " + player_tile["item"] + " item!");
+            print_message("<< Obtained " + player_tile["item"] + " item!");
             if (PROGRAM_LIST.indexOf(item)) { DATA["programs"].push('item');
             } else if (SCRIPT_LIST.indexOf(item)) { DATA["scripts"].push('item'); }
             
@@ -151,7 +151,7 @@ class DungeonGrid {
 
         if (this.player.latency > 400) { this.player.destroy = true; } // Player dies
         if (DATA["bits"] > 9) { DATA["bits"] = 0; DATA["version"]++;
-                                print_message("Version Update! Attack increased.")} // Level up
+                                print_message("<< Version Update! Stats increased.")} // Level up
 
         // Enemy turn
         var to_destroy = [];
@@ -169,11 +169,11 @@ class DungeonGrid {
                         var proxy = DATA["installed"].indexOf("Proxy");
                         if (proxy < 0) {
                             // Player dies
-                            print_message("Connection lost... Systems shutting down... You're now offline...");
+                            print_message("!! Connection lost... Systems shutting down... You're now offline...");
                             print_message("GAME OVER");
                             GAME_OVER = true;
                         } else {
-                            print_message("Main connection lost, Proxy connection estabilished.");
+                            print_message("!! Main connection lost, Proxy connection estabilished.");
                             this.player.latency = 80;
                             DATA["installed"].splice(proxy, 1);
                             DATA["programs"].splice(proxy, 1);
@@ -259,7 +259,7 @@ class DungeonGrid {
                 this.player_at = to;
                 var scavenger = DATA["installed"].indexOf("Scavenger");
                 if (scavenger >= 0 && Math.random() < 0.015) {
-                    print_message("Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
+                    print_message("!! Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
                     
                 }
             }

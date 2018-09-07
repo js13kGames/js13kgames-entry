@@ -43,7 +43,7 @@ class Player extends Entity {
             }
         } else if (other.type == "goal") {
             other.destroy = true;
-            print_message(">> You reached your goal!");
+            print_message("!! You reached your goal!");
             DATA["level"]++;
             startDungeon();
         }
