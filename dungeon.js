@@ -89,9 +89,6 @@ class DungeonGrid {
             player_spawned = false,
             goal_spawned = false,
             goal_start = null;
-        enemies_to_spawn = 0;
-        traps_to_spawn = 0;
-        items_to_spawn = 1;
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
             var rand_point = this.randomRoom().randomPoint(),
