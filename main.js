@@ -23,10 +23,12 @@ function handleEvents(evt) {
         GAME_OVER = false;
         startGame();
     }
-    if(evt.key === "Enter") { user_command(); }
-    if(evt.key === "Escape") { terminal_input.focus(); }
-    if(evt.key === "Control") { GAME_OVER = true; }
-    control.cur_scene.handle(evt)
+    if (!GAME_OVER) {
+        if(evt.key === "Enter") { user_command(); }
+        if(evt.key === "Escape") { terminal_input.focus(); }
+        if(evt.key === "Control") { GAME_OVER = true; }
+        control.cur_scene.handle(evt)
+    }
 }
 
 function startGame(){

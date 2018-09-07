@@ -12,6 +12,7 @@ function user_command() {
     var cmd = terminal_input.value;
     print_message(">>> " + cmd)
     terminal_input.value = "";
+    if (GAME_OVER) { return; }
     if (control.cur_scene.type == "menu") { return; }
     if (cmd == "help") {
         print_message(commandlist["help"]);
