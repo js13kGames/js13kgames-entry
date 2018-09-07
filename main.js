@@ -49,8 +49,7 @@ function reset() {
         "scripts": ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hack"],
         "installed": [],
         "money": 0,
-        "memory": 3,
-        "processing": 10
+        "memory": 3
     }
 }
 

@@ -15,7 +15,6 @@ SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hac
 SCRIPTS = {
     "Scan" : {
         "msg" : "Scanning surroundings...",
-        "cost": 3,
         "run" : function(dungeon) {
                     for (var y=0; y < dungeon.size; y++) {
                         for (var x=0; x < dungeon.size; x++) {
@@ -26,19 +25,16 @@ SCRIPTS = {
     },
     "Refresh" : {
         "msg" : "Teleporting back to the start...",
-        "cost" : 5,
         "run" :  function(dungeon) {
                     dungeon.moveEntity(dungeon.player_at, dungeon.player_start);
                 }
     },
     "Reconnect" : {
         "msg" : "Restoring Neural Link connection...",
-        "cost" : 2,
         "run" : function(dungeon) { dungeon.player.latency += 40; }
     },
     "Glitch" : {
         "msg" : "All enemies are now paralyzed.",
-        "cost" : 5,
         "run" : function(dungeon) {
             for (var y=0; y < dungeon.size; y++) {
                 for (var x=0; x < dungeon.size; x++) {
@@ -52,7 +48,6 @@ SCRIPTS = {
     },
     "Ping" : {
         "msg" : "Deals damage to all enemies you can see.",
-        "cost" : 2,
         "run" : function(dungeon) {
             var center = dungeon.player_at;
             for(var y=center.y-PLAYER_VISION; y<center.y+PLAYER_VISION; y++) {
@@ -69,7 +64,6 @@ SCRIPTS = {
     },
     "Hack" : {
         "msg" : "Hacking surrounding walls into passable tiles.",
-        "cost" : 5,
         "run" : function(dungeon) {
             var center = dungeon.player_at;
             for(var y=center.y-2; y<center.y+2; y++) {
