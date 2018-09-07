@@ -81,18 +81,29 @@ class DungeonScene extends Scene {
 
                 if (tile["fow"] == 0) {
                     // Explored map
-                    if ( !tile["isWall"] ) {
-                        ctx.fillStyle = '#ccc';
+                    if ( tile["isWall"] ) {
+                        ctx.fillStyle = "#1f774d55";
+                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    } else {
+                        if (tile["isHall"]) {
+                            ctx.fillStyle = '#caca5655';
+                        } else {
+                            ctx.fillStyle = '#1a1a1a55';
+                        }
                         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     }
                 }
                 if (tile["fow"] == 1) {
                     // Visible map
                     if ( tile["isWall"] ) {
-                        ctx.strokeStyle = "#555";
-                        ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                        ctx.fillStyle = "#1f774d";
+                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     } else {
-                        ctx.fillStyle = '#fff';
+                        if (tile["isHall"]) {
+                            ctx.fillStyle = '#caca56';
+                        } else {
+                            ctx.fillStyle = '#1a1a1a';
+                        }
                         ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     }
                     

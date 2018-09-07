@@ -13,7 +13,7 @@ class DungeonGrid {
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "entity": null, "trap": null, "item": null, "fow": -1};
+                this.grid[y][x] = {"isWall": true, "isHall": false, "entity": null, "trap": null, "item": null, "fow": -1};
             }
         }
     }
@@ -71,8 +71,11 @@ class DungeonGrid {
         for(var i=0; i<this.halls.length; i++) {
             var points = this.halls[i].asPointArray();
             for(var p=0; p<points.length; p++) {
-                var point = points[p];
-                this.getTile(point)["isWall"] = false;
+                var tile = this.getTile(points[p]);
+                if (tile["isWall"]) {
+                    tile["isWall"] = false;
+                    tile["isHall"] = true;
+                }
             }
         }
 
