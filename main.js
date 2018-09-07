@@ -19,7 +19,6 @@ reset();
 canvas.addEventListener( 'click', handleEvents );
 document.addEventListener( 'keyup', handleEvents );
 
-
 function handleEvents(evt) {
     if( GAME_OVER && GO_timer > 5000 && (evt.type == "keyup" || evt.type == "click") ) {
         GAME_OVER = false;

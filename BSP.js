@@ -2,10 +2,10 @@ function createHall(lChild, rChild, hallways) {
     // Connects two rooms with hallways in a straight line or a pair of lines.
 
     // Gets two random points, one in each room
-    var point1 = [randint(lChild.left + 1, lChild.right - 2),
-                  randint(lChild.top + 1, lChild.bottom - 2)];
-    var point2 = [randint(rChild.left + 1, rChild.right - 2),
-                  randint(rChild.top + 1, rChild.bottom - 2)];
+    var point1 = [randint(lChild.left , lChild.right),
+                  randint(lChild.top, lChild.bottom)];
+    var point2 = [randint(rChild.left , rChild.right),
+                  randint(rChild.top , rChild.bottom)];
 
     // The difference between the positions of both points
     w = point2[0] - point1[0];
@@ -45,7 +45,8 @@ function createHall(lChild, rChild, hallways) {
                 hallways.push( new Rect(point1[0], point2[1], Math.abs(w), 1) );
                 hallways.push( new Rect(point1[0], point2[1], 1, Math.abs(h)) );
             } else {
-                hallways.push( new Rect(point1[0], point1[1], Math.abs(w), 1) );
+                // The +1 here fixes a bug where the corridors would not connect
+                hallways.push( new Rect(point1[0], point1[1], Math.abs(w) +1, 1) );
                 hallways.push( new Rect(point2[0], point2[1], 1, Math.abs(h)) );
             }
 

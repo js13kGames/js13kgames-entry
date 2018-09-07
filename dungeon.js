@@ -13,7 +13,7 @@ class DungeonGrid {
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "isHall": false, "entity": null, "trap": null, "item": null, "fow": -1};
+                this.grid[y][x] = {"isWall": true, "isHall": false, "entity": null, "trap": null, "item": null, "fow": 0};
             }
         }
     }
@@ -54,7 +54,7 @@ class DungeonGrid {
             }
             splitted = false;
         }
-        
+
         root.createRooms(this.halls, this.rooms);
 
         // Set the grid elements as walls or not walls.
@@ -89,7 +89,9 @@ class DungeonGrid {
             player_spawned = false,
             goal_spawned = false,
             goal_start = null;
-        
+        enemies_to_spawn = 0;
+        traps_to_spawn = 0;
+        items_to_spawn = 1;
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
             var rand_point = this.randomRoom().randomPoint(),
