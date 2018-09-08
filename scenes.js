@@ -85,6 +85,13 @@ class DungeonScene extends Scene {
                         ctx.fillStyle = '#262626';
                     }
                     ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
+
+                    if (tile["entity"]) {
+                        if (tile["entity"].type === "goal") {
+                            ctx.fillStyle = '#9b9b30';
+                        }
+                        ctx.fillRect(x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                    }
                 }
                 if (tile["fow"] == 1) {
                     // Visible map
