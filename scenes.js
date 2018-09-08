@@ -3,7 +3,6 @@ class Scene {
     constructor(type) { 
         this.type = type;
         this.buttons = [];
-        this.ani = [];
     }
     draw() {
         ctx.fillStyle = "rgb(25,25,25)";
@@ -26,7 +25,6 @@ class MenuScene extends Scene {
     draw() {
         clearCanvas();
         for(var b=0; b<this.buttons.length; b++) { this.buttons[b].draw(); }
-        for(var a=0; a<this.ani.length; a++) { this.ani[a].draw(); if(this.ani[a].destroy) { this.ani.splice(a, 1); } }
     }
     handle() {
         // When a click event is generated, checks if the user has clicked
