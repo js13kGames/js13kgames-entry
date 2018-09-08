@@ -87,7 +87,7 @@ class DungeonScene extends Scene {
 
                     if (tile["entity"]) {
                         if (tile["entity"].type === "goal") {
-                            ctx.fillStyle = '#9b9b30';
+                            ctx.fillStyle = '#562a7c';
                         }
                         ctx.fillRect(x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                     }
@@ -111,6 +111,7 @@ class DungeonScene extends Scene {
                     
                     if (tile["item"]) {
                         ctx.fillStyle = 'green';
+                        if (tile['item'] == "password") { ctx.fillStyle = 'yellow'; }
                         ctx.fillRect(x * TILESIZE +3, y * TILESIZE +3, TILESIZE-3, TILESIZE-3);
                     }
                     
@@ -122,7 +123,7 @@ class DungeonScene extends Scene {
                             ctx.fillStyle = 'orange';
                         }
                         if (tile["entity"].type === "goal") {
-                            ctx.fillStyle = 'yellow';
+                            ctx.fillStyle = 'purple';
                         }
                         if (tile["entity"].type === "firewall") {
                             ctx.fillStyle = 'red';
