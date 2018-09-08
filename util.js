@@ -131,11 +131,12 @@ function clearCanvas() {
 }
 
 class Animation extends Rect {
-    constructor(x, y, width, height, rgbArray, time) {
+    constructor(x, y, width, height, rgbArray, time, itensity) {
         super(x, y, width, height);
         this.start = delta;
         this.destroy = false;
         this.time = time;
+        this.itensity = itensity;
         this.color = rgbArray;
     }
 
@@ -143,12 +144,12 @@ class Animation extends Rect {
         var alpha = (delta - this.start) / (1000 * this.time);
         ctx.fillStyle = "rgba(" + this.color + "," + alpha + ")";
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        if (alpha > this.time) {this.destroy = true;}
+        this.destroy = alpha > this.itensity;
     }
 }
 
-function playAnimation(x, y, size, color, time) {
-    control.cur_scene.ani.push( new Animation(x, y, size, size, color, time) );
+function playAnimation(x, y, size, color, time=0.1, itensity=0.6) {
+    control.cur_scene.ani.push( new Animation(x, y, size, size, color, time, itensity) );
 }
 
 

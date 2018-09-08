@@ -26,7 +26,7 @@ SCRIPTS = {
     "Scan" : {
         "msg" : "Scanning surroundings...",
         "run" : function(dungeon) {
-                    playAnimation(0, 0, canvas.width, [0,255,0], 0.3);
+                    playAnimation(0, 0, canvas.width, [0,255,0]);
                     for (var y=0; y < dungeon.size; y++) {
                         for (var x=0; x < dungeon.size; x++) {
                             dungeon.grid[y][x]["fow"] = 1;
@@ -37,7 +37,7 @@ SCRIPTS = {
     "Refresh" : {
         "msg" : "Teleporting back to the start...",
         "run" :  function(dungeon) {
-                    playAnimation(0, 0, canvas.width, [66,134,244], 0.3);
+                    playAnimation(0, 0, canvas.width, [66,134,244]);
                     dungeon.moveEntity(dungeon.player_at, dungeon.player_start);
                 }
     },
@@ -51,11 +51,11 @@ SCRIPTS = {
     "Glitch" : {
         "msg" : "All enemies are now paralyzed.",
         "run" : function(dungeon) {
+            playAnimation(0, 0, canvas.width, [232,232,95]);
             for (var y=0; y < dungeon.size; y++) {
                 for (var x=0; x < dungeon.size; x++) {
                     var entity = dungeon.grid[y][x]["entity"];
                     if (entity && entity.type == "enemy") {
-                        playAnimation(0, 0, canvas.width, [232,232,95], 0.3);
                         entity.status["stun"] += 3;
                     }
                 }
