@@ -57,6 +57,7 @@ SCRIPTS = {
         "msg" : "Restoring Neural Link connection...",
         "run" : function(dungeon) {
             playFloatText(dungeon.player_at.x, dungeon.player_at.y, "+", 'green');
+            playBullet(dungeon.player_at.x, dungeon.player_at.y, 10, [0,0,255]);
             DATA["latency"] -= 40;
         }
     },
@@ -75,9 +76,10 @@ SCRIPTS = {
         }
     },
     "Ping" : {
-        "msg" : "Deals damage to all enemies you can see.",
+        "msg" : "Sending packets to enemies...",
         "run" : function(dungeon) {
             var center = dungeon.player_at;
+            playBullet(center.x, center.y, 70, [255,0,0]);
             for(var y=center.y-PLAYER_VISION; y<center.y+PLAYER_VISION; y++) {
                 for(var x=center.x-PLAYER_VISION; x<center.x+PLAYER_VISION; x++) {
                     if (y >= 0 && y < dungeon.size && x >= 0 && x < dungeon.size) {
@@ -95,8 +97,9 @@ SCRIPTS = {
         "msg" : "Hacking surrounding walls into passable tiles.",
         "run" : function(dungeon) {
             var center = dungeon.player_at;
-            for(var y=center.y-3; y<center.y+3; y++) {
-                for(var x=center.x-3; x<center.x+3; x++) {
+            playBullet(center.x, center.y, 70, [100,100,100]);
+            for(var y=center.y-3; y<center.y+4; y++) {
+                for(var x=center.x-3; x<center.x+4; x++) {
                     if (y >= 1 && y < dungeon.size-1 && x >= 1 && x < dungeon.size-1) {
                         playFloatText(x, y, "10110100", 'gray');
                         dungeon.getTile(x, y)["isWall"] = false;
