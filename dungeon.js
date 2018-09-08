@@ -236,7 +236,7 @@ class DungeonGrid {
             player_tile["item"] = null;
         }
 
-        if (this.player.latency > 400 && !this.player.destroy) {
+        if (DATA["latency"] > 400 && !this.player.destroy) {
             this.player.destroy = true;
             playFloatText(this.player_at.x, this.player_at.y, "OFFLINE", 'red', 16);
         } // Player dies
@@ -271,7 +271,7 @@ class DungeonGrid {
                         } else {
                             print_message("!! Main connection lost, Proxy connection estabilished.");
                             this.moveEntity(this.player_at, this.player_start);
-                            this.player.latency = 80;
+                            DATA["latency"] = 80;
                             this.player.destroy = false;
                             DATA["installed"].splice(proxy, 1);
                             DATA["programs"].splice(proxy, 1);
@@ -344,7 +344,7 @@ class DungeonGrid {
         if (this.player.status['poison'] > 0) {
             this.player.status['poison']--;
             var dmg = randint(1, 30);
-            this.player.latency += dmg;
+            DATA['latency'] += dmg;
             playFloatText(this.player_at.x, this.player_at.y, dmg, 'green');
             playBullet(this.player_at.x, this.player_at.y, 3, [70,130,42]);
         }

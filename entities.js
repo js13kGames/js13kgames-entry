@@ -11,7 +11,6 @@ class Entity {
 class Player extends Entity {
     constructor(dungeon, pos) {
         super(dungeon, pos)
-        this.latency = 80;
         this.type = "player";
         this.status = {"stun": 0, "poison": 0};
     }
@@ -36,9 +35,9 @@ class Player extends Entity {
             if (other.hp <= 0) {
                 other.destroy = true;
                 DATA["bits"]++;
-                if (DATA["installed"].indexOf("Maintenance") > -1 && this.latency > 40) {
+                if (DATA["installed"].indexOf("Maintenance") > -1 && DATA["latency"] > 40) {
                     print_message(">> Maintenance repairs your connection by 20ms.")
-                    this.latency -= 20;
+                    DATA["latency"] -= 20;
                 }
                 playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
             }
@@ -94,7 +93,7 @@ class Enemy extends Entity {
             }
 
             var dmg = randint(0, 21) + this.dmg; // Dmg roll
-            other.latency += dmg
+            DATA["latency"] += dmg
             print_message("<< Enemy is trying to cut your connection, increased latency by " + dmg + "ms !");
             if (this._class == "tough" && Math.random() < 0.05) {
                 print_message("<< Enemy has stunned you!");
@@ -106,7 +105,7 @@ class Enemy extends Entity {
             }
             playFloatText(other.pos.x, other.pos.y, "+" + dmg + "ms", 'yellow');
             playBullet(other.pos.x, other.pos.y, 3, [234, 175, 58]);
-            if (other.latency == 0) { other.destroy = true; }
+            if (DATA["latency"] == 0) { other.destroy = true; }
         }
     }
     turn(dungeon) {
@@ -136,7 +135,7 @@ class Enemy extends Entity {
                 playBullet(this.pos.x, this.pos.y, 30, [255,0,0]);
                 this.destroy = true;
                 if (to_player.length == 1) {
-                    this.dungeon.player.latency += this.dmg;
+                    DATA["latency"] += this.dmg;
                     print_message("<< Enemy heavily damaged your connetion, increased latency by " + this.dmg + "ms !");
                     playFloatText(this.dungeon.player_at.x, this.dungeon.player_at.y, "+" + this.dmg + "ms", 'yellow');
                  }

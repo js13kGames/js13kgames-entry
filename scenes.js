@@ -155,12 +155,11 @@ class DungeonScene extends Scene {
     }
 
     update() {
-        var latency = this.dungeon.player.latency,
-            latency_text = "Latency: " + this.dungeon.player.latency + "ms";
+        var latency_text = "Latency: " + DATA["latency"] + "ms";
 
-        if (latency < 81) { var latency_level = "#0dc600"; }
-        else if (latency < 171) { var latency_level = "#e0e000"; }
-        else if (latency < 301) { var latency_level = "#c66600"; }
+        if (DATA["latency"] < 81) { var latency_level = "#0dc600"; }
+        else if (DATA["latency"] < 171) { var latency_level = "#e0e000"; }
+        else if (DATA["latency"] < 301) { var latency_level = "#c66600"; }
         else { var latency_level = "#ff0000"; }
         
         this.buttons = [];

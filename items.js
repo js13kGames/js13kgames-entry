@@ -5,7 +5,7 @@ TRAPS = {
         dmg = randint(1, 11) * 10;
         print_message("<< Stepped on a disconnection trap, received " + dmg + " damage.")
         playFloatText(target.pos.x, target.pos.y, dmg, 'red');
-        target.latency += dmg;
+        DATA["latency"] += dmg;
         playBullet(target.pos.x, target.pos.y);
     },
     "stun": function(target) {
@@ -48,7 +48,7 @@ SCRIPTS = {
         "msg" : "Restoring Neural Link connection...",
         "run" : function(dungeon) {
             playFloatText(dungeon.player_at.x, dungeon.player_at.y, "+", 'green');
-            dungeon.player.latency -= 40;
+            DATA["latency"] -= 40;
         }
     },
     "Glitch" : {

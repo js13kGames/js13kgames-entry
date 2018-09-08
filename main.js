@@ -62,6 +62,7 @@ function reset() {
     terminal_input.focus();
 
     DATA = {
+        "latency": 80,
         "programs": [],
         "scripts": [],
         "installed": [],
