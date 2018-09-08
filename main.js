@@ -1,4 +1,5 @@
 var canvas = document.getElementById("screen");
+var D_SIZE = 600;
 var ctx = canvas.getContext('2d');
 var terminal_window = document.getElementById("terminal-window");
 var terminal_input = document.getElementById("terminal-input");

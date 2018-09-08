@@ -167,6 +167,8 @@ class DungeonScene extends Scene {
         this.addButton(canvas.width-200, canvas.height-20, 200, 20, latency_text, 20, latency_level);
         this.addButton(0, canvas.height-20, 200, 20, "Version: " + DATA["version"] + "." + DATA["bits"] , 20, "#0dc600");
         this.addButton(canvas.width/2-100, canvas.height-20, 200, 20, "Level: " + DATA["level"], 20, "#0dc600");
+        this.addButton(0, canvas.height-40, 200, 20, "Pass: " + DATA["passwords"], 20, "#0dc600");
+        this.addButton(canvas.width-200, canvas.height-40, 200, 20, "Mem: " + DATA["installed"].length + "/3" , 20, "#0dc600");
         if (GAME_OVER) {
             var alpha = GO_timer / 3000;
             this.addButton(canvas.width/2-150, canvas.height/2-50, 300, 50, "GAME OVER", 40, 'rgba(255,0,0,' + alpha + ")");
