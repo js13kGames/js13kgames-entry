@@ -70,6 +70,7 @@ class Enemy extends Entity {
         this.dmg = dmg; // Damage
         this.type = "enemy";
         this.status = "";
+        this.player_in_range = false;
     }
     interactWith(other) {
         if (other.type == "player") {
@@ -86,16 +87,19 @@ class Enemy extends Entity {
     }
     turn(dungeon) {
         if (this.hp <= 0) { this.destroy = true; }
-        if (this.stats == "stun3") { this.stats = "stun2"; return;}
-        if (this.stats == "stun2") { this.stats = "stun1"; return;}
-        if (this.stats == "stun1") { this.stats = ""; return;}
+        if (this.status.startsWith('stun') && this.player_in_range) {
+            playFloatText(this.pos.x*TILESIZE + TILESIZE/2, this.pos.y*TILESIZE, "X", 'yellow');
+        }
+        if (this.status == "stun3") { this.status = "stun2"; return;}
+        if (this.status == "stun2") { this.status = "stun1"; return;}
+        if (this.status == "stun1") { this.status = ""; return;}
         var from = this.pos,
             to = new Vector(from),
             to_player = new Vector(from);
 
         to_player.subtract(dungeon.player_at);
         
-        if (to_player.length < PLAYER_VISION) {
+        if (this.player_in_range) {
             if (to_player.length == 1) {
                 this.interactWith(dungeon.player)
             } else {
@@ -110,6 +114,7 @@ class Enemy extends Entity {
                 case 4: {to.add(0, -1); break;}
             }
         }
+        if (to_player.length < PLAYER_VISION) { this.player_in_range = true;}
 
         this.dungeon.moveEntity(from, to);
     }

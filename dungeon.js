@@ -183,9 +183,16 @@ class DungeonGrid {
             player_tile["item"] = null;
         }
 
-        if (this.player.latency > 400) { this.player.destroy = true; } // Player dies
-        if (DATA["bits"] > 9) { DATA["bits"] = 0; DATA["version"]++;
-                                print_message("<< Version Update! Stats increased.")} // Level up
+        if (this.player.latency > 400 && !this.player.destroy) {
+            this.player.destroy = true;
+            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "OFFLINE", 'red', 16);
+        } // Player dies
+        if (DATA["bits"] > 9) { // Level up
+            DATA["bits"] = 0;
+            DATA["version"]++;
+            print_message("<< Version Update! Stats increased.")
+            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "UPDATE", 'blue');
+        }
 
         // Enemy turn
         var to_destroy = [];
@@ -206,15 +213,21 @@ class DungeonGrid {
                             print_message("!! Connection lost... Systems shutting down... You're now offline...");
                             print_message("GAME OVER");
                             GAME_OVER = true;
+                            to_destroy.push(e);
+                            this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                         } else {
                             print_message("!! Main connection lost, Proxy connection estabilished.");
+                            this.moveEntity(this.player_at, this.player_start);
                             this.player.latency = 80;
+                            this.player.destroy = false;
                             DATA["installed"].splice(proxy, 1);
                             DATA["programs"].splice(proxy, 1);
+                            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "CONNECTED", 'blue', 16);
                         }
+                    } else {
+                        to_destroy.push(e);
+                        this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                     }
-                    to_destroy.push(e);
-                    this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                 }
             }
         }
@@ -291,9 +304,9 @@ class DungeonGrid {
             // If the player is moving, update the tracker
             if (entity.type == "player") {
                 this.player_at = to;
-                if (DATA["installed"].indexOf("Scavenger") > -1 && Math.random() < 0.015) {
+                if (DATA["installed"].indexOf("Scavenger") > -1 && Math.random() < 0.05) {
                     print_message("!! Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
-                    
+                    playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "!!", 'blue');
                 }
             }
         }
