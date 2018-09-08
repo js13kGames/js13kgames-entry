@@ -28,16 +28,17 @@ class MenuScene extends Scene {
            this.buttons[b].draw();
         }
     }
-    handle(evt) {
+    handle() {
         // When a click event is generated, checks if the user has clicked
         // on a button.
-        var clicked_at = getCursorPosition(canvas, evt);
-
-        for(var b=0; b<this.buttons.length; b++){
-            var button = this.buttons[b];
-            if( button.callback && button.hasPoint(clicked_at) ) {
-                button.callback();
+        if (click) {
+            for(var b=0; b<this.buttons.length; b++){
+                var button = this.buttons[b];
+                if( button.callback && button.hasPoint(click_at) ) {
+                    button.callback();
+                }
             }
+            click = false;
         }
     }
     update() {
@@ -135,40 +136,21 @@ class DungeonScene extends Scene {
         for(var a=0; a<this.ani.length; a++) { this.ani[a].draw(); if(this.ani[a].destroy) { this.ani.splice(a, 1); } }
     }
 
-    handle(evt) {
-        if (evt.type == "keyup") {
-            if (!this.dungeon.player_at) { return; } // There is no player to move
-    
-            // Flag so only the arrows keys will raise a turn execution.
-            var noMovement = false,
-                from = this.dungeon.player_at,
-                to = new Vector(this.dungeon.player_at);
-    
-            switch (evt.key) {
-                case "ArrowUp": {
-                    to.add(0, -1);
-                    break;
-                }
-                case "ArrowLeft": {
-                    to.add(-1, 0);
-                    break;
-                }
-                case "ArrowDown": {
-                    to.add(0, 1);
-                    break;
-                }
-                case "ArrowRight": {
-                    to.add(1, 0);
-                    break;
-                }
-                default: {
-                    noMovement = true;
-                }
-            }
-            if (!noMovement) {
-                this.dungeon.moveEntity(from, to);
-                this.dungeon.executeTurn();
-            }
+    handle() {
+        if (!this.dungeon.player_at) { return; }
+
+        var noMovement = false,
+            from = this.dungeon.player_at,
+            to = new Vector(this.dungeon.player_at);
+
+        if (keys['left']) { to.add(-1, 0);
+        } else if (keys['up']) { to.add(0, -1);
+        } else if (keys['right']) { to.add(1, 0);
+        } else if (keys['down']) { to.add(0, 1);
+        } else { noMovement = true; }
+        if (!noMovement) {
+            this.dungeon.moveEntity(from, to);
+            this.dungeon.executeTurn();
         }
     }
 

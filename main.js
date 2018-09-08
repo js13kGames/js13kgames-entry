@@ -8,27 +8,39 @@ var GAME_OVER;
 var PLAYER_VISION = 5;
 var gameloop;
 var EXP_TO_LEVEL = 100;
-var FPS = 30;
+var FPS = 90;
 var GO_timer = 0; // Game over timer
 var delta = 0; // Game over timer
 var TILESIZE = 15;
-// var PLAYER_VISION = 15;
+var keys = {"left": false, "up": false, "right": false, "down": false};
+var click_at = null;
+var click = false;
 
 reset();
 
-canvas.addEventListener( 'click', handleEvents );
-document.addEventListener( 'keyup', handleEvents );
+canvas.addEventListener( 'click', handler );
+document.addEventListener( 'keyup', handler);
+document.addEventListener( 'keydown', handler);
 
-function handleEvents(evt) {
+function handler(evt) {
+    if (evt.type == "click") {
+        click_at = getCursorPosition(canvas, evt);
+        click = true;
+    }
     if( GAME_OVER && GO_timer > 5000 && (evt.type == "keyup" || evt.type == "click") ) {
         GAME_OVER = false;
         startGame();
     }
     if (!GAME_OVER) {
+        var press = evt.type == "keydown";
+        if (evt.keyCode == 37) { keys['left'] = press }
+        if (evt.keyCode == 38) { keys['up'] = press }
+        if (evt.keyCode == 39) { keys['right'] = press }
+        if (evt.keyCode == 40) { keys['down'] = press }
+
         if(evt.key === "Enter") { user_command(); }
         if(evt.key === "Escape") { terminal_input.focus(); }
         if(evt.key === "Control") { GAME_OVER = true; }
-        control.cur_scene.handle(evt)
     }
 }
 
@@ -63,6 +75,7 @@ function reset() {
 }
 
 function gameLoop() {
+    control.cur_scene.handle()
     control.update();
     control.draw();
 
