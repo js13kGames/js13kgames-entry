@@ -72,15 +72,19 @@ class Enemy extends Entity {
         var color, hp, ac, att, dmg;
         if (_class == "common") { color='#ffac3f'; hp=3; ac=12; att=2; dmg=10; // Common enemy
         } else if (_class == "tough") { color='#773b00'; hp=5; ac=14; att=1; dmg=5; // Tough enemy
-        } else if (_class == "glass") { color='#ff753a'; hp=2; ac=10; att=3; dmg=20; } // Glass cannon
+        } else if (_class == "glass") { color='#ff753a'; hp=2; ac=10; att=3; dmg=20; // Glass cannon
+        } else if (_class == "poison") { color='#617500'; hp=3; ac=12; att=2; dmg=10; // Poison
+        } else if (_class == "explosive") { color='#770000'; hp=1; ac=14; att=0; dmg=80; // Explosive
+        } 
 
+        this._class = _class;
         this.color = color;
         this.hp = hp;
         this.ac = ac;  // Armor class
         this.att = att;  // Accuracy
         this.dmg = dmg; // Damage
         this.type = "enemy";
-        this.status = {"stun": 0, "poison": 0};
+        this.status = {"stun": 0, "poison": 0, "explosion": 3};
         this.player_in_range = false;
     }
     interactWith(other) {
@@ -90,9 +94,18 @@ class Enemy extends Entity {
                 playFloatText(other.pos.x, other.pos.y, "miss", 'white');
                 return;
             }
+
             var dmg = randint(0, 21) + this.dmg; // Dmg roll
             other.latency += dmg
-            print_message("<< Enemy is trying to cut your connection, increased latency by 10ms!");
+            print_message("<< Enemy is trying to cut your connection, increased latency by " + dmg + "ms !");
+            if (this._class == "tough" && Math.random() < 0.05) {
+                print_message("<< Enemy has stunned you!");
+                other.status["stun"] = 3;
+            }
+            if (this._class == "poison") {
+                print_message("<< The enemy's attacks are slowly degrading your connection!");
+                other.status["poison"] = 10;
+            }
             playFloatText(other.pos.x, other.pos.y, "+" + dmg + "ms", 'yellow');
             playBullet(other.pos.x, other.pos.y, 3, [234, 175, 58]);
             if (other.latency == 0) { other.destroy = true; }
@@ -111,12 +124,36 @@ class Enemy extends Entity {
             this.status['stun']--;
             return;
         }
+
         var from = this.pos,
             to = new Vector(from),
             to_player = new Vector(from);
 
         to_player.subtract(dungeon.player_at);
-        
+
+        if (this._class == "explosive" && this.status["explosion"] < 3) {
+            playFloatText(this.pos.x, this.pos.y, this.status["explosion"], 'red');
+
+            if (this.status["explosion"] == 0) {
+                playBullet(this.pos.x, this.pos.y, 30, [255,0,0]);
+                this.destroy = true;
+                if (to_player.length == 1) {
+                    this.dungeon.player.latency += this.dmg;
+                    print_message("<< Enemy heavily damaged your connetion, increased latency by " + this.dmg + "ms !");
+                    playFloatText(this.dungeon.player_at.x, this.dungeon.player_at.y, "+" + this.dmg + "ms", 'yellow');
+                 }
+            }
+
+            this.status["explosion"]--;
+            return;
+        }
+        if (this._class == "explosive" && to_player.length == 1) {
+            playFloatText(this.pos.x, this.pos.y, this.status["explosion"], 'red');
+            this.status["explosion"]--;
+            return;
+        }
+
+
         if (this.player_in_range) {
             if (to_player.length == 1) {
                 this.interactWith(dungeon.player)

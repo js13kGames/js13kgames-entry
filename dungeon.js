@@ -177,10 +177,36 @@ class DungeonGrid {
                 } else if (DATA['level'] == 2) {
                     if (roll < 0.5) {  _class="common";
                     } else { _class="tough"; }
-                } else if (DATA['level'] >= 3) {
+                } else if (DATA['level'] == 3) {
                     if (roll < 0.4) { _class="common";
                     } else if (roll < 0.7) { _class="tough";
                     } else { _class="glass"; }
+                } else if (DATA['level'] == 4) {
+                    if (roll < 0.3) { _class="common";
+                    } else if (roll < 0.6) { _class="tough";
+                    } else if (roll < 0.9) { _class="glass";
+                    } else { _class="poison"; }
+                } else if (DATA['level'] == 5) {
+                    if (roll < 0.1) { _class="common";
+                    } else if (roll < 0.4) { _class="tough";
+                    } else if (roll < 0.7) { _class="glass";
+                    } else { _class="poison"; }
+                } else if (DATA['level'] == 6) {
+                    if (roll < 0.3) { _class="tough";
+                    } else if (roll < 0.4) { _class="glass";
+                    } else if (roll < 0.7) { _class="poison";
+                    } else { _class="explosive"; }
+                } else if (DATA['level'] == 7) {
+                    _class="explosive";
+                } else if (DATA['level'] == 8) {
+                    if (roll < 0.1) { _class="tough";
+                    } else if (roll < 0.2) { _class="glass";
+                    } else if (roll < 0.6) { _class="poison";
+                    } else { _class="explosive"; }
+                } else if (DATA['level'] >= 9) {
+                    if (roll < 0.1) { _class="tough";
+                    } else if (roll < 0.8) { _class="poison";
+                    } else { _class="explosive"; }
                 }
 
                 this.addEntity(new Enemy(this, rand_point, _class), rand_point);
@@ -190,7 +216,7 @@ class DungeonGrid {
     }
 
     executeTurn() {
-        // Player coomputation
+        // Player computation
         var player_tile = this.getTile(this.player_at);
         if (player_tile["trap"] && player_tile["trap"] != "exit") {
             TRAPS[player_tile["trap"]](this.player);
