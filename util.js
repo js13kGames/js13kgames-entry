@@ -142,8 +142,10 @@ class Animation extends Rect {
 
     draw() {
         var alpha = (delta - this.start) / (1000 * this.time);
-        ctx.fillStyle = "rgba(" + this.color + "," + alpha + ")";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (!this.destroy){
+            ctx.fillStyle = "rgba(" + this.color + "," + alpha + ")";
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
         this.destroy = alpha > this.itensity;
     }
 }
@@ -165,9 +167,11 @@ class FloatingText {
     }
 
     draw() {
-        ctx.font = this.fontsize + "px 'Courier New'";
-        ctx.fillStyle = this.color;
-        ctx.fillText(this.text, this.x, this.y);
+        if (!this.destroy) {
+            ctx.font = this.fontsize + "px 'Courier New'";
+            ctx.fillStyle = this.color;
+            ctx.fillText(this.text, this.x, this.y);
+        }
         this.y--;
         if (this.y < this.start_y-20) { this.destroy = true; }
     }
@@ -175,5 +179,31 @@ class FloatingText {
 
 function playFloatText(x, y, text, color='yellow', fontsize=10) {
     control.ani.push( new FloatingText(x*TILESIZE + TILESIZE/2, y*TILESIZE, text, fontsize, color) );
-    console.log(control);
+}
+
+class Bullet {
+    constructor(x, y, radius, rgbArray, time) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.start = delta;
+        this.color = rgbArray;
+        this.time = time;
+        this.destroy = false;
+    }
+
+    draw() {
+        var alpha = 1 - (delta - this.start) / (1000 * this.time);
+        if (!this.destroy) {
+            ctx.fillStyle = "rgba(" + this.color + "," + alpha + ")";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
+            ctx.fill();
+        }
+        this.destroy = alpha < 0;
+    }
+}
+
+function playBullet(x, y, radius=5, rgbArray=[255,0,0], time=0.5) {
+    control.ani.push( new Bullet(x*TILESIZE + TILESIZE/2, y*TILESIZE + TILESIZE/2, radius, rgbArray, time));
 }

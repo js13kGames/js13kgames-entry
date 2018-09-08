@@ -6,6 +6,7 @@ TRAPS = {
         print_message("<< Stepped on a disconnection trap, received " + dmg + " damage.")
         playFloatText(target.pos.x, target.pos.y, dmg, 'red');
         target.latency += dmg;
+        playBullet(target.pos.x, target.pos.y);
     },
     "stun": function(target) {
         print_message("<< Stepped on a disruption trap, your connection is unstable.")
