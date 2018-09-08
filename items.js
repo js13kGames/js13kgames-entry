@@ -56,9 +56,11 @@ SCRIPTS = {
     "Reconnect" : {
         "msg" : "Restoring Neural Link connection...",
         "run" : function(dungeon) {
-            playFloatText(dungeon.player_at.x, dungeon.player_at.y, "+", 'green');
             playBullet(dungeon.player_at.x, dungeon.player_at.y, 10, [0,0,255]);
-            DATA["latency"] -= 40;
+            var heal = randint(30, 80);
+            DATA["latency"] -= heal
+            if (DATA["latency"] < 16) { DATA["latency"] = 16 }
+            playFloatText(dungeon.player_at.x, dungeon.player_at.y, "-" + heal + "ms", 'green');
         }
     },
     "Glitch" : {

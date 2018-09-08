@@ -35,9 +35,10 @@ class Player extends Entity {
             if (other.hp <= 0) {
                 other.destroy = true;
                 DATA["bits"]++;
-                if (DATA["installed"].indexOf("Maintenance") > -1 && DATA["latency"] > 40) {
+                if (DATA["installed"].indexOf("Maintenance") > -1) {
                     print_message(">> Maintenance repairs your connection by 20ms.")
                     DATA["latency"] -= 20;
+                    if (DATA["latency"] < 16) { DATA["latency"] = 16 }
                 }
                 playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
             }
