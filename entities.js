@@ -16,14 +16,18 @@ class Player extends Entity {
     }
     interactWith(other) {
         if (other.type == "enemy") {
-            var roll = randint(1, 21); // Attack roll
-            if (roll + DATA["version"] < other.ac) {
+            // Attack roll
+            var roll = randint(1, 21),
+                bonus = DATA["installed"].indexOf("Linter") > -1 ? 3 : 0;
+            if (roll + DATA["version"] + bonus < other.ac) {
                 print_message(">> Missed your attack")
                 playFloatText(other.pos.x, other.pos.y, "miss", 'white');
                 return;
             }
 
-            var dmg = randint(1,7) + DATA["version"]; // Damage roll
+            // Damage roll
+            bonus = DATA["installed"].indexOf("Multithread") > -1 ? 3 : 0;
+            var dmg = randint(1,7) + DATA["version"] + bonus;
             other.hp -= dmg
 
             if (DATA["installed"].indexOf("Denial_Of_Service") > -1 && roll == 20) {
@@ -87,7 +91,8 @@ class Enemy extends Entity {
     }
     interactWith(other) {
         if (other.type == "player") {
-            if (randint(0, 20) < 10 + DATA["level"]) { // Attack roll, 10 is the base AC
+            var player_ac_bonus = DATA['installed'].indexOf("Redundancy") > -1 ? 3 : 0;
+            if (randint(0, 20) < 10 + DATA["level"] + player_ac_bonus) { // Attack roll, 10 is the base AC
                 print_message("<< Enemy tried to cut your connection, but failed!");
                 playFloatText(other.pos.x, other.pos.y, "miss", 'white');
                 return;

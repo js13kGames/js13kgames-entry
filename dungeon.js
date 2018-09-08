@@ -271,7 +271,7 @@ class DungeonGrid {
                 
                 if (entity.destroy) {
                     if (entity.type == "player") {
-                        var proxy = DATA["installed"].indexOf("Proxy");
+                        var proxy = DATA["installed"].indexOf("Backup");
                         if (proxy < 0) {
                             // Player dies
                             print_message("!! Connection lost... Systems shutting down... You're now offline...");
@@ -281,7 +281,7 @@ class DungeonGrid {
                             this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                         } else {
                             playAnimation(0, 0, canvas.width, [32, 249, 181]);
-                            print_message("!! Main connection lost, Proxy connection estabilished.");
+                            print_message("!! Main connection lost, backup connection estabilished.");
                             this.moveEntity(this.player_at, this.player_start);
                             DATA["latency"] = 80;
                             this.player.destroy = false;
