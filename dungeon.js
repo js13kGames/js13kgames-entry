@@ -99,6 +99,14 @@ class DungeonGrid {
             if (exits.length == 1 && Math.random() < 0.33) {
                 this.addEntity(new Entity(this, exits[0], "firewall"), exits[0]);
                 this.locked_rooms.push(room);
+
+                // Add something to the room
+                // 70% chance of spawning a program, 30% of script
+                if (Math.random < 0.7) { var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
+                } else { var item = SCRIPT_LIST[randint(0, SCRIPT_LIST.length)]; }
+
+                this.addItem(item, room.randomPoint());
+
                 keys_to_spawn++;
             } else if (keys_to_spawn) {
                 // Put the key into a room with more than 1 exit.
@@ -113,19 +121,19 @@ class DungeonGrid {
     populateDungeon() {
         var enemies_to_spawn = randint(this.size * 0.1, this.size * 0.3) + DATA["level"],
             traps_to_spawn = randint(1, this.size * 0.1) + DATA["level"],
-            items_to_spawn = randint(1, this.size * 0.05),
+            items_to_spawn = randint(1, this.size * 0.05 + 1),
             player_spawned = false,
             goal_spawned = false,
             goal_start = null;
 
         while(enemies_to_spawn + traps_to_spawn + items_to_spawn > 0) {
+            // A random point in a random room prevent elements of spawning on walls and corridors
             var rand_point = this.randomRoom().randomPoint(),
                 tile = this.getTile(rand_point),
                 locked=false;
 
             if (player_spawned && this.player_start == rand_point) { continue; }
             if (goal_spawned && goal_start == rand_point) { continue; }
-
             // Preventing the player to spawn in a locked room
             for (var r=0; r<this.locked_rooms.length; r++) {
                 if ( rand_point.isInside(this.locked_rooms[r].asPointArray()) ) { locked=true; }
@@ -146,13 +154,14 @@ class DungeonGrid {
                 goal_spawned = true;
                 goal_start = rand_point;
 
-            } else if (traps_to_spawn && tile['trap'] === null) {
+            } else if (traps_to_spawn && tile['trap'] == null && tile["entity"] == null) {
                 var trap = TRAP_LIST[randint(0, TRAP_LIST.length)];
                 this.addTrap(trap, rand_point);
                 traps_to_spawn--;
-            } else if (items_to_spawn && tile['item'] === null) {
+            } else if (items_to_spawn && tile['item'] == null && tile["entity"] == null) {
 
-                if (randint(0, 2)) {
+                // 30% chance of program, 70% of script
+                if (Math.random < 0.3) {
                     var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
                 } else {
                     var item = SCRIPT_LIST[randint(0, SCRIPT_LIST.length)];
