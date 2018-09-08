@@ -12,7 +12,11 @@ TRAPS = {
         playFloatText(target.pos.x, target.pos.y, "XXX", 'yellow');
         target.status["stun"] += 3;
     },
-    "poison": function(target) { print_message("<< Stepped on a worm trap, your connection is slowly degrading.") },
+    "poison": function(target) {
+        print_message("<< Stepped on a worm trap, your connection is slowly degrading.")
+        playFloatText(target.pos.x, target.pos.y, "###", 'green');
+        target.status["poison"] += 10;
+    },
 };
 
 PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];

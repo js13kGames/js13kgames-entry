@@ -90,9 +90,15 @@ class Enemy extends Entity {
         }
     }
     turn(dungeon) {
+        if (this.status["poison"] > 0) {
+            var dmg = 1;
+            if (this.player_in_range) { playFloatText(this.pos.x, this.pos.y, dmg, 'green') };
+            this.hp -= dmg;
+            this.status['poison']--;
+        }
         if (this.hp <= 0) { this.destroy = true; }
-        if (this.status['stun'] > 0 && this.player_in_range) {
-            playFloatText(this.pos.x, this.pos.y, "X", 'yellow');
+        if (this.status['stun'] > 0) {
+            if (this.player_in_range) { playFloatText(this.pos.x, this.pos.y, "X", 'yellow'); }
             this.status['stun']--;
             return;
         }

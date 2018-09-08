@@ -284,6 +284,12 @@ class DungeonGrid {
     }
 
     movePlayer(to) {    
+        if (this.player.status['poison'] > 0) {
+            this.player.status['poison']--;
+            var dmg = randint(1, 30);
+            this.player.latency += dmg;
+            playFloatText(this.player_at.x, this.player_at.y, dmg, 'green');
+        }
         if (this.player.status['stun'] > 0) {
             playFloatText(this.player_at.x, this.player_at.y, "X", 'yellow');
             this.player.status['stun']--;
