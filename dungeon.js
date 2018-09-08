@@ -14,7 +14,7 @@ class DungeonGrid {
         for (var y=0; y<size; y++) {
             this.grid[y] = [];
             for (var x=0; x<size; x++) {
-                this.grid[y][x] = {"isWall": true, "isHall": false, "entity": null, "trap": null, "item": null, "fow": 0};
+                this.grid[y][x] = {"isWall": true, "isHall": false, "entity": null, "trap": null, "item": null, "fow": -1};
             }
         }
     }

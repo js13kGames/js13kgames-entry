@@ -150,3 +150,29 @@ class Animation extends Rect {
 function playAnimation(x, y, size, color, time) {
     control.cur_scene.ani.push( new Animation(x, y, size, size, color, time) );
 }
+
+
+class FloatingText {
+    constructor(x, y, text, fontsize, color) {
+        this.x = x;
+        this.start_y = y;
+        this.y = y;
+        this.text = text;
+        this.fontsize = fontsize;
+        this.color = color;
+        this.destroy = false;
+    }
+
+    draw() {
+        ctx.font = this.fontsize + "px 'Courier New'";
+        ctx.fillStyle = this.color;
+        ctx.fillText(this.text, this.x, this.y);
+        this.y--;
+        if (this.y < this.start_y-20) { this.destroy = true; }
+    }
+}
+
+function playFloatText(x, y, text, color='yellow', fontsize=10) {
+    control.cur_scene.ani.push( new FloatingText(x, y, text, fontsize, color) );
+    console.log(control);
+}

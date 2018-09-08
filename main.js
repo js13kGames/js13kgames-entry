@@ -40,7 +40,6 @@ function handler(evt) {
 
         if(evt.key === "Enter") { user_command(); }
         if(evt.key === "Escape") { terminal_input.focus(); }
-        if(evt.key === "Control") { GAME_OVER = true; }
     }
 }
 
