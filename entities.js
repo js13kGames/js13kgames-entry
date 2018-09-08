@@ -67,8 +67,13 @@ class Player extends Entity {
 }
 
 class Enemy extends Entity {
-    constructor(dungeon, pos, color, hp, ac, att, dmg) {
-        super(dungeon, pos)
+    constructor(dungeon, pos, _class) {
+        super(dungeon, pos);
+        var color, hp, ac, att, dmg;
+        if (_class == "common") { color='#ffac3f'; hp=3; ac=12; att=2; dmg=10; // Common enemy
+        } else if (_class == "tough") { color='#773b00'; hp=5; ac=14; att=1; dmg=5; // Tough enemy
+        } else if (_class == "glass") { color='#ff753a'; hp=2; ac=10; att=3; dmg=20; } // Glass cannon
+
         this.color = color;
         this.hp = hp;
         this.ac = ac;  // Armor class

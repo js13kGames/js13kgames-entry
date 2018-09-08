@@ -169,21 +169,21 @@ class DungeonGrid {
                 this.addItem(item, rand_point);
                 items_to_spawn--;
             } else if (enemies_to_spawn && tile['entity'] === null) {
-                var roll, color, hp, ac, att, dmg;
+                var roll, _class;
                 roll = Math.random();
                 if (DATA['level'] == 1) {
-                    if (roll < 0.9) { color='#ffac3f'; hp=3; ac=12; att=2; dmg=10; // Common enemy
-                    } else { color='#773b00'; hp=5; ac=14; att=1; dmg=5; } // Tough enemy
+                    if (roll < 0.9) { _class="common";
+                    } else { _class="tough"; }
                 } else if (DATA['level'] == 2) {
-                    if (roll < 0.5) { color='#ffac3f'; hp=3; ac=12; att=2; dmg=10; // Common enemy
-                    } else { color='#773b00'; hp=5; ac=14; att=1; dmg=5; } // Tough enemy
+                    if (roll < 0.5) {  _class="common";
+                    } else { _class="tough"; }
                 } else if (DATA['level'] >= 3) {
-                    if (roll < 0.4) { color='#ffac3f'; hp=3; ac=12; att=2; dmg=10; // Common enemy
-                    } else if (roll < 0.7) { color='#773b00'; hp=5; ac=14; att=1; dmg=5; // Tough enemy
-                    } else { color='#ff753a'; hp=2; ac=10; att=3; dmg=20; } // Glass cannon
+                    if (roll < 0.4) { _class="common";
+                    } else if (roll < 0.7) { _class="tough";
+                    } else { _class="glass"; }
                 }
 
-                this.addEntity(new Enemy(this, rand_point, color, hp, ac, att, dmg), rand_point);
+                this.addEntity(new Enemy(this, rand_point, _class), rand_point);
                 enemies_to_spawn--;
             }
         }
