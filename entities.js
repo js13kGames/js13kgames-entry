@@ -20,7 +20,7 @@ class Player extends Entity {
             var roll = randint(1, 21); // Attack roll
             if (roll + DATA["version"] < other.ac) {
                 print_message(">> Missed your attack")
-                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "miss", 'white');
+                playFloatText(other.pos.x, other.pos.y, "miss", 'white');
                 return;
             }
 
@@ -30,7 +30,7 @@ class Player extends Entity {
             if (DATA["installed"].indexOf("Denial_Of_Service") > -1 && roll == 20) {
                 if (Math.random < 0.2) {
                     print_message(">> Denial_Of_Service successfully shut down the enemy's connection");
-                    playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "OFFLINE", 'red');
+                    playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
                     other.destroy = true;
                     DATA["bits"]++;
                 }
@@ -41,11 +41,11 @@ class Player extends Entity {
                     print_message(">> Maintenance repairs your connection by 20ms.")
                     this.latency -= 20;
                 }
-                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "OFFLINE", 'red');
+                playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
                 DATA["bits"]++;
             }
             if (!other.destroy) {
-                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, dmg, 'yellow');
+                playFloatText(other.pos.x, other.pos.y, dmg, 'yellow');
             }
         } else if (other.type == "goal") {
             other.destroy = true;
@@ -54,12 +54,12 @@ class Player extends Entity {
             startDungeon();
         } else if (other.type == "firewall") {
             if (DATA["passwords"] > 0) {
-                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "****", 'green');
+                playFloatText(other.pos.x, other.pos.y, "****", 'green');
                 other.destroy = true;
                 DATA["passwords"]--;
                 return;
             }
-            playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "****", 'red');
+            playFloatText(other.pos.x, other.pos.y, "****", 'red');
         }
     }
 }
@@ -79,20 +79,20 @@ class Enemy extends Entity {
         if (other.type == "player") {
             if (randint(0, 20) < 10 + DATA["level"]) { // Attack roll, 10 is the base AC
                 print_message("<< Enemy tried to cut your connection, but failed!");
-                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "miss", 'white');
+                playFloatText(other.pos.x, other.pos.y, "miss", 'white');
                 return;
             }
             var dmg = randint(0, 21) + this.dmg; // Dmg roll
             other.latency += dmg
             print_message("<< Enemy is trying to cut your connection, increased latency by 10ms!");
-            playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "+" + dmg + "ms", 'yellow');
+            playFloatText(other.pos.x, other.pos.y, "+" + dmg + "ms", 'yellow');
             if (other.latency == 0) { other.destroy = true; }
         }
     }
     turn(dungeon) {
         if (this.hp <= 0) { this.destroy = true; }
         if (this.status.startsWith('stun') && this.player_in_range) {
-            playFloatText(this.pos.x*TILESIZE + TILESIZE/2, this.pos.y*TILESIZE, "X", 'yellow');
+            playFloatText(this.pos.x, this.pos.y, "X", 'yellow');
         }
         if (this.status == "stun3") { this.status = "stun2"; return;}
         if (this.status == "stun2") { this.status = "stun1"; return;}

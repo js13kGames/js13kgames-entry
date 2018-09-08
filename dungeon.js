@@ -185,13 +185,13 @@ class DungeonGrid {
 
         if (this.player.latency > 400 && !this.player.destroy) {
             this.player.destroy = true;
-            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "OFFLINE", 'red', 16);
+            playFloatText(this.player_at.x, this.player_at.y, "OFFLINE", 'red', 16);
         } // Player dies
         if (DATA["bits"] > 9) { // Level up
             DATA["bits"] = 0;
             DATA["version"]++;
             print_message("<< Version Update! Stats increased.")
-            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "UPDATE", 'blue');
+            playFloatText(this.player_at.x, this.player_at.y, "UPDATE", 'blue');
         }
 
         // Enemy turn
@@ -222,7 +222,7 @@ class DungeonGrid {
                             this.player.destroy = false;
                             DATA["installed"].splice(proxy, 1);
                             DATA["programs"].splice(proxy, 1);
-                            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "CONNECTED", 'blue', 16);
+                            playFloatText(this.player_at.x, this.player_at.y, "CONNECTED", 'blue', 16);
                         }
                     } else {
                         to_destroy.push(e);
@@ -285,7 +285,7 @@ class DungeonGrid {
 
     movePlayer(to) {
         if (this.player.status.startsWith('stun')) {
-            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "X", 'yellow');
+            playFloatText(this.player_at.x, this.player_at.y, "X", 'yellow');
         } else {
             this.moveEntity(this.player_at, to);
         }
@@ -320,7 +320,7 @@ class DungeonGrid {
                 this.player_at = to;
                 if (DATA["installed"].indexOf("Scavenger") > -1 && Math.random() < 0.0005) {
                     print_message("!! Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
-                    playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "!!", 'blue');
+                    playFloatText(this.player_at.x, this.player_at.y, "!!", 'blue');
                 }
             }
         }

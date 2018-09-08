@@ -4,12 +4,12 @@ TRAPS = {
     "damage": function(target) {
         dmg = randint(1, 11) * 10;
         print_message("<< Stepped on a disconnection trap, received " + dmg + " damage.")
-        playFloatText(target.pos.x*TILESIZE + TILESIZE/2, target.pos.y*TILESIZE, dmg, 'red');
+        playFloatText(target.pos.x, target.pos.y, dmg, 'red');
         target.latency += dmg;
     },
     "stun": function(target) {
         print_message("<< Stepped on a disruption trap, your connection is unstable.")
-        playFloatText(target.pos.x*TILESIZE + TILESIZE/2, target.pos.y*TILESIZE, "XXX", 'yellow');
+        playFloatText(target.pos.x, target.pos.y, "XXX", 'yellow');
         target.status = "stun3";
     },
     "poison": function(target) { print_message("<< Stepped on a worm trap, your connection is slowly degrading.") },
@@ -40,7 +40,7 @@ SCRIPTS = {
     "Reconnect" : {
         "msg" : "Restoring Neural Link connection...",
         "run" : function(dungeon) {
-            playFloatText(dungeon.player_at.x*TILESIZE + TILESIZE/2, dungeon.player_at.y*TILESIZE, "+", 'green');
+            playFloatText(dungeon.player_at.x, dungeon.player_at.y, "+", 'green');
             dungeon.player.latency += 40;
         }
     },
@@ -67,7 +67,7 @@ SCRIPTS = {
                     if (y >= 0 && y < dungeon.size && x >= 0 && x < dungeon.size) {
                         entity = dungeon.getTile(x, y)["entity"];
                         if(entity && entity.type == "enemy") {
-                            playFloatText(entity.pos.x*TILESIZE + TILESIZE/2, entity.pos.y*TILESIZE, DATA["version"], 'red');
+                            playFloatText(entity.pos.x, entity.pos.y, DATA["version"], 'red');
                             entity.hp -= DATA["version"];
                         }
                     }
@@ -82,7 +82,7 @@ SCRIPTS = {
             for(var y=center.y-3; y<center.y+3; y++) {
                 for(var x=center.x-3; x<center.x+3; x++) {
                     if (y >= 1 && y < dungeon.size-1 && x >= 1 && x < dungeon.size-1) {
-                        playFloatText(x*TILESIZE + TILESIZE/2, y*TILESIZE, "10110100", 'gray');
+                        playFloatText(x, y, "10110100", 'gray');
                         dungeon.getTile(x, y)["isWall"] = false;
                     }
                 }

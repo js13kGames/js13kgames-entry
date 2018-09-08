@@ -173,6 +173,6 @@ class FloatingText {
 }
 
 function playFloatText(x, y, text, color='yellow', fontsize=10) {
-    control.cur_scene.ani.push( new FloatingText(x, y, text, fontsize, color) );
+    control.cur_scene.ani.push( new FloatingText(x*TILESIZE + TILESIZE/2, y*TILESIZE, text, fontsize, color) );
     console.log(control);
 }
