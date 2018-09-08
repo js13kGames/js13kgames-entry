@@ -10,7 +10,7 @@ TRAPS = {
 };
 
 PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];
-SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Decrypt", "Ping", "Hack"];
+SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Ping", "Hack"];
 
 SCRIPTS = {
     "Scan" : {
@@ -76,7 +76,7 @@ SCRIPTS = {
             for(var y=center.y-3; y<center.y+3; y++) {
                 for(var x=center.x-3; x<center.x+3; x++) {
                     if (y >= 1 && y < dungeon.size-1 && x >= 1 && x < dungeon.size-1) {
-                        playFloatText(x*TILESIZE + TILESIZE/2, y*TILESIZE, "@#%&*!", 'gray');
+                        playFloatText(x*TILESIZE + TILESIZE/2, y*TILESIZE, "10110100", 'gray');
                         dungeon.getTile(x, y)["isWall"] = false;
                     }
                 }

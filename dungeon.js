@@ -304,7 +304,7 @@ class DungeonGrid {
             // If the player is moving, update the tracker
             if (entity.type == "player") {
                 this.player_at = to;
-                if (DATA["installed"].indexOf("Scavenger") > -1 && Math.random() < 0.05) {
+                if (DATA["installed"].indexOf("Scavenger") > -1 && Math.random() < 0.0005) {
                     print_message("!! Scavenger found an item. " + PROGRAM_LIST[randint(0, PROGRAM_LIST.length)] + " found!");
                     playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "!!", 'blue');
                 }

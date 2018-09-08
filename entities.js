@@ -23,7 +23,9 @@ class Player extends Entity {
                 return;
             }
 
-            other.hp -= DATA["version"];
+            var dmg = randint(1,7) + DATA["version"]; // Damage roll
+            other.hp -= dmg
+
             if (DATA["installed"].indexOf("Denial_Of_Service") > -1 && roll == 20) {
                 if (Math.random < 0.2) {
                     print_message(">> Denial_Of_Service successfully shut down the enemy's connection");
@@ -42,7 +44,7 @@ class Player extends Entity {
                 DATA["bits"]++;
             }
             if (!other.destroy) {
-                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, DATA["version"], 'yellow');
+                playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, dmg, 'yellow');
             }
         } else if (other.type == "goal") {
             other.destroy = true;
@@ -62,7 +64,7 @@ class Player extends Entity {
 }
 
 class Enemy extends Entity {
-    constructor(dungeon, pos, hp=3, ac=12, att=1, dmg=20) {
+    constructor(dungeon, pos, hp=3, ac=12, att=1, dmg=10) {
         super(dungeon, pos)
         this.hp = hp;
         this.ac = ac;  // Armor class
@@ -79,9 +81,10 @@ class Enemy extends Entity {
                 playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "miss", 'white');
                 return;
             }
-            other.latency += this.att * 10;
+            var dmg = randint(0, 21) + this.dmg; // Dmg roll
+            other.latency += dmg
             print_message("<< Enemy is trying to cut your connection, increased latency by 10ms!");
-            playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "+" + this.att * 10 + "ms", 'yellow');
+            playFloatText(other.pos.x*TILESIZE + TILESIZE/2, other.pos.y*TILESIZE, "+" + dmg + "ms", 'yellow');
             if (other.latency == 0) { other.destroy = true; }
         }
     }
