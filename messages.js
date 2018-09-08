@@ -24,12 +24,11 @@ While walking over a pile of items, the player will be asked how many items to g
 */
 
 
-var commandlist = {
-    "help": "\
+HELP ="\
 help                 |   Prints out a help message.\n\
 ls [dir]             |   Prints out the contents of [dir].\n\
-help [program]       |   Prints the description of the [program] and its market value.\n\
-help [script]        |   Prints the description of the [script] and its market value.\n\
-install [program]    |   Installs [program] so it can be used in the cyberspace.\n\
-uninstall [program]  |   Uninstalls [program], allowing other programs to be installed."
-}
+help [program]       |   Prints the description of the [program].\n\
+help [script]        |   Prints the description of the [script].\n\
+install [program]    |   Installs [program] so its effects are active.\n\
+uninstall [program]  |   Uninstalls [program], allowing other programs to be installed.\n\
+[script]             |   Executes the specified script." 

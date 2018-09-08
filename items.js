@@ -23,8 +23,17 @@ TRAPS = {
 };
 
 PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];
+PROGRAM_HELP = {"Maintenance": "Restores part of your connection after defeating an enemy.",
+                "Proxy": "If your connection goes offline, immediatly starts a new one.",
+                "Denial_Of_Service": "Every attack on a enemy has a chance of disconnecting him instantly.",
+                "Scavenger": "Chance of randomly producing a new item for every step you take"}
 SCRIPT_LIST = ["Scan", "Refresh", "Reconnect", "Glitch", "Ping", "Hack"];
-
+SCRIPT_HELP = {"Scan": "Reveals the layout of the map.",
+               "Refresh": "Teleports back to the entrance.",
+               "Reconnect": "Restores a bit of your connetion.",
+               "Glitch": "Disables every enemy on the map.",
+               "Ping": "Deals damage to every enemy you can see.",
+               "Hack": "Turns walls into walkable tiles."}
 SCRIPTS = {
     "Scan" : {
         "msg" : "Scanning surroundings...",

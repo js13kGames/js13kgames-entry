@@ -280,6 +280,7 @@ class DungeonGrid {
                             to_destroy.push(e);
                             this.grid[entity.pos.y][entity.pos.x]["entity"] = null;
                         } else {
+                            playAnimation(0, 0, canvas.width, [32, 249, 181]);
                             print_message("!! Main connection lost, Proxy connection estabilished.");
                             this.moveEntity(this.player_at, this.player_start);
                             DATA["latency"] = 80;

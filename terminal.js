@@ -15,7 +15,14 @@ function user_command() {
     if (GAME_OVER) { return; }
     if (control.cur_scene.type == "menu") { return; }
     if (cmd == "help") {
-        print_message(commandlist["help"]);
+        print_message(HELP);
+    } else if (cmd.startsWith("help ")) {
+        var item = cmd.slice(5);
+        if (item in PROGRAM_HELP) {
+            print_message(PROGRAM_HELP[item]);
+        } else if (item in SCRIPT_HELP) {
+            print_message(SCRIPT_HELP[item]);
+        }
     } else if (cmd == "ls") {
         print_message("programs/  scripts/  installed/");
     } else if (cmd == "ls programs" || cmd == "ls programs/") {
