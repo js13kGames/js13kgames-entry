@@ -13,6 +13,7 @@ class Player extends Entity {
         super(dungeon, pos)
         this.latency = 80;
         this.type = "player";
+        this.status = "";
     }
     interactWith(other) {
         if (other.type == "enemy") {

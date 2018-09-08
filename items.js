@@ -1,12 +1,18 @@
 TRAP_LIST = ["damage", "stun", "poison"];
 
 TRAPS = {
-    "damage": function(target) { print_message("<< Stepped on a disconnection trap, received 3 damage.") },
-    "stun": function(target) { print_message("<< Stepped on a disruption trap, your connection is unstable.") },
+    "damage": function(target) {
+        dmg = randint(1, 11) * 10;
+        print_message("<< Stepped on a disconnection trap, received " + dmg + " damage.")
+        playFloatText(target.pos.x*TILESIZE + TILESIZE/2, target.pos.y*TILESIZE, dmg, 'red');
+        target.latency += dmg;
+    },
+    "stun": function(target) {
+        print_message("<< Stepped on a disruption trap, your connection is unstable.")
+        playFloatText(target.pos.x*TILESIZE + TILESIZE/2, target.pos.y*TILESIZE, "XXX", 'yellow');
+        target.status = "stun3";
+    },
     "poison": function(target) { print_message("<< Stepped on a worm trap, your connection is slowly degrading.") },
-
-    // This is not a trap, just used to represent the exit of the dungeon.
-    "exit": function(target) { print_message("!! You're at the exit. Press space to exit the dungeon."); }
 };
 
 PROGRAM_LIST = ["Maintenance", "Proxy", "Denial_Of_Service", "Scavenger"];

@@ -140,7 +140,6 @@ class DungeonScene extends Scene {
         if (!this.dungeon.player_at) { return; }
 
         var noMovement = false,
-            from = this.dungeon.player_at,
             to = new Vector(this.dungeon.player_at);
 
         if (keys['left']) { to.add(-1, 0);
@@ -148,10 +147,7 @@ class DungeonScene extends Scene {
         } else if (keys['right']) { to.add(1, 0);
         } else if (keys['down']) { to.add(0, 1);
         } else { noMovement = true; }
-        if (!noMovement) {
-            this.dungeon.moveEntity(from, to);
-            this.dungeon.executeTurn();
-        }
+        if (!noMovement) { this.dungeon.movePlayer(to); }
     }
 
     update() {

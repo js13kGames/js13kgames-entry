@@ -283,6 +283,20 @@ class DungeonGrid {
         return closest
     }
 
+    movePlayer(to) {
+        if (this.player.status.startsWith('stun')) {
+            playFloatText(this.player_at.x*TILESIZE + TILESIZE/2, this.player_at.y*TILESIZE, "X", 'yellow');
+        } else {
+            this.moveEntity(this.player_at, to);
+        }
+
+        if (this.player.status == "stun3") { this.player.status = "stun2";}
+        else if (this.player.status == "stun2") { this.player.status = "stun1";}
+        else if (this.player.status == "stun1") { this.player.status = "";}
+
+        this.executeTurn();
+    }
+
     moveEntity(from, to) {
         var from_tile = this.getTile(from),
             to_tile = this.getTile(to),
