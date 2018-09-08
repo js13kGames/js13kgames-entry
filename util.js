@@ -183,8 +183,8 @@ function playFloatText(x, y, text, color='yellow', fontsize=10) {
 
 class Bullet {
     constructor(x, y, radius, rgbArray, time) {
-        this.x = x;
-        this.y = y;
+        this.x = x + randint(-5, 5);
+        this.y = y + randint(-5, 5);
         this.radius = radius;
         this.start = delta;
         this.color = rgbArray;

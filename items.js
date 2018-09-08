@@ -12,11 +12,13 @@ TRAPS = {
         print_message("<< Stepped on a disruption trap, your connection is unstable.")
         playFloatText(target.pos.x, target.pos.y, "XXX", 'yellow');
         target.status["stun"] += 3;
+        playBullet(target.pos.x, target.pos.y, 5, [234,208,60]);
     },
     "poison": function(target) {
         print_message("<< Stepped on a worm trap, your connection is slowly degrading.")
         playFloatText(target.pos.x, target.pos.y, "###", 'green');
         target.status["poison"] += 10;
+        playBullet(target.pos.x, target.pos.y, 5, [70,130,42]);
     },
 };
 

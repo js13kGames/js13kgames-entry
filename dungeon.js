@@ -306,9 +306,11 @@ class DungeonGrid {
             var dmg = randint(1, 30);
             this.player.latency += dmg;
             playFloatText(this.player_at.x, this.player_at.y, dmg, 'green');
+            playBullet(this.player_at.x, this.player_at.y, 3, [70,130,42]);
         }
         if (this.player.status['stun'] > 0) {
             playFloatText(this.player_at.x, this.player_at.y, "X", 'yellow');
+            playBullet(this.player_at.x, this.player_at.y, 3, [234,208,60]);
             this.player.status['stun']--;
         } else {
             this.moveEntity(this.player_at, to);

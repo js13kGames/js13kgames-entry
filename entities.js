@@ -46,6 +46,7 @@ class Player extends Entity {
             }
             if (!other.destroy) {
                 playFloatText(other.pos.x, other.pos.y, dmg, 'yellow');
+                playBullet(other.pos.x, other.pos.y, 3);
             }
         } else if (other.type == "goal") {
             playAnimation(0, 0, canvas.width, [140,60,200]);
@@ -87,6 +88,7 @@ class Enemy extends Entity {
             other.latency += dmg
             print_message("<< Enemy is trying to cut your connection, increased latency by 10ms!");
             playFloatText(other.pos.x, other.pos.y, "+" + dmg + "ms", 'yellow');
+            playBullet(other.pos.x, other.pos.y, 3, [234,208,60]);
             if (other.latency == 0) { other.destroy = true; }
         }
     }
