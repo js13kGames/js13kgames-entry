@@ -48,6 +48,7 @@ class Player extends Entity {
                 playFloatText(other.pos.x, other.pos.y, dmg, 'yellow');
             }
         } else if (other.type == "goal") {
+            playAnimation(0, 0, canvas.width, [140,60,200]);
             other.destroy = true;
             print_message("!! You reached your goal!");
             DATA["level"]++;

@@ -149,7 +149,7 @@ class Animation extends Rect {
 }
 
 function playAnimation(x, y, size, color, time=0.1, itensity=0.6) {
-    control.cur_scene.ani.push( new Animation(x, y, size, size, color, time, itensity) );
+    control.ani.push( new Animation(x, y, size, size, color, time, itensity) );
 }
 
 
@@ -174,6 +174,6 @@ class FloatingText {
 }
 
 function playFloatText(x, y, text, color='yellow', fontsize=10) {
-    control.cur_scene.ani.push( new FloatingText(x*TILESIZE + TILESIZE/2, y*TILESIZE, text, fontsize, color) );
+    control.ani.push( new FloatingText(x*TILESIZE + TILESIZE/2, y*TILESIZE, text, fontsize, color) );
     console.log(control);
 }

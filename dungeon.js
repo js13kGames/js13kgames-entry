@@ -246,6 +246,10 @@ class DungeonGrid {
         }
 
         for (var d=0; d<to_destroy.length; d++) {
+            if(to_destroy[d].type == "goal") {
+                DATA["level"]++;
+                startDungeon();
+            }
             this.entities.splice(to_destroy[d], 1);
         }
     }

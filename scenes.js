@@ -140,7 +140,6 @@ class DungeonScene extends Scene {
 
 
         for(var b=0; b<this.buttons.length; b++) { this.buttons[b].draw(); }
-        for(var a=0; a<this.ani.length; a++) { this.ani[a].draw(); if(this.ani[a].destroy) { this.ani.splice(a, 1); } }
     }
 
     handle() {
@@ -184,11 +183,15 @@ class DungeonScene extends Scene {
 class SceneControl {
     constructor() {
         this.cur_scene = new MenuScene("main");
+        this.ani = [];
     }
     changeScene(to_scene) {
         this.cur_scene = to_scene;
     }
 
     update() { this.cur_scene.update() }
-    draw() { this.cur_scene.draw() }
+    draw() {
+        this.cur_scene.draw();
+        for(var a=0; a<this.ani.length; a++) { this.ani[a].draw(); if(this.ani[a].destroy) { this.ani.splice(a, 1); } }
+    }
 }
