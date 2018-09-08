@@ -118,7 +118,7 @@ class DungeonScene extends Scene {
                             ctx.fillStyle = 'blue';
                         }
                         if (tile["entity"].type === "enemy") {
-                            ctx.fillStyle = 'orange';
+                            ctx.fillStyle = tile["entity"].color;
                         }
                         if (tile["entity"].type === "goal") {
                             ctx.fillStyle = 'purple';

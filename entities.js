@@ -67,8 +67,9 @@ class Player extends Entity {
 }
 
 class Enemy extends Entity {
-    constructor(dungeon, pos, hp=3, ac=12, att=1, dmg=10) {
+    constructor(dungeon, pos, color, hp, ac, att, dmg) {
         super(dungeon, pos)
+        this.color = color;
         this.hp = hp;
         this.ac = ac;  // Armor class
         this.att = att;  // Accuracy
@@ -88,7 +89,7 @@ class Enemy extends Entity {
             other.latency += dmg
             print_message("<< Enemy is trying to cut your connection, increased latency by 10ms!");
             playFloatText(other.pos.x, other.pos.y, "+" + dmg + "ms", 'yellow');
-            playBullet(other.pos.x, other.pos.y, 3, [234,208,60]);
+            playBullet(other.pos.x, other.pos.y, 3, [234, 175, 58]);
             if (other.latency == 0) { other.destroy = true; }
         }
     }
