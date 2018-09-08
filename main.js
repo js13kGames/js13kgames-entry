@@ -63,7 +63,7 @@ function reset() {
 
     DATA = {
         "programs": [],
-        "scripts": ["Scan", "Refresh", "Glitch"],
+        "scripts": [],
         "installed": [],
         "bits": 0,
         "version": 1,
@@ -71,6 +71,9 @@ function reset() {
         "level": 1,
         "passwords": 0
     }
+
+    DATA["programs"] = PROGRAM_LIST;
+    DATA["scripts"] = SCRIPT_LIST;
 }
 
 function gameLoop() {

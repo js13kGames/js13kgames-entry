@@ -102,7 +102,7 @@ class DungeonGrid {
 
                 // Add something to the room
                 // 70% chance of spawning a program, 30% of script
-                if (Math.random < 0.7) { var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
+                if (Math.random() < 0.7) { var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
                 } else { var item = SCRIPT_LIST[randint(0, SCRIPT_LIST.length)]; }
 
                 this.addItem(item, room.randomPoint());
@@ -161,7 +161,7 @@ class DungeonGrid {
             } else if (items_to_spawn && tile['item'] == null && tile["entity"] == null) {
 
                 // 30% chance of program, 70% of script
-                if (Math.random < 0.3) {
+                if (Math.random() < 0.3) {
                     var item = PROGRAM_LIST[randint(0, PROGRAM_LIST.length)];
                 } else {
                     var item = SCRIPT_LIST[randint(0, SCRIPT_LIST.length)];
@@ -185,7 +185,11 @@ class DungeonGrid {
         if (player_tile["item"]) {
             var item = player_tile["item"];
             print_message("<< Obtained " + player_tile["item"] + " item!");
-            if (PROGRAM_LIST.indexOf(item) > -1) { DATA["programs"].push(item);
+            if (PROGRAM_LIST.indexOf(item) > -1) {
+                if (DATA["programs"].indexOf(item) > -1 || DATA["installed"].indexOf(item) > -1) {
+                    print_message("!! Program already obtained, using its data to the version update.");
+                    DATA["bits"]++;
+                } else { DATA["programs"].push(item); }
             } else if (SCRIPT_LIST.indexOf(item)> -1) { DATA["scripts"].push(item);
             } else if (item == "password") { DATA["passwords"]++; }
             

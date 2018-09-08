@@ -45,7 +45,7 @@ SCRIPTS = {
         "msg" : "Restoring Neural Link connection...",
         "run" : function(dungeon) {
             playFloatText(dungeon.player_at.x, dungeon.player_at.y, "+", 'green');
-            dungeon.player.latency += 40;
+            dungeon.player.latency -= 40;
         }
     },
     "Glitch" : {
