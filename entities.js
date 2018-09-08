@@ -13,7 +13,7 @@ class Player extends Entity {
         super(dungeon, pos)
         this.latency = 80;
         this.type = "player";
-        this.status = "";
+        this.status = {"stun": 0, "poison": 0};
     }
     interactWith(other) {
         if (other.type == "enemy") {
@@ -72,7 +72,7 @@ class Enemy extends Entity {
         this.att = att;  // Accuracy
         this.dmg = dmg; // Damage
         this.type = "enemy";
-        this.status = "";
+        this.status = {"stun": 0, "poison": 0};
         this.player_in_range = false;
     }
     interactWith(other) {
@@ -91,12 +91,11 @@ class Enemy extends Entity {
     }
     turn(dungeon) {
         if (this.hp <= 0) { this.destroy = true; }
-        if (this.status.startsWith('stun') && this.player_in_range) {
+        if (this.status['stun'] > 0 && this.player_in_range) {
             playFloatText(this.pos.x, this.pos.y, "X", 'yellow');
+            this.status['stun']--;
+            return;
         }
-        if (this.status == "stun3") { this.status = "stun2"; return;}
-        if (this.status == "stun2") { this.status = "stun1"; return;}
-        if (this.status == "stun1") { this.status = ""; return;}
         var from = this.pos,
             to = new Vector(from),
             to_player = new Vector(from);

@@ -10,7 +10,7 @@ TRAPS = {
     "stun": function(target) {
         print_message("<< Stepped on a disruption trap, your connection is unstable.")
         playFloatText(target.pos.x, target.pos.y, "XXX", 'yellow');
-        target.status = "stun3";
+        target.status["stun"] += 3;
     },
     "poison": function(target) { print_message("<< Stepped on a worm trap, your connection is slowly degrading.") },
 };
@@ -52,7 +52,7 @@ SCRIPTS = {
                     var entity = dungeon.grid[y][x]["entity"];
                     if (entity && entity.type == "enemy") {
                         playAnimation(0, 0, canvas.width, [232,232,95], 0.3);
-                        entity.status = "stun3";
+                        entity.status["stun"] += 3;
                     }
                 }
             }

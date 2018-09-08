@@ -283,16 +283,13 @@ class DungeonGrid {
         return closest
     }
 
-    movePlayer(to) {
-        if (this.player.status.startsWith('stun')) {
+    movePlayer(to) {    
+        if (this.player.status['stun'] > 0) {
             playFloatText(this.player_at.x, this.player_at.y, "X", 'yellow');
+            this.player.status['stun']--;
         } else {
             this.moveEntity(this.player_at, to);
         }
-
-        if (this.player.status == "stun3") { this.player.status = "stun2";}
-        else if (this.player.status == "stun2") { this.player.status = "stun1";}
-        else if (this.player.status == "stun1") { this.player.status = "";}
 
         this.executeTurn();
     }
