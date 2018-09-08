@@ -148,6 +148,17 @@ class DungeonGrid {
                 player_spawned = true;
 
             } else if (!goal_spawned ) {
+                var neighbors = this.getNeighbors(rand_point),
+                    inHall = false;
+                
+                // Prevents the goal from blocking the exit of a room
+                for (var n=0; n<neighbors.length; n++) {
+                    if (this.getTile(neighbors[n])["isHall"]) {
+                        inHall = true;
+                    }
+                }
+                if (inHall) { continue; }
+
                 var goal = new Entity(this, rand_point);
                 goal.type = "goal";
                 this.addEntity(goal, rand_point);
