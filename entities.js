@@ -28,21 +28,19 @@ class Player extends Entity {
             other.hp -= dmg
 
             if (DATA["installed"].indexOf("Denial_Of_Service") > -1 && roll == 20) {
-                if (Math.random < 0.2) {
-                    print_message(">> Denial_Of_Service successfully shut down the enemy's connection");
-                    playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
-                    other.destroy = true;
-                    DATA["bits"]++;
-                }
-            }
-            if (other.hp == 0) {
+                print_message(">> Denial_Of_Service successfully shut down the enemy's connection");
+                playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
                 other.destroy = true;
+                DATA["bits"]++;
+            }
+            if (other.hp <= 0) {
+                other.destroy = true;
+                DATA["bits"]++;
                 if (DATA["installed"].indexOf("Maintenance") > -1 && this.latency > 40) {
                     print_message(">> Maintenance repairs your connection by 20ms.")
                     this.latency -= 20;
                 }
                 playFloatText(other.pos.x, other.pos.y, "OFFLINE", 'red');
-                DATA["bits"]++;
             }
             if (!other.destroy) {
                 playFloatText(other.pos.x, other.pos.y, dmg, 'yellow');
