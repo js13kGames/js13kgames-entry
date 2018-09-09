@@ -76,11 +76,14 @@ class DungeonScene extends Scene {
                     // Explored map
                     if ( tile["isWall"] ) {
                         if (DATA["level"] % 40 <= 10) { ctx.fillStyle = "#14412b";
-                        } else if (DATA["level"] % 40 <= 20) { ctx.fillStyle = "#284191";
-                        } else if (DATA["level"] % 40 <= 30) { ctx.fillStyle = "#9e2430";
-                        } else if (DATA["level"] % 40 <= 40) { ctx.fillStyle = "#515151"; }
+                        } else if (DATA["level"] % 40 <= 20) { ctx.fillStyle = "#043363";
+                        } else if (DATA["level"] % 40 <= 30) { ctx.fillStyle = "#7d3232";
+                        } else if (DATA["level"] % 40 <= 40) { ctx.fillStyle = "#404040"; }
                     } else if (tile["isHall"]) {
-                        ctx.fillStyle = '#7f9642';
+                        if (DATA["level"] % 40 <= 10) { ctx.fillStyle = "#71c96e";
+                        } else if (DATA["level"] % 40 <= 20) { ctx.fillStyle = "#4f6ac4";
+                        } else if (DATA["level"] % 40 <= 30) { ctx.fillStyle = "#b96868";
+                        } else if (DATA["level"] % 40 <= 40) { ctx.fillStyle = "#b1b1b1"; }
                     } else {
                         ctx.fillStyle = '#262626';
                     }
@@ -97,11 +100,14 @@ class DungeonScene extends Scene {
                     // Visible map
                     if ( tile["isWall"] ) {
                         if (DATA["level"] % 40 <= 10) { ctx.fillStyle = "#1f774d";
-                        } else if (DATA["level"] % 40 <= 20) { ctx.fillStyle = "#425eb5";
-                        } else if (DATA["level"] % 40 <= 30) { ctx.fillStyle = "#bf424f";
-                        } else if (DATA["level"] % 40 <= 40) { ctx.fillStyle = "#848484"; }
+                        } else if (DATA["level"] % 40 <= 20) { ctx.fillStyle = "#075db6";
+                        } else if (DATA["level"] % 40 <= 30) { ctx.fillStyle = "#af4646";
+                        } else if (DATA["level"] % 40 <= 40) { ctx.fillStyle = "#5c5c5c"; }
                     } else if (tile["isHall"]) {
-                        ctx.fillStyle = '#caca56';
+                        if (DATA["level"] % 40 <= 10) { ctx.fillStyle = "#b1e1b0";
+                        } else if (DATA["level"] % 40 <= 20) { ctx.fillStyle = "#a0afdf";
+                        } else if (DATA["level"] % 40 <= 30) { ctx.fillStyle = "#d9aeae";
+                        } else if (DATA["level"] % 40 <= 40) { ctx.fillStyle = "#d5d5d5"; }
                     } else {
                         ctx.fillStyle = '#1a1a1a';
                     }

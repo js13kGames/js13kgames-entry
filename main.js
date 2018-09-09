@@ -1,21 +1,22 @@
-var canvas = document.getElementById("screen");
-var D_SIZE = 600;
-var ctx = canvas.getContext('2d');
-var terminal_window = document.getElementById("terminal-window");
-var terminal_input = document.getElementById("terminal-input");
-var control;
-var DATA;
-var GAME_OVER;
-var PLAYER_VISION = 5;
-var gameloop;
-var EXP_TO_LEVEL = 100;
-var FPS = 90;
-var GO_timer = 0; // Game over timer
-var delta = 0; // Game over timer
-var TILESIZE = 15;
-var keys = {"left": false, "up": false, "right": false, "down": false};
-var click_at = null;
-var click = false;
+var canvas = document.getElementById("screen"),
+    D_SIZE = 600,
+    ctx = canvas.getContext('2d'),
+    terminal_window = document.getElementById("terminal-window"),
+    terminal_input = document.getElementById("terminal-input"),
+    control,
+    DATA,
+    GAME_OVER,
+    PLAYER_VISION = 5,
+    gameloop,
+    EXP_TO_LEVEL = 100,
+    FPS = 90,
+    GO_timer = 0; // Game over time,
+    delta = 0; // Game over time,
+    TILESIZE = 15,
+    keys = {"left": false, "up": false, "right": false, "down": false},
+    click_at = null,
+    click = false;
+
 
 reset();
 
