@@ -73,9 +73,6 @@ function reset() {
         "level": 1,
         "passwords": 0
     }
-
-    DATA["programs"] = PROGRAM_LIST;
-    DATA["scripts"] = SCRIPT_LIST;
 }
 
 function gameLoop() {
