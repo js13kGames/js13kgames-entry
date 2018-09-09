@@ -14,7 +14,9 @@
   width: 100%;
   height: 680px;
 }
-
+.instructions {
+  text-align: center;
+}
 #terminal-div{ order: 1; }
 #canvas-div { order: 2; }
 
