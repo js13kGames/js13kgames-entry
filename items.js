@@ -60,7 +60,7 @@ SCRIPTS = {
                 }
     },
     "Reconnect" : {
-        "msg" : "Restoring Neural Link connection...",
+        "msg" : "Restoring Connection...",
         "run" : function(dungeon) {
             playBullet(dungeon.player_at.x, dungeon.player_at.y, 10, [0,0,255]);
             var heal = randint(30, 80);
