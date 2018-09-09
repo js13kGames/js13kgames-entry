@@ -91,7 +91,13 @@ class DungeonScene extends Scene {
 
                     if (tile["entity"]) {
                         if (tile["entity"].type === "goal") {
-                            ctx.drawImage(sprites, 112,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            var grd=ctx.createLinearGradient(x*TILESIZE, y*TILESIZE,(x+1)*TILESIZE,(y+1)*TILESIZE);
+                            grd.addColorStop(0,"#000a57");
+                            grd.addColorStop(1,"#880073");
+                            ctx.fillStyle = grd;
+                            ctx.beginPath();
+                            ctx.arc(x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, TILESIZE/2-2, 0, 2*Math.PI);
+                            ctx.fill();
                         }
                     }
                 }
@@ -115,46 +121,120 @@ class DungeonScene extends Scene {
                     if (tile["trap"]) {
                         ctx.fillStyle = 'rgb(200,200,200)';
                         if (tile["trap"] == "exit") {
-                            ctx.drawImage(sprites, 96,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            ctx.fillStyle = "#b0b0b0"
+                            ctx.strokeStyle = "#333333"
+                            ctx.lineWidth = 2;
+                            ctx.beginPath();
+                            ctx.arc(x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, TILESIZE/2-2, 0, 2*Math.PI);
+                            ctx.fill();
+                            ctx.stroke();
                         } else {
-                            ctx.drawImage(sprites, 32,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            var grd=ctx.createLinearGradient(x*TILESIZE, y*TILESIZE,(x+1)*TILESIZE,(y+1)*TILESIZE);
+                            grd.addColorStop(0.2,"#770000");
+                            grd.addColorStop(0.5,"red");
+                            grd.addColorStop(0.8,"#770000");
+                            ctx.fillStyle = grd;
+                            ctx.beginPath();
+                            ctx.arc(x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, TILESIZE/2-2, 0, 2*Math.PI);
+                            ctx.fill();
                         }
                     }
                     
                     if (tile["item"]) {
                         if (tile['item'] == "password") {
-                            ctx.drawImage(sprites, 0,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            ctx.fillStyle = "#f9dd00";
+                            ctx.beginPath();
+                            ctx.arc(x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, TILESIZE/2-4, 0, 2*Math.PI);
+                            ctx.fill();
                         } else if (PROGRAM_LIST.indexOf(tile['item']) > -1) {
-                            ctx.drawImage(sprites, 64,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            var grd=ctx.createLinearGradient(x*TILESIZE+2, y*TILESIZE+2,(x+1)*TILESIZE-2,(y+1)*TILESIZE-2);
+                            grd.addColorStop(0,"#9a9a9a");
+                            grd.addColorStop(0.4,"#d5d5d5");
+                            grd.addColorStop(0.45,"yellow");
+                            grd.addColorStop(0.5,"green");
+                            grd.addColorStop(0.55,"red");
+                            grd.addColorStop(0.6,"#9a9a9a");
+                            grd.addColorStop(1,"#d5d5d5");
+                            ctx.fillStyle = grd;
+                            ctx.beginPath();
+                            ctx.arc(x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, TILESIZE/2-4, 0, 2*Math.PI);
+                            ctx.fill();
                         } else {
-                            ctx.drawImage(sprites, 48,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            ctx.fillStyle = "black";
+                            ctx.strokeStyle = "white";
+                            ctx.lineWidth = 1;
+                            ctx.fillRect(x*TILESIZE+3, y*TILESIZE+3, TILESIZE-3, TILESIZE-3);
+                            ctx.beginPath();
+                            ctx.moveTo(x*TILESIZE+4, y*TILESIZE+4)
+                            ctx.lineTo(x*TILESIZE+8, y*TILESIZE+8)
+                            ctx.lineTo(x*TILESIZE+4, y*TILESIZE+12)
+                            ctx.moveTo(x*TILESIZE+8, y*TILESIZE+12)
+                            ctx.lineTo(x*TILESIZE+14, y*TILESIZE+12)
+                            ctx.stroke();
                         }
                     }
                     
                     if (tile["entity"]) {
                         if (tile["entity"].type === "player") {
-                            ctx.drawImage(sprites, 0,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            ctx.fillStyle = "#4e73ff";
+                            ctx.fillRect(x*TILESIZE+2, y*TILESIZE+2, TILESIZE-4, TILESIZE-4);
                         }
                         if (tile["entity"].type === "enemy") {
                             if (tile["entity"]._class == "common") {
-                                ctx.drawImage(sprites, 16,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                                ctx.fillStyle = "#752669";
+                                ctx.fillRect(x*TILESIZE+2, y*TILESIZE+2, TILESIZE-4, TILESIZE-4);
                             } else if (tile["entity"]._class == "tough") {
-                                ctx.drawImage(sprites, 32,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                                ctx.fillStyle = "#752669";
+                                ctx.fillRect(x*TILESIZE+2, y*TILESIZE+2, TILESIZE-4, TILESIZE-8);
+                                ctx.beginPath();
+                                ctx.moveTo(x*TILESIZE+2, y*TILESIZE+9);
+                                ctx.lineTo(x*TILESIZE+TILESIZE/2, (y+1)*TILESIZE);
+                                ctx.lineTo((x+1)*TILESIZE-2, y*TILESIZE+9);
+                                ctx.lineTo(x*TILESIZE+2, y*TILESIZE+9);
+                                ctx.fill();
                             } else if (tile["entity"]._class == "glass") {
-                                ctx.drawImage(sprites, 48,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                                ctx.fillStyle = "#752669";
+                                ctx.fillRect(x*TILESIZE+4, y*TILESIZE+2, TILESIZE-8, TILESIZE-4);
                             } else if (tile["entity"]._class == "vamp") {
-                                ctx.drawImage(sprites, 64,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                                ctx.fillStyle = "#752669";
+                                ctx.beginPath();
+                                ctx.moveTo(x*TILESIZE+2, y*TILESIZE+2);
+                                ctx.lineTo(x*TILESIZE+TILESIZE/2, (y+1)*TILESIZE);
+                                ctx.lineTo((x+1)*TILESIZE-2, y*TILESIZE+2);
+                                ctx.lineTo(x*TILESIZE+2, y*TILESIZE+2);
+                                ctx.fill();
                             } else if (tile["entity"]._class == "explosive") {
-                                ctx.drawImage(sprites, 80,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                                ctx.fillStyle = "#752669";
+                                ctx.moveTo(x*TILESIZE+TILESIZE/2, y*TILESIZE);
+                                ctx.lineTo(x*TILESIZE, y*TILESIZE+TILESIZE/2);
+                                ctx.lineTo(x*TILESIZE+TILESIZE/2, (y+1)*TILESIZE);
+                                ctx.lineTo((x+1)*TILESIZE, y*TILESIZE+TILESIZE/2);
+                                ctx.lineTo(x*TILESIZE+TILESIZE/2, y*TILESIZE);
+                                ctx.fill();
                             } else if (tile["entity"]._class == "poison") {
-                                ctx.drawImage(sprites, 96,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                                ctx.fillStyle = "#752669";
+                                ctx.moveTo(x*TILESIZE+TILESIZE/2, y*TILESIZE);
+                                ctx.lineTo(x*TILESIZE, y*TILESIZE+TILESIZE/2);
+                                ctx.lineTo((x+1)*TILESIZE, y*TILESIZE+TILESIZE/2);
+                                ctx.lineTo(x*TILESIZE+TILESIZE/2, y*TILESIZE);
+                                ctx.fill();
                             }
                         }
                         if (tile["entity"].type === "goal") {
-                            ctx.drawImage(sprites, 80,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            var grd=ctx.createLinearGradient(x*TILESIZE, y*TILESIZE,(x+1)*TILESIZE,(y+1)*TILESIZE);
+                            grd.addColorStop(0,"#0013a0");
+                            grd.addColorStop(1,"#f300ce");
+                            ctx.fillStyle = grd;
+                            ctx.beginPath();
+                            ctx.arc(x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, TILESIZE/2-2, 0, 2*Math.PI);
+                            ctx.fill();
                         }
                         if (tile["entity"].type === "firewall") {
-                            ctx.drawImage(sprites, 16,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            var grd=ctx.createLinearGradient(x*TILESIZE + TILESIZE/2, y*TILESIZE,(x+1)*TILESIZE+TILESIZE/2,(y+1)*TILESIZE);
+                            grd.addColorStop(0,"orange");
+                            grd.addColorStop(1,"red");
+                            ctx.fillStyle = grd;
+                            ctx.fillRect(x*TILESIZE, y*TILESIZE, TILESIZE, TILESIZE);
                         }
                     }
                 } 

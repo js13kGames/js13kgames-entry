@@ -15,10 +15,7 @@ var canvas = document.getElementById("screen"),
     TILESIZE = 15,
     keys = {"left": false, "up": false, "right": false, "down": false},
     click_at = null,
-    click = false,
-    sprites = new Image();
-
-sprites.src = 'sprites.png';
+    click = false;
 
 reset();
 
@@ -27,7 +24,7 @@ document.addEventListener( 'keyup', handler);
 document.addEventListener( 'keydown', handler);
 
 function handler(evt) {
-    if (evt.type == "keyup" || evt.type == "keydown" && [37,38,39,40].indexOf(evt.keyCode)) {
+    if ((evt.type == "keyup" || evt.type == "keydown") && [37,38,39,40].indexOf(evt.keyCode) > -1) {
         evt.preventDefault();
     }
     if (evt.type == "click") {
