@@ -15,8 +15,10 @@ var canvas = document.getElementById("screen"),
     TILESIZE = 15,
     keys = {"left": false, "up": false, "right": false, "down": false},
     click_at = null,
-    click = false;
+    click = false,
+    sprites = new Image();
 
+sprites.src = 'sprites.png';
 
 reset();
 

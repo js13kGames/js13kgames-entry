@@ -91,9 +91,8 @@ class DungeonScene extends Scene {
 
                     if (tile["entity"]) {
                         if (tile["entity"].type === "goal") {
-                            ctx.fillStyle = '#562a7c';
+                            ctx.drawImage(sprites, 112,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                         }
-                        ctx.fillRect(x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                     }
                 }
                 if (tile["fow"] == 1) {
@@ -115,36 +114,50 @@ class DungeonScene extends Scene {
                     
                     if (tile["trap"]) {
                         ctx.fillStyle = 'rgb(200,200,200)';
-                        if (tile["trap"] == "exit") { ctx.fillStyle = 'cyan'; }
-                        ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
+                        if (tile["trap"] == "exit") {
+                            ctx.drawImage(sprites, 96,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                        } else {
+                            ctx.drawImage(sprites, 32,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                        }
                     }
                     
                     if (tile["item"]) {
-                        ctx.fillStyle = 'green';
-                        if (tile['item'] == "password") { ctx.fillStyle = 'yellow'; }
-                        ctx.fillRect(x * TILESIZE +3, y * TILESIZE +3, TILESIZE-3, TILESIZE-3);
+                        if (tile['item'] == "password") {
+                            ctx.drawImage(sprites, 0,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                        } else if (PROGRAM_LIST.indexOf(tile['item']) > -1) {
+                            ctx.drawImage(sprites, 64,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                        } else {
+                            ctx.drawImage(sprites, 48,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                        }
                     }
                     
                     if (tile["entity"]) {
                         if (tile["entity"].type === "player") {
-                            ctx.fillStyle = 'blue';
+                            ctx.drawImage(sprites, 0,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                         }
                         if (tile["entity"].type === "enemy") {
-                            ctx.fillStyle = tile["entity"].color;
+                            if (tile["entity"]._class == "common") {
+                                ctx.drawImage(sprites, 16,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            } else if (tile["entity"]._class == "tough") {
+                                ctx.drawImage(sprites, 32,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            } else if (tile["entity"]._class == "glass") {
+                                ctx.drawImage(sprites, 48,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            } else if (tile["entity"]._class == "vamp") {
+                                ctx.drawImage(sprites, 64,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            } else if (tile["entity"]._class == "explosive") {
+                                ctx.drawImage(sprites, 80,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            } else if (tile["entity"]._class == "poison") {
+                                ctx.drawImage(sprites, 96,16,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
+                            }
                         }
                         if (tile["entity"].type === "goal") {
-                            ctx.fillStyle = 'purple';
+                            ctx.drawImage(sprites, 80,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                         }
                         if (tile["entity"].type === "firewall") {
-                            ctx.fillStyle = 'red';
+                            ctx.drawImage(sprites, 16,0,16,16,x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                         }
-                        ctx.fillRect(x * TILESIZE +1, y * TILESIZE +1, TILESIZE-1, TILESIZE-1);
                     }
                 } 
-                if (tile["isDoor"]) {
-                    ctx.fillStyle = '#725337';
-                    ctx.fillRect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE);
-                }
             }
         }
 
