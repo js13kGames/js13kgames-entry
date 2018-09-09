@@ -94,7 +94,7 @@ SCRIPTS = {
                         entity = dungeon.getTile(x, y)["entity"];
                         if(entity && entity.type == "enemy") {
                             playFloatText(entity.pos.x, entity.pos.y, DATA["version"], 'red');
-                            entity.hp -= DATA["version"];
+                            entity.hp -= randint(1, 7) + DATA["version"];
                         }
                     }
                 }
