@@ -9,9 +9,9 @@ var canvas = document.getElementById("screen"),
     PLAYER_VISION = 5,
     gameloop,
     EXP_TO_LEVEL = 100,
-    FPS = 90,
-    GO_timer = 0; // Game over time,
-    delta = 0; // Game over time,
+    interval = 90,
+    GO_timer = 0;
+    delta = 0;
     TILESIZE = 15,
     keys = {"left": false, "up": false, "right": false, "down": false},
     click_at = null,
@@ -27,6 +27,9 @@ document.addEventListener( 'keyup', handler);
 document.addEventListener( 'keydown', handler);
 
 function handler(evt) {
+    if (evt.type == "keyup" || evt.type == "keydown" && [37,38,39,40].indexOf(evt.keyCode)) {
+        evt.preventDefault();
+    }
     if (evt.type == "click") {
         click_at = getCursorPosition(canvas, evt);
         click = true;
@@ -51,7 +54,7 @@ function startGame(){
     reset();
     control.changeScene(new MenuScene("menu"));
     if (gameloop) { clearInterval(gameloop); }
-    gameloop = setInterval(gameLoop, FPS);
+    gameloop = setInterval(gameLoop, interval);
 }
 
 function startDungeon(){
@@ -83,8 +86,8 @@ function gameLoop() {
     control.update();
     control.draw();
 
-    if (GAME_OVER) { GO_timer += FPS; }
-    delta += FPS;
+    if (GAME_OVER) { GO_timer += interval; }
+    delta += interval;
 }
 
 startGame();
