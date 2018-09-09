@@ -27,7 +27,9 @@ class Player extends Entity {
 
             // Damage roll
             bonus = DATA["installed"].indexOf("Multithread") > -1 ? 3 : 0;
-            var dmg = randint(1,7) + DATA["version"] + bonus;
+            var last_wind = 10 - ((400 - DATA['latency']) / 50) **2; // Bonus damage the closer the player is to dying
+            last_wind = Math.ceil(last_wind) > 0 ? last_wind : 0;
+            var dmg = randint(1,7) + DATA["version"] + bonus + last_wind;
             other.hp -= dmg
 
             if (DATA["installed"].indexOf("Denial_Of_Service") > -1 && roll == 20) {
