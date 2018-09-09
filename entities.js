@@ -73,12 +73,14 @@ class Enemy extends Entity {
     constructor(dungeon, pos, _class) {
         super(dungeon, pos);
         var color, hp, ac, att, dmg;
-        if (_class == "common") { color='#ffac3f'; hp=3; ac=12; att=2; dmg=10; // Common enemy
-        } else if (_class == "tough") { color='#773b00'; hp=5; ac=14; att=1; dmg=5; // Tough enemy
-        } else if (_class == "glass") { color='#ff753a'; hp=2; ac=10; att=3; dmg=20; // Glass cannon
-        } else if (_class == "poison") { color='#617500'; hp=3; ac=12; att=2; dmg=10; // Poison
-        } else if (_class == "explosive") { color='#770000'; hp=1; ac=14; att=0; dmg=80; // Explosive
-        } 
+        var bonus = DATA['level'] > 10 ? DATA['level'] - 10 : 0;
+        if (_class == "common") { color='#ffac3f'; hp=3+bonus; ac=12+bonus; att=2+bonus; dmg=10+bonus; // Common enemy
+        } else if (_class == "tough") { color='#773b00'; hp=5+bonus*2; ac=14+bonus*2; att=1+bonus; dmg=5+bonus; // Tough enemy
+        } else if (_class == "vampire") { color='#770000'; hp=5+bonus*2; ac=12+bonus*2; att=1+bonus; dmg=5+bonus; // Vampire enemy
+        } else if (_class == "glass") { color='#ff753a'; hp=2+bonus; ac=10+bonus; att=3+bonus; dmg=20+bonus*2; // Glass cannon
+        } else if (_class == "poison") { color='#617500'; hp=3+bonus; ac=12+bonus; att=2+bonus; dmg=10+bonus; // Poison
+        } else if (_class == "explosive") { color='#ff009d'; hp=1+bonus; ac=14+bonus; att=0; dmg=80+bonus; // Explosive
+        }
 
         this._class = _class;
         this.color = color;
@@ -93,7 +95,7 @@ class Enemy extends Entity {
     interactWith(other) {
         if (other.type == "player") {
             var player_ac_bonus = DATA['installed'].indexOf("Redundancy") > -1 ? 3 : 0;
-            if (randint(0, 20) < 10 + DATA["level"] + player_ac_bonus) { // Attack roll, 10 is the base AC
+            if (randint(0, 20) < 10 + DATA["version"] + player_ac_bonus) { // Attack roll, 10 is the base AC
                 print_message("<< Enemy tried to cut your connection, but failed!");
                 playFloatText(other.pos.x, other.pos.y, "miss", 'white');
                 return;
@@ -102,6 +104,8 @@ class Enemy extends Entity {
             var dmg = randint(0, 21) + this.dmg; // Dmg roll
             DATA["latency"] += dmg
             print_message("<< Enemy is trying to cut your connection, increased latency by " + dmg + "ms !");
+
+
             if (this._class == "tough" && Math.random() < 0.05) {
                 print_message("<< Enemy has stunned you!");
                 other.status["stun"] = 3;
@@ -109,6 +113,11 @@ class Enemy extends Entity {
             if (this._class == "poison") {
                 print_message("<< The enemy's attacks are slowly degrading your connection!");
                 other.status["poison"] = 10;
+            }
+            if (this._class == "vampire" && this.hp < 5) {
+                print_message("<< The enemy's grows stronger with every successful attack!");
+                playFloatText(this.pos.x, this.pos.y, "+1", 'green');
+                this.hp += 1
             }
             playFloatText(other.pos.x, other.pos.y, "+" + dmg + "ms", 'yellow');
             playBullet(other.pos.x, other.pos.y, 3, [234, 175, 58]);

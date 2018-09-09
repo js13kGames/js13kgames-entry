@@ -182,40 +182,45 @@ class DungeonGrid {
             } else if (enemies_to_spawn && tile['entity'] === null) {
                 var roll, _class;
                 roll = Math.random();
-                if (DATA['level'] == 1) {
+                if (DATA['level'] % 10 == 1) {
                     if (roll < 0.9) { _class="common";
                     } else { _class="tough"; }
-                } else if (DATA['level'] == 2) {
+                } else if (DATA['level'] % 10 == 2) {
                     if (roll < 0.5) {  _class="common";
                     } else { _class="tough"; }
-                } else if (DATA['level'] == 3) {
+                } else if (DATA['level'] % 10 == 3) {
                     if (roll < 0.4) { _class="common";
                     } else if (roll < 0.7) { _class="tough";
                     } else { _class="glass"; }
-                } else if (DATA['level'] == 4) {
+                } else if (DATA['level'] % 10 == 4) {
                     if (roll < 0.3) { _class="common";
                     } else if (roll < 0.6) { _class="tough";
                     } else if (roll < 0.9) { _class="glass";
                     } else { _class="poison"; }
-                } else if (DATA['level'] == 5) {
+                } else if (DATA['level'] % 10 == 5) {
                     if (roll < 0.1) { _class="common";
                     } else if (roll < 0.4) { _class="tough";
                     } else if (roll < 0.7) { _class="glass";
                     } else { _class="poison"; }
-                } else if (DATA['level'] == 6) {
+                } else if (DATA['level'] % 10 == 6) {
                     if (roll < 0.3) { _class="tough";
                     } else if (roll < 0.4) { _class="glass";
                     } else if (roll < 0.7) { _class="poison";
                     } else { _class="explosive"; }
-                } else if (DATA['level'] == 7) {
+                } else if (DATA['level'] % 10 == 7) {
                     _class="explosive";
-                } else if (DATA['level'] == 8) {
+                } else if (DATA['level'] % 10 == 8) {
                     if (roll < 0.1) { _class="tough";
                     } else if (roll < 0.2) { _class="glass";
-                    } else if (roll < 0.6) { _class="poison";
+                    } else if (roll < 0.5) { _class="poison";
+                    } else if (roll < 0.6) { _class="vampire";
                     } else { _class="explosive"; }
-                } else if (DATA['level'] >= 9) {
-                    if (roll < 0.1) { _class="tough";
+                } else if (DATA['level'] % 10 == 9) {
+                    if (roll < 0.5) { _class="vampire";
+                    } else  { _class="poison"; }
+                } else if (DATA['level'] % 10 == 0) {
+                    if (roll < 0.3) { _class="vampire";
+                    } else if (roll < 0.6) { _class="tough";
                     } else if (roll < 0.8) { _class="poison";
                     } else { _class="explosive"; }
                 }
