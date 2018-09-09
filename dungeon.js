@@ -360,7 +360,7 @@ class DungeonGrid {
     movePlayer(to) {    
         if (this.player.status['poison'] > 0) {
             this.player.status['poison']--;
-            var dmg = randint(1, 30);
+            var dmg = randint(1, 10);
             DATA['latency'] += dmg;
             playFloatText(this.player_at.x, this.player_at.y, dmg, 'green');
             playBullet(this.player_at.x, this.player_at.y, 3, [70,130,42]);
